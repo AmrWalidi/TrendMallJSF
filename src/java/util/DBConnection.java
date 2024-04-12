@@ -14,29 +14,17 @@ import java.sql.SQLException;
  */
 public class DBConnection {
 
-    private String database = "TrendMallDB";
-    private String username = "postgres";
-    private String password = "AmrF.C.B";
     private Connection connection;
-    private static DBConnection dbConnection = null;
-
-    private DBConnection() {
-        try {
-            Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/" + database, username, password);
-        } catch (ClassNotFoundException | SQLException ex) {
-            System.out.println("Connection Failed");
-        }
-    }
-
-    public static DBConnection getInstance() {
-        if (dbConnection == null) {
-            dbConnection = new DBConnection();
-        }
-        return dbConnection;
-    }
 
     public Connection getConnection() {
+        if (connection == null) {
+            try {
+                Class.forName("org.postgresql.Driver");
+                connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/TrendMallDB", "postgres", "AmrF.C.B");
+            } catch (ClassNotFoundException | SQLException ex) {
+                System.out.println("Connection Failed");
+            }
+        }
         return connection;
     }
 }
