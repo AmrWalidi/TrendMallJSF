@@ -1,0 +1,75 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package entity;
+
+import java.time.LocalDate;
+import java.util.Date;
+
+/**
+ *
+ * @author HP
+ */
+public class KrediKart {
+    
+    private String kartNo;
+    private String kartSahibi;
+    private Date sonKullanimTarihi;
+    private String cvv;
+    private Odeme odeme;
+
+    public KrediKart(String kartNo, String kartSahibi, Date sonKullanimTarihi, String cvv, Odeme odeme) {
+        this.kartNo = kartNo;
+        this.kartSahibi = kartSahibi;
+        this.sonKullanimTarihi = sonKullanimTarihi;
+        this.cvv = cvv;
+        this.odeme = odeme;
+    }
+
+    public KrediKart() {
+    }
+
+    public String getKartNo() {
+        return kartNo;
+    }
+
+    public void setKartNo(String kartNo) {
+        this.kartNo = kartNo;
+    }
+
+    public String getKartSahibi() {
+        return kartSahibi;
+    }
+
+    public void setKartSahibi(String kartSahibi) {
+        this.kartSahibi = kartSahibi;
+    }
+
+    public Date getSonKullanimTarihi() {
+        return sonKullanimTarihi;
+    }
+
+    public void setSonKullanimTarihi(Date sonKullanimTarihi) {
+        this.sonKullanimTarihi = sonKullanimTarihi;
+    }
+
+    public String getCvv() {
+        return cvv;
+    }
+
+    public void setCvv(String cvv) {
+        this.cvv = cvv;
+    }
+
+    public Odeme getOdeme() {
+        return odeme;
+    }
+
+    public void setOdeme(Odeme odeme) {
+        this.odeme = odeme;
+    }
+    
+    
+    
+}
