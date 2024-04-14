@@ -8,12 +8,15 @@
     </head>
     <body>
         <h:form enctype="multipart/form-data">
-            <h:inputFile value="#{managedBean.file}" />
-            <h:commandButton value="Upload" action="#{managedBean.upload}" />
+            <h:inputFile value="#{imageController.file}" />
+            <h:commandButton value="Upload" action="#{imageController.upload}" />
         </h:form>
-        <h:dataTable value="#{managedBean.imageIds}" var="imageId">
+        <h:dataTable value="#{imageController.list}" var="image">
             <h:column>
-                <img src="image?id=#{imageId}" alt="Image" width="500" hight="500"/>
+                <p>#{image.name}</p>
+            </h:column>
+            <h:column>
+                <img src="image?id=#{image.id}" alt="Image" width="500" hight="500"/>
             </h:column>
         </h:dataTable >
     </body>
