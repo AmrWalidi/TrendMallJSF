@@ -11,7 +11,7 @@ import java.util.Date;
  *
  * @author HP
  */
-public class KrediKart {
+public class KartOdeme {
     
     private String kartNo;
     private String kartSahibi;
@@ -19,7 +19,7 @@ public class KrediKart {
     private String cvv;
     private Odeme odeme;
 
-    public KrediKart(String kartNo, String kartSahibi, Date sonKullanimTarihi, String cvv, Odeme odeme) {
+    public KartOdeme(String kartNo, String kartSahibi, Date sonKullanimTarihi, String cvv, Odeme odeme) {
         this.kartNo = kartNo;
         this.kartSahibi = kartSahibi;
         this.sonKullanimTarihi = sonKullanimTarihi;
@@ -27,7 +27,7 @@ public class KrediKart {
         this.odeme = odeme;
     }
 
-    public KrediKart() {
+    public KartOdeme() {
     }
 
     public String getKartNo() {
