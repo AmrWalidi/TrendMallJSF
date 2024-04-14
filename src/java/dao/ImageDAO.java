@@ -25,6 +25,25 @@ public class ImageDAO {
 
     private List<Image> imageList;
 
+    public byte[] getImageData(String id) {
+        byte[] image = null;
+        try {
+            Class.forName("org.postgresql.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/JSFexampleDB", "postgres", "AmrF.C.B");
+            Statement st = conn.createStatement();
+            String sql = "SELECT content FROM images where id = " + id;
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+
+                image = rs.getBytes("content");
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.getMessage();
+        }
+
+        return image;
+    }
+
     public List<Image> getImages() {
         imageList = new ArrayList<>();
         try {
