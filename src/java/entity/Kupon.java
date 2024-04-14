@@ -11,19 +11,20 @@ import java.util.Date;
  * @author admin
  */
 public class Kupon {
+
     private String kod;
-    private int indirim_miktari;
-    private Date geceri_tarihi;
-    private int kullanim_limiti;
+    private int indirimMiktari;
+    private Date geceriTarihi;
+    private int kullanimLimiti;
 
     public Kupon() {
     }
-  
-    public Kupon(String kod, int indirim_miktari, Date geceri_tarihi, int kullanim_limiti) {
+
+    public Kupon(String kod, int indirimMiktari, Date geceriTarihi, int kullanimLimiti) {
         this.kod = kod;
-        this.indirim_miktari = indirim_miktari;
-        this.geceri_tarihi = geceri_tarihi;
-        this.kullanim_limiti = kullanim_limiti;
+        this.indirimMiktari = indirimMiktari;
+        this.geceriTarihi = geceriTarihi;
+        this.kullanimLimiti = kullanimLimiti;
     }
 
     public String getKod() {
@@ -34,32 +35,28 @@ public class Kupon {
         this.kod = kod;
     }
 
-    public int getIndirim_miktari() {
-        return indirim_miktari;
+    public int getIndirimMiktari() {
+        return indirimMiktari;
     }
 
-    public void setIndirim_miktari(int indirim_miktari) {
-        this.indirim_miktari = indirim_miktari;
+    public void setIndirimMiktari(int indirimMiktari) {
+        this.indirimMiktari = indirimMiktari;
     }
 
-    public Date getGeceri_tarihi() {
-        return geceri_tarihi;
+    public Date getGeceriTarihi() {
+        return geceriTarihi;
     }
 
-    public void setGeceri_tarihi(Date geceri_tarihi) {
-        this.geceri_tarihi = geceri_tarihi;
+    public void setGeceriTarihi(Date geceriTarihi) {
+        this.geceriTarihi = geceriTarihi;
     }
 
-    public int getKullanim_limiti() {
-        return kullanim_limiti;
+    public int getKullanimLimiti() {
+        return kullanimLimiti;
     }
 
-    public void setKullanim_limiti(int kullanim_limiti) {
-        this.kullanim_limiti = kullanim_limiti;
+    public void setKullanimLimiti(int kullanimLimiti) {
+        this.kullanimLimiti = kullanimLimiti;
     }
-    
-    
-    
-    
-    
+
 }

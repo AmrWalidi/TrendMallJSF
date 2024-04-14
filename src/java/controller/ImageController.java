@@ -6,7 +6,6 @@ import jakarta.inject.Named;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.servlet.http.Part;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 @Named(value = "imageController")
