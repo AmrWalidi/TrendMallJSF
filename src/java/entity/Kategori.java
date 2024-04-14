@@ -9,5 +9,5 @@ package entity;
  * @author HP
  */
 public class Kategori {
-    
+    private int id;
 }
