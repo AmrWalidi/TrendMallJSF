@@ -1,0 +1,151 @@
+*{
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+:root{
+    --main-color:#00c7fc;
+}
+html{
+    scroll-behavior: smooth;
+}
+body{
+    font-family: 'Crimson Text', sans-serif;
+    font-family: 'Work Sans', sans-serif;
+    font-family: 'Open Sans', sans-serif;
+}
+
+a{
+    text-decoration: none;
+}
+
+@media (min-Width: 768px){
+    .container{
+        width: 750px;
+    }
+}
+
+@media (min-Width: 992px){
+    .container{
+        width: 970px
+    }
+}
+
+@media (min-Width: 1200px){
+    .container{
+        width: 1170;
+    }
+}
+.container{
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.form_card{
+    background-color: #F7F7F7;
+    max-width: 500px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px;
+    border-color: #cbcbcb;
+    border-style: solid;
+    border-width: 0.5px;
+    padding: 0 50px;
+}
+.buttons{
+    display: flex;
+    margin:20px auto ;
+    position:relative;
+    background-color: #ececec;
+    width: 220px;
+    height: 40px;
+    justify-content: center;
+    border-radius: 6px;
+    outline: none;
+    border-color:transparent ;
+}
+
+
+.buttons button{
+    padding: 5px 10px;
+    border-radius: 6px;
+    width: 50%;
+    height: 90%;
+    position: absolute;
+    border-color: transparent;
+    justify-content: center;
+    bottom: 5%;
+    font-weight: 550;
+}
+.buttons .btn_giris{
+    right: 50%;
+    background-color: transparent;
+}
+.buttons .btn_kayit{
+    background-color: #D27550;
+    color: white;
+    right: 1%;
+}
+
+.form_elements{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.inputs{
+    display: flex;
+    align-items:center;
+    flex-direction: column;
+}
+form{
+    display: flex;
+    flex-direction: column;
+}
+
+.inputs input{
+    margin-bottom: 20px;
+}
+.inputs input,.inputs textarea{
+    width: 350px;
+    border-radius: 6px;
+    background-color: #ececec;
+    border-style: none;
+    padding: 10px;
+    outline: none;
+    resize: none;
+}
+
+.inputs input{
+    height: 38px;
+}
+
+.kullanci_radios{
+    display: flex;
+    padding: 25px 0 ;
+    font-size: 12px;
+    justify-content: space-evenly;
+}
+
+
+.Giris{
+    padding: 10px 0;
+    background-color: #D27550;
+    color: white;
+    font-weight: 600;
+    font-size: 17px;
+    border:none;
+    border-radius: 6px;
+}

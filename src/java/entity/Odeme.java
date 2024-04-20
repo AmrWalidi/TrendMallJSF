@@ -5,19 +5,16 @@ import java.time.LocalDate;
 public class Odeme {
 
     private int id;
-    private Musteri musteri;
-    private double tutar;
+    private Siparis siparis;
     private LocalDate tarih;
 
-    public Odeme(int id, Musteri musteri, double tutar, LocalDate tarih) {
-        this.id = id;
-        this.musteri = musteri;
-        this.tutar = tutar;
-        this.tarih = tarih;
+    public Odeme() {
     }
 
-    public Odeme(Musteri musteri) {
-        this.musteri = musteri;
+    public Odeme(int id, Siparis siparis, LocalDate tarih) {
+        this.id = id;
+        this.siparis = siparis;
+        this.tarih = tarih;
     }
 
     public int getId() {
@@ -28,20 +25,12 @@ public class Odeme {
         this.id = id;
     }
 
-    public Musteri getMusteri() {
-        return musteri;
+    public Siparis getSiparis() {
+        return siparis;
     }
 
-    public void setMusteri(Musteri musteri) {
-        this.musteri = musteri;
-    }
-
-    public double getTutar() {
-        return tutar;
-    }
-
-    public void setTutar(double tutar) {
-        this.tutar = tutar;
+    public void setSiparis(Siparis siparis) {
+        this.siparis = siparis;
     }
 
     public LocalDate getTarih() {
