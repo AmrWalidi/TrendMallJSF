@@ -3,8 +3,10 @@
 <html
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
     >
-       
+
     <head>
         <title>TrandMall</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -127,44 +129,32 @@
                                 <button class="btn_kayit">Üye Ol</button>
                             </div>
                         </div>
-                        <form action="">
+                        <h:form action="">
                             <div class="inputs">
-                                <input type="text" placeholder="E-posta" />
+                                <h:inputText a:placeholder="E-posta" value="#{kullaniciBean.entity.eposta}" />
 
-                                <input type="text" placeholder="Ad" />
+                                <h:inputText a:placeholder="Ad" value="#{kullaniciBean.entity.ad}"/>
 
-                                <input type="text" placeholder="Soyad" />
+                                <h:inputText a:placeholder="Soyad" value="#{kullaniciBean.entity.soyad}"/>
 
-                                <input type="text" placeholder="Şifre" />
+                                <h:inputSecret a:placeholder="Şifre" value="#{kullaniciBean.entity.sifre}"/>
 
-                                <input type="text" placeholder="Telefon Numarası" />
+                                <h:inputText a:placeholder="Telefon Numarası" value="#{kullaniciBean.entity.telNo}"/>
 
-                                <textarea cols="30" rows="5" placeholder="Adres"></textarea>
+                                <h:inputTextarea cols="30" rows="5" a:placeholder="Adres" value="#{kullaniciBean.entity.adres}"/>
                             </div>
-                            <div class="kullanci_radios">
+                            <h:selectOneRadio value="#{kullaniciBean.type}" class="kullanci_radios">
                                 <div>
-                                    <input
-                                        id="mus"
-                                        type="radio"
-                                        name="kullanıcı"
-                                        value="Muşteri"
-                                        />
-                                    <label for="mus">Muşteri</label>
+                                    <f:selectItem itemValue="1" itemLabel="Muşteri" />
                                 </div>
                                 <div>
-                                    <input
-                                        id="sat"
-                                        type="radio"
-                                        name="kullanıcı"
-                                        value="Satıcı"
-                                        checked="true"
-                                        />
-                                    <label for="sat">Satıcı</label>
+                                    <f:selectItem itemValue="2" itemLabel="Satıcı" />
                                 </div>
-                            </div>
-                            <button class="Giris">Üye Ol</button>
-                        </form>
+                            </h:selectOneRadio>
+                            <h:commandButton value="Üye Ol" action="#{kullaniciBean.create}" styleClass="Giris" />
+                        </h:form>
                     </div>
+                    <p class="error-message">#{kullaniciBean.errorMessage}</p>
                 </div>
             </div>
         </div>

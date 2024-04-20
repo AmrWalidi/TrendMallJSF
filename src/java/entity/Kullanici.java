@@ -1,6 +1,6 @@
 package entity;
 
-public abstract class Kullanici {
+public class Kullanici {
 
     private int id;
     private String ad;
@@ -78,4 +78,5 @@ public abstract class Kullanici {
     public void setAdres(String adres) {
         this.adres = adres;
     }
+    
 }

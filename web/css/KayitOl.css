@@ -35,7 +35,7 @@ a{
 
 @media (min-Width: 1200px){
     .container{
-        width: 1170;
+        width: 1170px;
     }
 }
 .container{
@@ -54,7 +54,7 @@ a{
 .form_card{
     background-color: #F7F7F7;
     max-width: 500px;
-    height: 600px;
+    height: 640px;
     display: flex;
     flex-direction: column;
     border-radius: 4px;
@@ -126,6 +126,7 @@ form{
     padding: 10px;
     outline: none;
     resize: none;
+    font-family: "Arial"
 }
 
 .inputs input{
@@ -133,10 +134,8 @@ form{
 }
 
 .kullanci_radios{
-    display: flex;
     padding: 25px 0 ;
     font-size: 12px;
-    justify-content: space-evenly;
 }
 
 
@@ -148,4 +147,9 @@ form{
     font-size: 17px;
     border:none;
     border-radius: 6px;
+}
+
+.error-message{
+    padding: 20px 0;
+    color:red;
 }
