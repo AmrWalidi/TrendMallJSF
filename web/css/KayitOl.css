@@ -77,7 +77,7 @@ a{
 }
 
 
-.buttons button{
+.buttons input[type="submit"]{
     padding: 5px 10px;
     border-radius: 6px;
     width: 50%;
@@ -90,12 +90,19 @@ a{
 }
 .buttons .btn_giris{
     right: 50%;
-    background-color: transparent;
 }
 .buttons .btn_kayit{
-    background-color: #D27550;
-    color: white;
     right: 1%;
+}
+.form_elements .buttons .active{
+    background-color: #D27550;
+    color: white; 
+    box-shadow: 1px 1px 3px lightcoral;
+}
+
+.form_elements .buttons .pasif{
+    background-color: transparent;
+    color: black;   
 }
 
 .form_elements{
@@ -103,6 +110,7 @@ a{
     flex-direction: column;
     justify-content: center;
     flex-wrap: wrap;
+    
 }
 
 .inputs{

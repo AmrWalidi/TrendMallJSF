@@ -18,8 +18,10 @@ public class KullaniciBean implements Serializable {
     private SaticiDAO sDao;
     private int type;
     private String errorMessage;
+    private String sayfa;
 
     public KullaniciBean() {
+        this.sayfa = "giriş";
     }
 
     public Kullanici getEntity() {
@@ -68,6 +70,14 @@ public class KullaniciBean implements Serializable {
 
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
+    }
+
+    public String getSayfa() {
+        return sayfa;
+    }
+
+    public void setSayfa(String sayfa) {
+        this.sayfa = sayfa;
     }
 
     public String login() {

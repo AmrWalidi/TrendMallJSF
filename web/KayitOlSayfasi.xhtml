@@ -119,31 +119,31 @@
                             />
                     </svg>
                 </div>
-                <div class="form_card">
+                <div class="form_card" style="#{kullaniciBean.sayfa == 'giriş'? 'height: 400px;' :  'height: 640px;'}">
                     <div class="form_elements">
-                        <div class="buttons">
+                        <h:form class="buttons">
                             <div class="giris_btn">
-                                <button class="btn_giris">Giriş Yap</button>
+                                <h:commandButton class="#{kullaniciBean.sayfa == 'giriş'? 'active': 'pasif'} btn_giris" value="Giriş Yap" action="#{kullaniciBean.setSayfa('giriş')}"/>
                             </div>
                             <div class="kayit_btn">
-                                <button class="btn_kayit">Üye Ol</button>
+                                <h:commandButton class="#{kullaniciBean.sayfa == 'üye ol'? 'active': 'pasif'} btn_kayit"  value="Üye Ol" action="#{kullaniciBean.setSayfa('üye ol')}"/>
                             </div>
-                        </div>
+                        </h:form>
                         <h:form action="">
                             <div class="inputs">
                                 <h:inputText a:placeholder="E-posta" value="#{kullaniciBean.entity.eposta}" />
 
-                                <h:inputText a:placeholder="Ad" value="#{kullaniciBean.entity.ad}"/>
+                                <h:inputText rendered="#{kullaniciBean.sayfa == 'üye ol'}" a:placeholder="Ad" value="#{kullaniciBean.entity.ad}"/>
 
-                                <h:inputText a:placeholder="Soyad" value="#{kullaniciBean.entity.soyad}"/>
+                                <h:inputText rendered="#{kullaniciBean.sayfa == 'üye ol'}" a:placeholder="Soyad" value="#{kullaniciBean.entity.soyad}"/>
 
                                 <h:inputSecret a:placeholder="Şifre" value="#{kullaniciBean.entity.sifre}"/>
 
-                                <h:inputText a:placeholder="Telefon Numarası" value="#{kullaniciBean.entity.telNo}"/>
+                                <h:inputText rendered="#{kullaniciBean.sayfa == 'üye ol'}" a:placeholder="Telefon Numarası" value="#{kullaniciBean.entity.telNo}"/>
 
-                                <h:inputTextarea cols="30" rows="5" a:placeholder="Adres" value="#{kullaniciBean.entity.adres}"/>
+                                <h:inputTextarea rendered="#{kullaniciBean.sayfa == 'üye ol'}" cols="30" rows="5" a:placeholder="Adres" value="#{kullaniciBean.entity.adres}"/>
                             </div>
-                            <h:selectOneRadio value="#{kullaniciBean.type}" class="kullanci_radios">
+                            <h:selectOneRadio rendered="#{kullaniciBean.sayfa == 'üye ol'}" value="#{kullaniciBean.type}" class="kullanci_radios">
                                 <div>
                                     <f:selectItem itemValue="1" itemLabel="Muşteri" />
                                 </div>
@@ -151,7 +151,8 @@
                                     <f:selectItem itemValue="2" itemLabel="Satıcı" />
                                 </div>
                             </h:selectOneRadio>
-                            <h:commandButton value="Üye Ol" action="#{kullaniciBean.create}" styleClass="Giris" />
+                            <h:commandButton rendered="#{kullaniciBean.sayfa == 'üye ol'}" value="Üye Ol" action="#{kullaniciBean.create}" styleClass="Giris" />
+                            <h:commandButton rendered="#{kullaniciBean.sayfa == 'giriş'}" value="Giriş Yap" action="#{kullaniciBean.login}" styleClass="Giris" />
                         </h:form>
                     </div>
                     <p class="error-message">#{kullaniciBean.errorMessage}</p>
