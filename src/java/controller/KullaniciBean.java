@@ -1,6 +1,5 @@
 package controller;
 
-import dao.KullaniciDAO;
 import dao.MusteriDAO;
 import dao.SaticiDAO;
 import entity.Kullanici;
@@ -13,9 +12,8 @@ import java.io.Serializable;
 public class KullaniciBean implements Serializable {
 
     private Kullanici entity;
-    private KullaniciDAO kDao;
-    private MusteriDAO mDao;
-    private SaticiDAO sDao;
+    private MusteriDAO musteriDao;
+    private SaticiDAO saticiDao;
     private int type;
     private String errorMessage;
 
@@ -33,25 +31,18 @@ public class KullaniciBean implements Serializable {
         this.entity = entity;
     }
 
-    public KullaniciDAO getkDao() {
-        if (this.kDao == null) {
-            kDao = new KullaniciDAO();
+    public MusteriDAO getMusteriDao() {
+        if (this.musteriDao == null) {
+            musteriDao = new MusteriDAO();
         }
-        return kDao;
+        return musteriDao;
     }
 
-    public MusteriDAO getmDao() {
-        if (this.mDao == null) {
-            mDao = new MusteriDAO();
+    public SaticiDAO getSaticiDao() {
+        if (this.saticiDao == null) {
+            saticiDao = new SaticiDAO();
         }
-        return mDao;
-    }
-
-    public SaticiDAO getsDao() {
-        if (this.sDao == null) {
-            sDao = new SaticiDAO();
-        }
-        return sDao;
+        return saticiDao;
     }
 
     public int getType() {
@@ -71,9 +62,9 @@ public class KullaniciBean implements Serializable {
     }
 
     public String login() {
-        if (this.getmDao().getMusteri(entity)) {
+        if (this.getMusteriDao().getMusteri(entity)) {
             return "Login successful";
-        } else if (this.getsDao().getSatici(entity)) {
+        } else if (this.getSaticiDao().getSatici(entity)) {
             return "Login successful";
         }
         return "Login Failed";
@@ -90,14 +81,14 @@ public class KullaniciBean implements Serializable {
             setErrorMessage("Şifre 6 ve 16 arasında karekterden oluşur");
         } else if (entity.getTelNo().charAt(0) != '5' || entity.getTelNo().length() != 10 || !entity.getTelNo().matches("\\d+")) {
             setErrorMessage("telefon numarasi 5 ile başlar ve 10 rakamlardan oluşur");
-        } else if (this.getmDao().getMusteri(entity.getEposta()) || this.getsDao().getSatici(entity.getEposta())) {
+        } else if (this.getMusteriDao().getMusteri(entity.getEposta()) || this.getSaticiDao().getSatici(entity.getEposta())) {
             setErrorMessage("E-posta zaten alındı");
         } else {
             if (type == 1) {
-                this.getkDao().create(entity, "musteri");
+                this.getMusteriDao().create(entity);
 
             } else {
-                this.getkDao().create(entity, "satici");
+                this.getSaticiDao().create(entity);
             }
         }
     }
