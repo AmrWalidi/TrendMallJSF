@@ -71,13 +71,14 @@ public class KullaniciBean implements Serializable {
         this.sayfa = sayfa;
     }
 
-    public String login() {
+    public void login() {
         if (this.getMusteriDao().getMusteri(entity)) {
-            return "Login successful";
+            setErrorMessage("Login successful");
         } else if (this.getSaticiDao().getSatici(entity)) {
-            return "Login successful";
+            setErrorMessage("Login successful");
+        } else {
+            setErrorMessage("Login Failed");
         }
-        return "Login Failed";
     }
 
     public void create() {

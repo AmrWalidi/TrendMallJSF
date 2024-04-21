@@ -31,6 +31,18 @@ public class MusteriDAO {
         }
         return db;
     }
+    
+    public void create(Kullanici k) {
+        try {
+            Statement st = this.getConn().createStatement();
+            String query = "INSERT INTO musteri VALUES (DEFAULT, '" + k.getAd()
+                    + "', '" + k.getSoyad() + "', '" + k.getEposta() + "', '" + k.getSifre()
+                    + "', '" + k.getAdres() + "', '" + k.getTelNo() + "')";
+            st.executeUpdate(query);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
 
     public boolean getMusteri(Kullanici k) {
         try {

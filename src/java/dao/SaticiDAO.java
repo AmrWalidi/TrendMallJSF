@@ -30,6 +30,18 @@ public class SaticiDAO {
         return db;
     }
     
+    public void create(Kullanici k) {
+        try {
+            Statement st = this.getConn().createStatement();
+            String query = "INSERT INTO satici VALUES (DEFAULT, '" + k.getAd()
+                    + "', '" + k.getSoyad() + "', '" + k.getEposta() + "', '" + k.getSifre()
+                    + "', '" + k.getAdres() + "', '" + k.getTelNo() + "')";
+            st.executeUpdate(query);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    
     public boolean getSatici(Kullanici k) {
         try {
             Statement st = this.getConn().createStatement();
