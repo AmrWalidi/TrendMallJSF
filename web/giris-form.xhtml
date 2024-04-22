@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    >
+
+    <head>
+        <title>TrendMall</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" type="text/css"  href="css/giris-form.css" />
+        <link rel="stylesheet" type="text/css"  href="css/all.css" />
+        <link rel="stylesheet" type="text/css"  href="css/normalize.css" />
+    </head>
+    <body align="center">
+        <div class="container">
+            <div class="content">
+                <ui:include src="/Template/logo.xhtml" />
+                <div class="form_card" style="#{kullaniciBean.sayfa == 'giriş'? 'height: 400px;' :  'height: 640px;'}">
+                    <div class="form_elements">
+                        <h:form class="buttons">
+                            <div class="giris_btn">
+                                <h:commandButton class="#{kullaniciBean.sayfa == 'giriş'? 'active': 'pasif'} btn_giris" value="Giriş Yap" action="#{kullaniciBean.setSayfa('giriş')}"/>
+                            </div>
+                            <div class="kayit_btn">
+                                <h:commandButton class="#{kullaniciBean.sayfa == 'üye ol'? 'active': 'pasif'} btn_kayit"  value="Üye Ol" action="#{kullaniciBean.setSayfa('üye ol')}"/>
+                            </div>
+                        </h:form>
+                        <h:form action="">
+                            <div class="inputs">
+                                <h:inputText a:placeholder="E-posta" value="#{kullaniciBean.entity.eposta}" />
+
+                                <h:inputText rendered="#{kullaniciBean.sayfa == 'üye ol'}" a:placeholder="Ad" value="#{kullaniciBean.entity.ad}"/>
+
+                                <h:inputText rendered="#{kullaniciBean.sayfa == 'üye ol'}" a:placeholder="Soyad" value="#{kullaniciBean.entity.soyad}"/>
+
+                                <h:inputSecret a:placeholder="Şifre" value="#{kullaniciBean.entity.sifre}"/>
+
+                                <h:inputText rendered="#{kullaniciBean.sayfa == 'üye ol'}" a:placeholder="Telefon Numarası" value="#{kullaniciBean.entity.telNo}"/>
+
+                                <h:inputTextarea rendered="#{kullaniciBean.sayfa == 'üye ol'}" cols="30" rows="5" a:placeholder="Adres" value="#{kullaniciBean.entity.adres}"/>
+                            </div>
+                            <h:selectOneRadio rendered="#{kullaniciBean.sayfa == 'üye ol'}" value="#{kullaniciBean.type}" class="kullanci_radios">
+                                <div>
+                                    <f:selectItem itemValue="1" itemLabel="Muşteri" />
+                                </div>
+                                <div>
+                                    <f:selectItem itemValue="2" itemLabel="Satıcı" />
+                                </div>
+                            </h:selectOneRadio>
+                            <h:commandButton rendered="#{kullaniciBean.sayfa == 'üye ol'}" value="Üye Ol" action="#{kullaniciBean.create}" styleClass="submit" />
+                            <h:commandButton rendered="#{kullaniciBean.sayfa == 'giriş'}" value="Giriş Yap" action="#{kullaniciBean.login}" styleClass="submit" />
+                        </h:form>
+                    </div>
+                    <p class="error-message">#{kullaniciBean.errorMessage}</p>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
