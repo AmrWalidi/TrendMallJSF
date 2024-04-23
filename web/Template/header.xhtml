@@ -11,9 +11,10 @@
                 <i class="fas fa-search" style="font-size: 20px; color: #5A5959"></i>
             </div>
             <div class="nav-btns">
-                <h:commandButton value="Hesabım" />
-                <h:commandButton value="Sepetim" />
-                <h:commandButton value="Giriş Yap" />
+                <h:commandButton rendered="#{kullaniciBean.musteri != null || kullaniciBean.satici != null}" value="Hesabım" />
+                <h:commandButton rendered="#{kullaniciBean.musteri != null}" value="Sepetim" />
+                <h:commandButton rendered="#{kullaniciBean.satici != null}" value="Ürün Ekle" />
+                <h:commandButton rendered="#{kullaniciBean.musteri == null and kullaniciBean.satici == null}" action="/giris-form.xhtml" value="Giriş Yap" />
             </div>
         </h:form>
     </div>

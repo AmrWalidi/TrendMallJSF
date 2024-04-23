@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dao;
 
 import entity.Kullanici;
@@ -12,10 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import util.DBConnection;
 
-/**
- *
- * @author HP
- */
 public class MusteriDAO {
 
     private Connection db;
@@ -31,7 +23,7 @@ public class MusteriDAO {
         }
         return db;
     }
-    
+
     public void create(Kullanici k) {
         try {
             Statement st = this.getConn().createStatement();
@@ -44,18 +36,22 @@ public class MusteriDAO {
         }
     }
 
-    public boolean getMusteri(Kullanici k) {
+    public Musteri getMusteri(Kullanici k) {
+        Musteri musteri = null;
         try {
             Statement st = this.getConn().createStatement();
             String query = "SELECT * FROM musteri WHERE eposta='" + k.getEposta() + "' and sifre= '" + k.getSifre() + "'";
             ResultSet rs = st.executeQuery(query);
             if (rs.next()) {
-                return true;
+                musteri = new Musteri(rs.getInt("id"), rs.getString("ad"),
+                        rs.getString("soyad"), rs.getString("eposta"),
+                        rs.getString("sifre"), rs.getString("tel_no"),
+                        rs.getString("adres"));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        return false;
+        return musteri;
     }
 
     public boolean getMusteri(String email) {

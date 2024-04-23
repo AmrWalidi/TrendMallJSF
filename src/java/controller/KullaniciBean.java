@@ -3,6 +3,8 @@ package controller;
 import dao.MusteriDAO;
 import dao.SaticiDAO;
 import entity.Kullanici;
+import entity.Musteri;
+import entity.Satici;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -11,9 +13,11 @@ import java.io.Serializable;
 @SessionScoped
 public class KullaniciBean implements Serializable {
 
-    private Kullanici entity;
-    private MusteriDAO musteriDao;
-    private SaticiDAO saticiDao;
+    private Kullanici kullanici;
+    private Musteri musteri;
+    private Satici satici;
+    private MusteriDAO musteriDAO;
+    private SaticiDAO saticiDAO;
     private int type;
     private String errorMessage;
     private String sayfa;
@@ -22,29 +26,45 @@ public class KullaniciBean implements Serializable {
         this.sayfa = "giriş";
     }
 
-    public Kullanici getEntity() {
-        if (entity == null) {
-            entity = new Kullanici();
+    public Kullanici getKullanici() {
+        if (kullanici == null) {
+            kullanici = new Kullanici();
         }
-        return entity;
+        return kullanici;
     }
 
-    public void setEntity(Kullanici entity) {
-        this.entity = entity;
+    public void setKullanici(Kullanici kullanici) {
+        this.kullanici = kullanici;
     }
 
-    public MusteriDAO getMusteriDao() {
-        if (this.musteriDao == null) {
-            musteriDao = new MusteriDAO();
-        }
-        return musteriDao;
+    public Musteri getMusteri() {
+        return musteri;
     }
 
-    public SaticiDAO getSaticiDao() {
-        if (this.saticiDao == null) {
-            saticiDao = new SaticiDAO();
+    public void setMusteri(Musteri musteri) {
+        this.musteri = musteri;
+    }
+
+    public Satici getSatici() {
+        return satici;
+    }
+
+    public void setSatici(Satici satici) {
+        this.satici = satici;
+    }
+
+    public MusteriDAO getMusteriDAO() {
+        if (this.musteriDAO == null) {
+            musteriDAO = new MusteriDAO();
         }
-        return saticiDao;
+        return musteriDAO;
+    }
+
+    public SaticiDAO getSaticiDAO() {
+        if (this.saticiDAO == null) {
+            saticiDAO = new SaticiDAO();
+        }
+        return saticiDAO;
     }
 
     public int getType() {
@@ -71,35 +91,39 @@ public class KullaniciBean implements Serializable {
         this.sayfa = sayfa;
     }
 
-    public void login() {
-        if (this.getMusteriDao().getMusteri(entity)) {
-            setErrorMessage("Login successful");
-        } else if (this.getSaticiDao().getSatici(entity)) {
-            setErrorMessage("Login successful");
-        } else {
-            setErrorMessage("Login Failed");
+    public String login() {
+        this.setMusteri(null);
+        this.setSatici(null);
+        if (this.getMusteriDAO().getMusteri(kullanici) != null) {
+            this.setMusteri(this.getMusteriDAO().getMusteri(kullanici));
+            return "index.xhtml";
+        } else if (this.getSaticiDAO().getSatici(kullanici) != null) {
+            this.setSatici(this.getSaticiDAO().getSatici(kullanici));
+            return "index.xhtml";
         }
+        setErrorMessage("E-posta veya şifre hatalı");
+        return "giris-form.xhtml";
     }
 
     public void create() {
-        if (entity.getAd().length() > 20 || entity.getAd().matches(".*\\d+.*")) {
+        if (kullanici.getAd().length() > 20 || kullanici.getAd().matches(".*\\d+.*")) {
             setErrorMessage("Kullanici adı 20 karekterden az oluşur ve rakamlarden oluşmaz");
-        } else if (entity.getSoyad().length() > 20 || entity.getSoyad().matches(".*\\d+.*")) {
+        } else if (kullanici.getSoyad().length() > 20 || kullanici.getSoyad().matches(".*\\d+.*")) {
             setErrorMessage("Kullanıcı soyadı 20 karekterden az oluşur ve rakamlarden oluşmaz");
-        } else if (entity.getEposta().length() > 50 || !(entity.getEposta().indexOf('@') >= 0)) {
+        } else if (kullanici.getEposta().length() > 50 || !(kullanici.getEposta().indexOf('@') >= 0)) {
             setErrorMessage("E-posta 50 karekterden az oluşur ve @ sembol içerir");
-        } else if (entity.getSifre().length() < 6 || entity.getSifre().length() > 16) {
+        } else if (kullanici.getSifre().length() < 6 || kullanici.getSifre().length() > 16) {
             setErrorMessage("Şifre 6 ve 16 arasında karekterden oluşur");
-        } else if (entity.getTelNo().charAt(0) != '5' || entity.getTelNo().length() != 10 || !entity.getTelNo().matches("\\d+")) {
+        } else if (kullanici.getTelNo().charAt(0) != '5' || kullanici.getTelNo().length() != 10 || !kullanici.getTelNo().matches("\\d+")) {
             setErrorMessage("telefon numarasi 5 ile başlar ve 10 rakamlardan oluşur");
-        } else if (this.getMusteriDao().getMusteri(entity.getEposta()) || this.getSaticiDao().getSatici(entity.getEposta())) {
+        } else if (this.getMusteriDAO().getMusteri(kullanici.getEposta()) || this.getSaticiDAO().getSatici(kullanici.getEposta())) {
             setErrorMessage("E-posta zaten alındı");
         } else {
             if (type == 1) {
-                this.getMusteriDao().create(entity);
+                this.getMusteriDAO().create(kullanici);
 
             } else {
-                this.getSaticiDao().create(entity);
+                this.getSaticiDAO().create(kullanici);
             }
         }
     }

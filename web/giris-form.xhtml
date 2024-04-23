@@ -31,17 +31,17 @@
                         </h:form>
                         <h:form action="">
                             <div class="inputs">
-                                <h:inputText a:placeholder="E-posta" value="#{kullaniciBean.entity.eposta}" />
+                                <h:inputText a:placeholder="E-posta" value="#{kullaniciBean.kullanici.eposta}" />
 
-                                <h:inputText rendered="#{kullaniciBean.sayfa == 'üye ol'}" a:placeholder="Ad" value="#{kullaniciBean.entity.ad}"/>
+                                <h:inputText rendered="#{kullaniciBean.sayfa == 'üye ol'}" a:placeholder="Ad" value="#{kullaniciBean.kullanici.ad}"/>
 
-                                <h:inputText rendered="#{kullaniciBean.sayfa == 'üye ol'}" a:placeholder="Soyad" value="#{kullaniciBean.entity.soyad}"/>
+                                <h:inputText rendered="#{kullaniciBean.sayfa == 'üye ol'}" a:placeholder="Soyad" value="#{kullaniciBean.kullanici.soyad}"/>
 
-                                <h:inputSecret a:placeholder="Şifre" value="#{kullaniciBean.entity.sifre}"/>
+                                <h:inputSecret a:placeholder="Şifre" value="#{kullaniciBean.kullanici.sifre}"/>
 
-                                <h:inputText rendered="#{kullaniciBean.sayfa == 'üye ol'}" a:placeholder="Telefon Numarası" value="#{kullaniciBean.entity.telNo}"/>
+                                <h:inputText rendered="#{kullaniciBean.sayfa == 'üye ol'}" a:placeholder="Telefon Numarası" value="#{kullaniciBean.kullanici.telNo}"/>
 
-                                <h:inputTextarea rendered="#{kullaniciBean.sayfa == 'üye ol'}" cols="30" rows="5" a:placeholder="Adres" value="#{kullaniciBean.entity.adres}"/>
+                                <h:inputTextarea rendered="#{kullaniciBean.sayfa == 'üye ol'}" cols="30" rows="5" a:placeholder="Adres" value="#{kullaniciBean.kullanici.adres}"/>
                             </div>
                             <h:selectOneRadio rendered="#{kullaniciBean.sayfa == 'üye ol'}" value="#{kullaniciBean.type}" class="kullanci_radios">
                                 <div>

@@ -5,6 +5,7 @@
 package dao;
 
 import entity.Kullanici;
+import entity.Satici;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,7 +17,8 @@ import util.DBConnection;
  * @author HP
  */
 public class SaticiDAO {
-     private Connection db;
+
+    private Connection db;
 
     public SaticiDAO() {
 
@@ -29,7 +31,7 @@ public class SaticiDAO {
         }
         return db;
     }
-    
+
     public void create(Kullanici k) {
         try {
             Statement st = this.getConn().createStatement();
@@ -41,20 +43,25 @@ public class SaticiDAO {
             System.out.println(ex.getMessage());
         }
     }
-    
-    public boolean getSatici(Kullanici k) {
+
+    public Satici getSatici(Kullanici k) {
+        Satici satici = null;
         try {
             Statement st = this.getConn().createStatement();
-            String query = "SELECT * FROM musteri WHERE eposta='" + k.getEposta() + "' and sifre= '" + k.getSifre() + "'";
+            String query = "SELECT * FROM satici WHERE eposta='" + k.getEposta() + "' and sifre= '" + k.getSifre() + "'";
             ResultSet rs = st.executeQuery(query);
-            if (rs.next())
-                return true;
+            if (rs.next()) {
+                satici = new Satici(rs.getInt("id"), rs.getString("ad"),
+                        rs.getString("soyad"), rs.getString("eposta"),
+                        rs.getString("sifre"), rs.getString("tel_no"),
+                        rs.getString("adres"));
+            }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-        return false;
+        return satici;
     }
-    
+
     public boolean getSatici(String email) {
         try {
             Statement st = this.getConn().createStatement();
