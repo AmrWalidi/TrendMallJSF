@@ -1,5 +1,9 @@
 package entity;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 public class Kullanici {
 
     private int id;
@@ -60,7 +64,7 @@ public class Kullanici {
     }
 
     public void setSifre(String sifre) {
-        this.sifre = sifre;
+        this.sifre = this.encryptString(sifre);
     }
 
     public String getTelNo() {
@@ -78,5 +82,20 @@ public class Kullanici {
     public void setAdres(String adres) {
         this.adres = adres;
     }
+    
+    public String encryptString(String input) {
+    try {
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        byte[] messageDigest = md.digest(input.getBytes());
+        BigInteger no = new BigInteger(1, messageDigest);
+        String hashText = no.toString(16);
+        while (hashText.length() < 32) {
+            hashText = "0" + hashText;
+        }
+        return hashText;
+    } catch (NoSuchAlgorithmException e) {
+        throw new RuntimeException(e);
+    }
+}
     
 }

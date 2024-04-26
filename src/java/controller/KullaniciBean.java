@@ -112,7 +112,7 @@ public class KullaniciBean implements Serializable {
             setErrorMessage("Kullanıcı soyadı 20 karekterden az oluşur ve rakamlarden oluşmaz");
         } else if (kullanici.getEposta().length() > 50 || !(kullanici.getEposta().indexOf('@') >= 0)) {
             setErrorMessage("E-posta 50 karekterden az oluşur ve @ sembol içerir");
-        } else if (kullanici.getSifre().length() < 6 || kullanici.getSifre().length() > 16) {
+        } else if (kullanici.getSifre().length() < 6 || kullanici.getSifre().length() > 36) {
             setErrorMessage("Şifre 6 ve 16 arasında karekterden oluşur");
         } else if (kullanici.getTelNo().charAt(0) != '5' || kullanici.getTelNo().length() != 10 || !kullanici.getTelNo().matches("\\d+")) {
             setErrorMessage("telefon numarasi 5 ile başlar ve 10 rakamlardan oluşur");
