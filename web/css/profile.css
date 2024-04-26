@@ -1,0 +1,60 @@
+h2 {
+    font-size: 24px;
+    font-family:"arial";
+}
+
+.container{
+    display:flex;
+    position: relative;
+    top: 50%;
+    left:50%;
+    transform: translateX(-50%);
+    align-items: center;
+    justify-content: center;
+    height: 600px;
+    width: 720px;
+    padding: 10px;
+    margin: 20px;
+}
+
+.profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 600px
+}
+
+.input-container{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.input-container label{
+    font-family: "arial";
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.input-container input{
+    font-family: "arial";
+    font-size: 20px;
+    color: #0F0F0F;
+    height: 50px;
+    background-color: #F9F9F9;
+    border: 2px solid #BFBFBF;
+    border-radius: 15px;
+    padding-left: 30px
+}
+
+.profile-form input[type="submit"]{
+    color: white;
+    background-color: #D95927;
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 5px;
+    border-color: transparent;
+    width: 130px;
+}
+
+

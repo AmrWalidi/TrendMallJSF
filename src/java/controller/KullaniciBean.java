@@ -105,7 +105,7 @@ public class KullaniciBean implements Serializable {
         return "giris-form.xhtml";
     }
 
-    public void create() {
+    public String create() {
         if (kullanici.getAd().length() > 20 || kullanici.getAd().matches(".*\\d+.*")) {
             setErrorMessage("Kullanici adı 20 karekterden az oluşur ve rakamlarden oluşmaz");
         } else if (kullanici.getSoyad().length() > 20 || kullanici.getSoyad().matches(".*\\d+.*")) {
@@ -121,10 +121,13 @@ public class KullaniciBean implements Serializable {
         } else {
             if (type == 1) {
                 this.getMusteriDAO().create(kullanici);
+                return this.login();
 
             } else {
                 this.getSaticiDAO().create(kullanici);
+                return this.login();
             }
         }
+        return "giris-form.xhtml";
     }
 }

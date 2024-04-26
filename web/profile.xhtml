@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+        <link rel="stylesheet" type="text/css" href="css/header.css" />
+        <link rel="stylesheet" type="text/css" href="css/normalize.css" />
+        <link rel="stylesheet" type="text/css" href="css/profile.css" />
+        <title>TrendMall</title>
+    </h:head>
+    <body>
+        <ui:include src="/Template/header.xhtml" />
+        <div class="container">
+            <h:form class="profile-form">
+                <div style="display: flex; gap: 25px; justify-content: space-between">
+                    <div class="input-container">
+                        <label>Ad</label>
+                        <h:inputText value="#{kullaniciBean.musteri != null? kullaniciBean.musteri.ad:kullaniciBean.satici.ad }" disabled="true"/>
+                    </div>
+                    <div class="input-container">
+                        <label>Soyad</label>
+                        <h:inputText value="#{kullaniciBean.musteri != null? kullaniciBean.musteri.soyad:kullaniciBean.satici.soyad }" disabled="true"/>
+                    </div>
+                </div>
+                <div class="input-container">
+                    <label>E-posta</label>
+                    <h:inputText value="#{kullaniciBean.musteri != null? kullaniciBean.musteri.eposta:kullaniciBean.satici.eposta}" disabled="true"/>
+                </div>
+                <div style="display: flex; gap: 25px; justify-content: space-between">
+                    <div class="input-container">
+                        <label>Cep Telefonu</label>
+                        <h:inputText value="#{kullaniciBean.musteri != null? kullaniciBean.musteri.telNo:kullaniciBean.satici.telNo }"/>
+                    </div>
+                    <div class="input-container">
+                        <label>Şifre</label>
+                        <h:inputSecret value="#{kullaniciBean.musteri != null? kullaniciBean.musteri.sifre:kullaniciBean.satici.sifre }"/>
+                    </div>
+                </div>
+                <div>
+                    <div class="input-container">
+                        <label>Adres</label>
+                        <h:inputText value="#{kullaniciBean.musteri != null? kullaniciBean.musteri.adres:kullaniciBean.satici.adres }"/>
+                    </div>
+                </div>
+                <h:commandButton value="Kaydet" />
+            </h:form>
+        </div>
+    </body>
+</html>
