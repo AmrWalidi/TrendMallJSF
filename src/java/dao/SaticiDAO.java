@@ -5,6 +5,7 @@ import entity.Satici;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.PreparedStatement;
 import java.sql.Statement;
 import util.DBConnection;
 
@@ -39,9 +40,11 @@ public class SaticiDAO {
     public Satici getSatici(Kullanici k) {
         Satici satici = null;
         try {
-            Statement st = this.getConn().createStatement();
-            String query = "SELECT * FROM satici WHERE eposta='" + k.getEposta() + "' and sifre= '" + k.getSifre() + "'";
-            ResultSet rs = st.executeQuery(query);
+            String query = "SELECT * FROM satici WHERE eposta= ? and sifre= ? ";
+            PreparedStatement st = this.getConn().prepareStatement(query);
+            st.setString(1, k.getEposta());
+            st.setString(2, k.getSifre());
+            ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 satici = new Satici(rs.getInt("id"), rs.getString("ad"),
                         rs.getString("soyad"), rs.getString("eposta"),

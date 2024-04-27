@@ -4,6 +4,7 @@ import entity.Kullanici;
 import entity.Musteri;
 import java.sql.ResultSet;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import util.DBConnection;
@@ -39,9 +40,11 @@ public class MusteriDAO {
     public Musteri getMusteri(Kullanici k) {
         Musteri musteri = null;
         try {
-            Statement st = this.getConn().createStatement();
-            String query = "SELECT * FROM musteri WHERE eposta='" + k.getEposta() + "' and sifre= '" + k.getSifre() + "'";
-            ResultSet rs = st.executeQuery(query);
+            String query = "SELECT * FROM musteri WHERE eposta= ? and sifre= ? ";
+            PreparedStatement st = this.getConn().prepareStatement(query);
+            st.setString(1, k.getEposta());
+            st.setString(2, k.getSifre());
+            ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 musteri = new Musteri(rs.getInt("id"), rs.getString("ad"),
                         rs.getString("soyad"), rs.getString("eposta"),
