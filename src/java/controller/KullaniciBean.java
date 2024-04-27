@@ -104,6 +104,12 @@ public class KullaniciBean implements Serializable {
         setErrorMessage("E-posta veya şifre hatalı");
         return "giris-form.xhtml";
     }
+    
+    public String logout(){
+        this.setMusteri(null);
+        this.setSatici(null);
+        return "giris-form.xhtml"; 
+    }
 
     public String create() {
         if (kullanici.getAd().length() > 20 || kullanici.getAd().matches(".*\\d+.*")) {
