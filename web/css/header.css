@@ -58,3 +58,8 @@
     color: black;
 }
 
+.nav-btns input[type="submit"][value="Çıkış Yap"] {
+    background-color: transparent;
+    border-color: #FA6930;
+    color: #FA6930;
+}

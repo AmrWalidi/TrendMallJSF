@@ -14,6 +14,7 @@
                 <h:commandButton rendered="#{kullaniciBean.musteri != null || kullaniciBean.satici != null}" value="Hesabım" action="/profile.xhtml" />
                 <h:commandButton rendered="#{kullaniciBean.musteri != null}" value="Sepetim" />
                 <h:commandButton rendered="#{kullaniciBean.satici != null}" value="Ürün Ekle" />
+                <h:commandButton rendered="#{kullaniciBean.musteri != null || kullaniciBean.satici != null}" value="Çıkış Yap" action="#{kullaniciBean.logout}"/>
                 <h:commandButton rendered="#{kullaniciBean.musteri == null and kullaniciBean.satici == null}" action="/giris-form.xhtml" value="Giriş Yap" />
             </div>
         </h:form>
