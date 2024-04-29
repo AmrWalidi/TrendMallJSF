@@ -105,6 +105,18 @@ public class KullaniciBean implements Serializable {
         return "giris-form.xhtml";
     }
 
+    public String update() {
+        if (this.getMusteriDAO().getMusteri(kullanici) != null) {
+            this.getMusteriDAO().update(musteri);
+            return "index.xhtml";
+        } else if (this.getSaticiDAO().getSatici(kullanici) != null) {
+            this.getSaticiDAO().update(satici);
+            return "index.xhtml";
+        }
+        setErrorMessage("E-posta veya şifre hatalı");
+        return "profile.xhtml";
+    }
+
     public String create() {
         if (kullanici.getAd().length() > 20 || kullanici.getAd().matches(".*\\d+.*")) {
             setErrorMessage("Kullanici adı 20 karekterden az oluşur ve rakamlarden oluşmaz");

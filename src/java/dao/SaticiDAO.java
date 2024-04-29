@@ -35,6 +35,20 @@ public class SaticiDAO {
             System.out.println(ex.getMessage());
         }
     }
+    
+    public void update(Kullanici k) {
+        try {
+            Statement st = this.getConn().createStatement();
+                    
+            String query ="UPDATE satici SET sifre = '" + k.getSifre() + "'"
+                    + ", adres = '" + k.getAdres() + "',"
+                    + " tel_no = '" + k.getTelNo() + "'"
+                    + " WHERE id = '" + k.getId() + "'";
+            st.executeUpdate(query);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
 
     public Satici getSatici(Kullanici k) {
         Satici satici = null;

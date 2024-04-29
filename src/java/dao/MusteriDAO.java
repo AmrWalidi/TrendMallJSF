@@ -35,6 +35,19 @@ public class MusteriDAO {
             System.out.println(ex.getMessage());
         }
     }
+    public void update(Kullanici k) {
+        try {
+            Statement st = this.getConn().createStatement();
+                    
+            String query ="UPDATE musteri SET sifre = '" + k.getSifre() + "'"
+                    + ", adres = '" + k.getAdres() + "',"
+                    + " tel_no = '" + k.getTelNo() + "'"
+                    + " WHERE id = '" + k.getId() + "'";
+            st.executeUpdate(query);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
 
     public Musteri getMusteri(Kullanici k) {
         Musteri musteri = null;

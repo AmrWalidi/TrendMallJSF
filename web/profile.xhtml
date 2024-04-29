@@ -43,7 +43,7 @@
                         <h:inputText value="#{kullaniciBean.musteri != null? kullaniciBean.musteri.adres:kullaniciBean.satici.adres }"/>
                     </div>
                 </div>
-                <h:commandButton value="Kaydet" />
+                <h:commandButton value="Kaydet" action="#{kullaniciBean.update()}"/>
             </h:form>
         </div>
     </body>
