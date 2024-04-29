@@ -27,25 +27,29 @@ public class SaticiDAO {
 
     public void create(Kullanici k) {
         try {
-            Statement st = this.getConn().createStatement();
-            String query = "INSERT INTO satici VALUES (DEFAULT, '" + k.getAd()
-                    + "', '" + k.getSoyad() + "', '" + k.getEposta() + "', '" + k.getSifre()
-                    + "', '" + k.getAdres() + "', '" + k.getTelNo() + "')";
-            st.executeUpdate(query);
+            String query = "INSERT INTO satici (ad, soyad, eposta, sifre, adres, tel_no) VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement st = this.getConn().prepareStatement(query);
+            st.setString(1, k.getAd());
+            st.setString(2, k.getSoyad());
+            st.setString(3, k.getEposta());
+            st.setString(4, k.getSifre());
+            st.setString(5, k.getAdres());
+            st.setString(6, k.getTelNo());
+            st.executeUpdate();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
     }
-    
+
     public void update(Kullanici k) {
         try {
-            Statement st = this.getConn().createStatement();
-                    
-            String query ="UPDATE satici SET sifre = '" + k.getSifre() + "'"
-                    + ", adres = '" + k.getAdres() + "',"
-                    + " tel_no = '" + k.getTelNo() + "'"
-                    + " WHERE id = '" + k.getId() + "'";
-            st.executeUpdate(query);
+            String query = "UPDATE satici SET sifre = ?, adres = ?, tel_no = ? WHERE id = ?";
+            PreparedStatement st = this.getConn().prepareStatement(query);
+            st.setString(1, k.getSifre());
+            st.setString(2, k.getAdres());
+            st.setString(3, k.getTelNo());
+            st.setInt(4, k.getId());
+            st.executeUpdate();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
