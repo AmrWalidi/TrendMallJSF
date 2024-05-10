@@ -8,6 +8,9 @@ import entity.Satici;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 @Named(value = "kullaniciBean")
 @SessionScoped
@@ -104,24 +107,25 @@ public class KullaniciBean implements Serializable {
         setErrorMessage("E-posta veya şifre hatalı");
         return "giris-form.xhtml";
     }
-    
-    public String logout(){
+
+    public String logout() {
         this.setMusteri(null);
         this.setSatici(null);
-        return "giris-form.xhtml"; 
+        return "giris-form.xhtml";
     }
 
-    public String update() {
-        if (this.getMusteriDAO().getMusteri(kullanici) != null) {
-            this.getMusteriDAO().update(musteri);
-            return "index.xhtml";
-        } else if (this.getSaticiDAO().getSatici(kullanici) != null) {
-            this.getSaticiDAO().update(satici);
-            return "index.xhtml";
-        }
-        setErrorMessage("E-posta veya şifre hatalı");
-        return "profile.xhtml";
+public String update() {
+    if (this.getMusteriDAO().getMusteri(kullanici) != null) {
+        this.getMusteriDAO().update(musteri);
+        return "index.xhtml";
+    } else if (this.getSaticiDAO().getSatici(kullanici) != null) {
+        kullanici.setSifre(encryptString(kullanici.getSifre()));
+        this.getSaticiDAO().update(satici);
+        return "index.xhtml";
     }
+    setErrorMessage("E-posta veya şifre hatalı");
+    return "profile.xhtml";
+}
 
     public String create() {
         if (kullanici.getAd().length() > 20 || kullanici.getAd().matches(".*\\d+.*")) {
@@ -140,12 +144,26 @@ public class KullaniciBean implements Serializable {
             if (type == 1) {
                 this.getMusteriDAO().create(kullanici);
                 return this.login();
-
             } else {
                 this.getSaticiDAO().create(kullanici);
                 return this.login();
             }
         }
         return "giris-form.xhtml";
+    }
+
+    public String encryptString(String input) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] messageDigest = md.digest(input.getBytes());
+            BigInteger no = new BigInteger(1, messageDigest);
+            String hashText = no.toString(16);
+            while (hashText.length() < 32) {
+                hashText = "0" + hashText;
+            }
+            return hashText;
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
