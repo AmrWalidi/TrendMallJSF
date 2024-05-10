@@ -24,7 +24,7 @@
             <h:form class="profile-form">
                 <h:panelGroup rendered="#{!kullaniciBean.sifreSayfasi}" class="input-container">
                     <label>E-posta</label>
-                    <h:inputText value="#{kullaniciBean.musteri != null? kullaniciBean.musteri.eposta:kullaniciBean.satici.eposta}"/>
+                    <h:inputText value="#{kullaniciBean.musteri != null? kullaniciBean.musteri.eposta:kullaniciBean.satici.eposta}" disabled="true"/>
                 </h:panelGroup>
                 <h:panelGroup rendered="#{!kullaniciBean.sifreSayfasi}" class="input-container">
                     <label>Cep Telefonu</label>

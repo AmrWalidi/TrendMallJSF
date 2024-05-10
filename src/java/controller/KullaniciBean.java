@@ -8,9 +8,6 @@ import entity.Satici;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 @Named(value = "kullaniciBean")
 @SessionScoped
@@ -114,18 +111,7 @@ public class KullaniciBean implements Serializable {
     }
 
     public void setEskiSifre(String eskiSifre) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] messageDigest = md.digest(eskiSifre.getBytes());
-            BigInteger no = new BigInteger(1, messageDigest);
-            String hashText = no.toString(16);
-            while (hashText.length() < 32) {
-                hashText = "0" + hashText;
-            }
-            this.eskiSifre = hashText;
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
+        this.eskiSifre = kullanici.encryptString(eskiSifre);
     }
 
     public String getYeniSifre() {
@@ -235,7 +221,8 @@ public class KullaniciBean implements Serializable {
         } else {
             setErrorMessage("Şifreniz yanlış");
         }
-        if(!getErrorMessage().equals(""))
+        if (!getErrorMessage().equals("")) {
             setSuccessMessage("");
+        }
     }
 }
