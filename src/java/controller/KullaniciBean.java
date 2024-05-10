@@ -8,6 +8,9 @@ import entity.Satici;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 @Named(value = "kullaniciBean")
 @SessionScoped
@@ -21,9 +24,15 @@ public class KullaniciBean implements Serializable {
     private int type;
     private String errorMessage;
     private String sayfa;
+    private boolean sifreSayfasi;
+    private String eskiSifre;
+    private String yeniSifre;
+    private String tekrarSifre;
+    private String successMessage;
 
     public KullaniciBean() {
         this.sayfa = "giriş";
+        this.sifreSayfasi = false;
     }
 
     public Kullanici getKullanici() {
@@ -91,36 +100,88 @@ public class KullaniciBean implements Serializable {
         this.sayfa = sayfa;
     }
 
+    public boolean isSifreSayfasi() {
+        return sifreSayfasi;
+    }
+
+    public void setSifreSayfasi(boolean sifreSayfasi) {
+
+        this.sifreSayfasi = sifreSayfasi;
+    }
+
+    public String getEskiSifre() {
+        return eskiSifre;
+    }
+
+    public void setEskiSifre(String eskiSifre) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] messageDigest = md.digest(eskiSifre.getBytes());
+            BigInteger no = new BigInteger(1, messageDigest);
+            String hashText = no.toString(16);
+            while (hashText.length() < 32) {
+                hashText = "0" + hashText;
+            }
+            this.eskiSifre = hashText;
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String getYeniSifre() {
+        return yeniSifre;
+    }
+
+    public void setYeniSifre(String yeniSifre) {
+        this.yeniSifre = yeniSifre;
+    }
+
+    public String getTekrarSifre() {
+        return tekrarSifre;
+    }
+
+    public void setTekrarSifre(String tekrarSifre) {
+        this.tekrarSifre = tekrarSifre;
+    }
+
+    public String getSuccessMessage() {
+        return successMessage;
+    }
+
+    public void setSuccessMessage(String successMessage) {
+        this.successMessage = successMessage;
+    }
+
     public String login() {
         this.setMusteri(null);
         this.setSatici(null);
         if (this.getMusteriDAO().getMusteri(kullanici) != null) {
             this.setMusteri(this.getMusteriDAO().getMusteri(kullanici));
+            setErrorMessage("");
             return "index.xhtml";
         } else if (this.getSaticiDAO().getSatici(kullanici) != null) {
             this.setSatici(this.getSaticiDAO().getSatici(kullanici));
+            setErrorMessage("");
             return "index.xhtml";
         }
         setErrorMessage("E-posta veya şifre hatalı");
         return "giris-form.xhtml";
     }
-    
-    public String logout(){
+
+    public String logout() {
         this.setMusteri(null);
         this.setSatici(null);
-        return "giris-form.xhtml"; 
+        return "giris-form.xhtml";
     }
 
-    public String update() {
+    public void update() {
         if (this.getMusteriDAO().getMusteri(kullanici) != null) {
             this.getMusteriDAO().update(musteri);
-            return "index.xhtml";
+            setSuccessMessage("Şifreniz Başarılı Bir Şekilde Değişti");
         } else if (this.getSaticiDAO().getSatici(kullanici) != null) {
             this.getSaticiDAO().update(satici);
-            return "index.xhtml";
+            setSuccessMessage("Şifreniz Başarılı Bir Şekilde Değişti");
         }
-        setErrorMessage("E-posta veya şifre hatalı");
-        return "profile.xhtml";
     }
 
     public String create() {
@@ -137,6 +198,7 @@ public class KullaniciBean implements Serializable {
         } else if (this.getMusteriDAO().getMusteri(kullanici.getEposta()) || this.getSaticiDAO().getSatici(kullanici.getEposta())) {
             setErrorMessage("E-posta zaten alındı");
         } else {
+            setErrorMessage("");
             if (type == 1) {
                 this.getMusteriDAO().create(kullanici);
                 return this.login();
@@ -147,5 +209,33 @@ public class KullaniciBean implements Serializable {
             }
         }
         return "giris-form.xhtml";
+    }
+
+    public void sifreDegistir() {
+        if (eskiSifre.equals(kullanici.getSifre())) {
+            if (yeniSifre.equals(tekrarSifre)) {
+                if (yeniSifre.length() >= 6 || yeniSifre.length() <= 36) {
+                    if (musteri != null) {
+                        getMusteri().setSifre(yeniSifre);
+                        getKullanici().setSifre(yeniSifre);
+                        getMusteriDAO().update(getMusteri());
+                    } else {
+                        getSatici().setSifre(yeniSifre);
+                        getKullanici().setSifre(yeniSifre);
+                        getSaticiDAO().update(getSatici());
+                    }
+                    setErrorMessage("");
+                    setSuccessMessage("Şifreniz Başarılı Bir Şekilde Değişti");
+                } else {
+                    setErrorMessage("Şifre 6 ve 16 arasında karekterden oluşur");
+                }
+            } else {
+                setErrorMessage("Tekrarlana şifre ve yeni sifre farklı");
+            }
+        } else {
+            setErrorMessage("Şifreniz yanlış");
+        }
+        if(!getErrorMessage().equals(""))
+            setSuccessMessage("");
     }
 }
