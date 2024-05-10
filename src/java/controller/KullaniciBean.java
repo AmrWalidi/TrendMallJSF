@@ -168,6 +168,7 @@ public class KullaniciBean implements Serializable {
             this.getSaticiDAO().update(satici);
             setSuccessMessage("Şifreniz Başarılı Bir Şekilde Değişti");
         }
+        setErrorMessage("E-posta veya şifre hatalı");
     }
 
     public String create() {
@@ -188,7 +189,6 @@ public class KullaniciBean implements Serializable {
             if (type == 1) {
                 this.getMusteriDAO().create(kullanici);
                 return this.login();
-
             } else {
                 this.getSaticiDAO().create(kullanici);
                 return this.login();
