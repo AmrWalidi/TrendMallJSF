@@ -6,12 +6,10 @@ import java.util.List;
 public class Sepet {
     private Musteri musteri;
     private List<Urun> urunList;
-    private double toplamUcret;
 
-    public Sepet(Musteri musteri, List<Urun> urunList, double toplamUcret) {
+    public Sepet(Musteri musteri, List<Urun> urunList) {
         this.musteri = musteri;
         this.urunList = urunList;
-        this.toplamUcret = toplamUcret;
     }
 
     public Sepet(Musteri musteri) {
@@ -35,13 +33,5 @@ public class Sepet {
 
     public void setUrunList(List<Urun> urunList) {
         this.urunList = urunList;
-    }
-
-    public double getToplamUcret() {
-        return toplamUcret;
-    }
-
-    public void setToplamUcret(double toplamUcret) {
-        this.toplamUcret = toplamUcret;
     }
 }

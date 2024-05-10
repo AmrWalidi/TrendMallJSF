@@ -11,39 +11,45 @@
     </h:head>
     <body>
         <ui:include src="/Template/header.xhtml" />
+
         <div class="container">
+            <h:form class="side-profile-container ">
+                <div class="profile-image">
+                    <i class="fas fa-user" style="font-size: 100px; color: white"></i>
+                </div>
+                <p>#{kullaniciBean.musteri!=null? kullaniciBean.musteri.ad:kullaniciBean.satici.ad}</p>
+                <p>#{kullaniciBean.musteri!=null? kullaniciBean.musteri.soyad:kullaniciBean.satici.soyad}</p>
+                <h:commandButton action="#{kullaniciBean.setSifreSayfasi(!kullaniciBean.sifreSayfasi)}" value="#{kullaniciBean.sifreSayfasi? 'Kişisel Bilgileri': 'Şifre Değiştir'}"/>
+            </h:form>
             <h:form class="profile-form">
-                <div style="display: flex; gap: 25px; justify-content: space-between">
-                    <div class="input-container">
-                        <label>Ad</label>
-                        <h:inputText value="#{kullaniciBean.musteri != null? kullaniciBean.musteri.ad:kullaniciBean.satici.ad }" disabled="true"/>
-                    </div>
-                    <div class="input-container">
-                        <label>Soyad</label>
-                        <h:inputText value="#{kullaniciBean.musteri != null? kullaniciBean.musteri.soyad:kullaniciBean.satici.soyad }" disabled="true"/>
-                    </div>
-                </div>
-                <div class="input-container">
+                <h:panelGroup rendered="#{!kullaniciBean.sifreSayfasi}" class="input-container">
                     <label>E-posta</label>
-                    <h:inputText value="#{kullaniciBean.musteri != null? kullaniciBean.musteri.eposta:kullaniciBean.satici.eposta}" disabled="true"/>
-                </div>
-                <div style="display: flex; gap: 25px; justify-content: space-between">
-                    <div class="input-container">
-                        <label>Cep Telefonu</label>
-                        <h:inputText value="#{kullaniciBean.musteri != null? kullaniciBean.musteri.telNo:kullaniciBean.satici.telNo }"/>
-                    </div>
-                    <div class="input-container">
-                        <label>Şifre</label>
-                        <h:inputSecret value="#{kullaniciBean.musteri != null? kullaniciBean.musteri.sifre:kullaniciBean.satici.sifre }"/>
-                    </div>
-                </div>
-                <div>
-                    <div class="input-container">
-                        <label>Adres</label>
-                        <h:inputText value="#{kullaniciBean.musteri != null? kullaniciBean.musteri.adres:kullaniciBean.satici.adres }"/>
-                    </div>
-                </div>
-                <h:commandButton value="Kaydet" action="#{kullaniciBean.update()}"/>
+                    <h:inputText value="#{kullaniciBean.musteri != null? kullaniciBean.musteri.eposta:kullaniciBean.satici.eposta}"/>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{!kullaniciBean.sifreSayfasi}" class="input-container">
+                    <label>Cep Telefonu</label>
+                    <h:inputText value="#{kullaniciBean.musteri != null? kullaniciBean.musteri.telNo:kullaniciBean.satici.telNo }"/>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{kullaniciBean.sifreSayfasi}" class="input-container">
+                    <label>Eski Şifre</label>
+                    <h:inputSecret value="#{kullaniciBean.eskiSifre}"/>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{kullaniciBean.sifreSayfasi}" class="input-container">
+                    <label>Yeni Şifre</label>
+                    <h:inputSecret value="#{kullaniciBean.yeniSifre}"/>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{kullaniciBean.sifreSayfasi}" class="input-container">
+                    <label>Tekrar Şifre</label>
+                    <h:inputSecret value="#{kullaniciBean.tekrarSifre}"/>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{!kullaniciBean.sifreSayfasi}" class="input-container">
+                    <label>Adres</label>
+                    <h:inputText value="#{kullaniciBean.musteri != null? kullaniciBean.musteri.adres:kullaniciBean.satici.adres }"/>
+                </h:panelGroup>
+                <h:outputText rendered="#{kullaniciBean.errorMessage != ''}" style="color: red;" value="#{kullaniciBean.errorMessage}"/>
+                <h:outputText rendered="#{kullaniciBean.successMessage != ''}" style="color:green;" value="#{kullaniciBean.successMessage}"/>
+                <h:commandButton rendered="#{kullaniciBean.sifreSayfasi}" value="Kaydet" action="#{kullaniciBean.sifreDegistir()}"/>
+                <h:commandButton rendered="#{!kullaniciBean.sifreSayfasi}" value="Kaydet" action="#{kullaniciBean.update()}"/>
             </h:form>
         </div>
     </body>

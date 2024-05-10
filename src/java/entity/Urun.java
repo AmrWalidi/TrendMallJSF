@@ -1,22 +1,25 @@
 package entity;
 
+import java.util.List;
+
 
 public class Urun {
     private int id;
     private String ad;
     private Satici satici;
-    private Kategori kategori;
+    private List<Kategori> kategoriler;
     private int miktar;
     private double fiyat;
 
-    public Urun(int id, String ad, Satici satici, Kategori kategori, int miktar, double fiyat) {
+    public Urun(int id, String ad, Satici satici, List<Kategori> kategoriler, int miktar, double fiyat) {
         this.id = id;
         this.ad = ad;
         this.satici = satici;
-        this.kategori = kategori;
+        this.kategoriler = kategoriler;
         this.miktar = miktar;
         this.fiyat = fiyat;
     }
+
 
     public int getId() {
         return id;
@@ -42,14 +45,15 @@ public class Urun {
         this.satici = satici;
     }
 
-    public Kategori getKategori() {
-        return kategori;
+    public List<Kategori> getKategoriler() {
+        return kategoriler;
     }
 
-    public void setKategori(Kategori kategori) {
-        this.kategori = kategori;
+    public void setKategoriler(List<Kategori> kategoriler) {
+        this.kategoriler = kategoriler;
     }
-
+    
+    
     public int getMiktar() {
         return miktar;
     }

@@ -5,22 +5,60 @@ h2 {
 
 .container{
     display:flex;
+    gap:50px;
     position: relative;
-    top: 50%;
-    left:50%;
-    transform: translateX(-50%);
     align-items: center;
-    justify-content: center;
     height: 600px;
     width: 720px;
-    padding: 10px;
-    margin: 20px;
 }
+
+.container input:focus{
+    outline: none;
+}
+
+.side-profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding:45px;
+    border-right: 1px solid #9F9F9F;
+    height: 500px;
+}
+
+.profile-image{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    width:150px;
+    height:150px;
+    background-color: #D9D9D9;
+    border: 4px solid #969696;
+    border-radius:9999px
+}
+
+.side-profile-container p{
+    font-size: 25px;
+    font-family: "Arial";
+    font-weight: bold
+}
+
+.side-profile-container input[type="submit"]{
+    width:130px;
+    height: 30px;
+    background-color: #ECECEC;
+    border: 1px solid #2D2D2D;
+    border-radius: 5px;
+    color: #2D2D2D;
+    font-size: 14px;
+    cursor: pointer;
+}
+
 
 .profile-form {
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 60px;
     width: 600px
 }
 
@@ -32,7 +70,7 @@ h2 {
 
 .input-container label{
     font-family: "arial";
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
 }
 
@@ -41,9 +79,8 @@ h2 {
     font-size: 20px;
     color: #0F0F0F;
     height: 50px;
-    background-color: #F9F9F9;
-    border: 2px solid #BFBFBF;
-    border-radius: 15px;
+    border:0;
+    border-bottom: 2px solid #BFBFBF;
     padding-left: 30px
 }
 
@@ -51,10 +88,9 @@ h2 {
     color: white;
     background-color: #D95927;
     padding: 10px;
-    font-size: 20px;
+    font-size: 18px;
     border-radius: 5px;
     border-color: transparent;
-    width: 130px;
+    width: 110px;
 }
-
 

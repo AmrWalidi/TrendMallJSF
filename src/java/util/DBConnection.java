@@ -16,7 +16,7 @@ public class DBConnection {
         if (connection == null) {
             try {
                 Class.forName("org.postgresql.Driver");
-                connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/TrendMallDB", "postgres", "malek2002");
+                connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/TrendMallDB", "postgres", "AmrF.C.B");
             } catch (ClassNotFoundException | SQLException ex) {
                 System.out.println("Connection Failed");
             }
