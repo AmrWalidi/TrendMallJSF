@@ -182,10 +182,8 @@ public class KullaniciBean implements Serializable {
             this.getSaticiDAO().update(satici);
             setSuccessMessage("Şifreniz Başarılı Bir Şekilde Değişti");
         }
+        setErrorMessage("E-posta veya şifre hatalı");
     }
-    setErrorMessage("E-posta veya şifre hatalı");
-    return "profile.xhtml";
-}
 
     public String create() {
         if (kullanici.getAd().length() > 20 || kullanici.getAd().matches(".*\\d+.*")) {
@@ -237,7 +235,8 @@ public class KullaniciBean implements Serializable {
         } else {
             setErrorMessage("Şifreniz yanlış");
         }
-        if(!getErrorMessage().equals(""))
+        if (!getErrorMessage().equals("")) {
             setSuccessMessage("");
+        }
     }
 }
