@@ -48,18 +48,20 @@
     border-radius: 12px;
     box-shadow: 0px 4px 4px rgba(0,0,0,0.25);
     border-color: transparent;
-    background-color: #FA6930;
-    color: #F4F4F4;
     cursor: pointer;
 }
 
-.nav-btns input[type="submit"][value="Hesabım"] {
-    background-color: #D3D3D3;
-    color: black;
+.nav-btns input[type="submit"][value="Ürün EKle"] {
+    background-color: #FA6930;
+    color: #F4F4F4;
 }
 
-.nav-btns input[type="submit"][value="Çıkış Yap"] {
-    background-color: transparent;
-    border-color: #FA6930;
-    color: #FA6930;
+.nav-btns input[type="submit"][value="Sepetim"] {
+    background-color: #FA6930;
+    color: #F4F4F4;
+}
+
+.nav-btns input[type="submit"][value="Giriş Yap"] {
+    background-color: #FA6930;
+    color: #F4F4F4;
 }

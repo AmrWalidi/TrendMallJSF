@@ -71,10 +71,7 @@ public class UrunBean implements Serializable {
                 this.pageSayisi++;
             }
         } else {
-            this.pageSayisi = this.getDao().getUrunSayisi(selectedKategoriler) / 5;
-            if(pageSayisi == 0){
-                pageSayisi ++;
-            }
+            this.pageSayisi = this.getDao().getUrunSayisi(selectedKategoriler) / 5 + 1;
         }
 
         return pageSayisi;
