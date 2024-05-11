@@ -88,4 +88,22 @@ public class SaticiDAO {
         }
         return false;
     }
+
+    public Satici getSatici(int id) {
+        Satici s = null;
+        try {
+            Statement st = this.getConn().createStatement();
+            String query = "SELECT * FROM satici WHERE id= " + id;
+            ResultSet rs = st.executeQuery(query);
+            if (rs.next()) {
+                s = new Satici(rs.getInt("id"), rs.getString("ad"),
+                        rs.getString("soyad"), rs.getString("eposta"),
+                        rs.getString("sifre"), rs.getString("tel_no"),
+                        rs.getString("adres"));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return s;
+    }
 }

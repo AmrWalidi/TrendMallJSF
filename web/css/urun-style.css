@@ -53,8 +53,13 @@
 }
 .urun-satici-lable{
     font-weight:bold;
-    font-size: 18px
+    font-size: 16px
 }
+
+.urun-urun-lable{
+    font-size: 14px
+}
+
 .urun-btn{
     display:flex;
     justify-content: space-between;

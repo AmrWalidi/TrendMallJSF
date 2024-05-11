@@ -11,8 +11,6 @@
         <link rel="stylesheet" type="text/css" href="css/header.css" />
         <link rel="stylesheet" type="text/css" href="css/normalize.css" />
         <link rel="stylesheet" type="text/css"  href="css/urun-style.css" />
-
-
         <title>TrendMall</title>
     </h:head>
     <h:body>
@@ -22,17 +20,18 @@
                 <h:selectManyMenu class="kategory">
                     <f:selectItems value="#{['test1','test2','test3','test4','test5']}" var="num" itemValue="#{num}" itemLabel="#{num}" />
                 </h:selectManyMenu>
-                <div class="urun-container">
-                    <c:forEach begin="1" end="5" var="i">
+                <div id="urunler" class="urun-container" >
+                    <ui:repeat value="#{urunBean.list}" var="u">
                         <div class="urun">
                             <div class="urun-image">
                             </div>
                             <div class="urun-bilgileri">
-                                <div>     
-                                    <h:outputText class="urun-satici-lable" value="Satici adi"/>
+                                <div style="display:flex; gap:10px">     
+                                    <h:outputText class="urun-satici-lable" value="#{u.satici.ad}"/>
+                                    <h:outputText class="urun-urun-lable" value="#{u.ad}"/>
                                 </div>
                                 <div>
-                                    <h:outputText class="urun-fiyati-lable" value="87.99 TL" />                   
+                                    <h:outputText class="urun-fiyati-lable" value="#{u.fiyat} TL" />                   
                                 </div>
                             </div>
                             <div class="urun-btn">
@@ -43,16 +42,14 @@
                                     <h:commandButton value="Sepete Ekle" class="btn-2"/>
                                 </div>
                             </div>
-                        </div>                        
-
-                    </c:forEach>
-
+                        </div>    
+                    </ui:repeat>
                 </div>
-            </h:form>
-            <h:form class="roll">
-                <h:commandButton value="&#9664;" class="previous-btn"/>
-                <h:outputText class="sayfa-sayisi" value="1"/>
-                <h:commandButton value="&#9654;" class="next-btn" />
+                <div class="roll">
+                    <h:commandButton rendered="#{urunBean.counter gt 1}" class="previous-btn" value="&#9664;" action="#{urunBean.previousPage()}"/>
+                    <h:outputText class="sayfa-sayisi" value="#{urunBean.counter} of #{urunBean.pageSayisi}"/>
+                    <h:commandButton rendered="#{urunBean.counter lt urunBean.pageSayisi}" class="next-btn" value="&#9654;" action="#{urunBean.nextPage()}"/>
+                </div>
             </h:form>
         </div>
     </h:body>
