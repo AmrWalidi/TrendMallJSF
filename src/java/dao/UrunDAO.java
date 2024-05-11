@@ -31,11 +31,61 @@ public class UrunDAO {
         return saticiDao;
     }
 
+    public Kategori getKategori(int id) {
+        Kategori kategori = null;
+        try {
+            Statement st = this.getConn().createStatement();
+            String queary = "SELECT * FROM kategori WHERE id = " + id;
+            ResultSet rs = st.executeQuery(queary);
+            while (rs.next()) {
+                kategori = new Kategori(rs.getInt("Id"), rs.getString("ad"));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return kategori;
+    }
+
+    public List<Kategori> getKategoriler() {
+        List<Kategori> kategoriler = new ArrayList<>();
+        try {
+            Statement st = this.getConn().createStatement();
+            String queary = "SELECT * FROM kategori";
+            ResultSet rs = st.executeQuery(queary);
+            while (rs.next()) {
+                kategoriler.add(new Kategori(rs.getInt("Id"), rs.getString("ad")));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return kategoriler;
+    }
+
     public int getUrunSayisi() {
         int adet = 0;
         try {
             Statement st = this.getConn().createStatement();
             String query = "SELECT count(*) FROM urun ";
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                adet = rs.getInt("count");
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return adet;
+    }
+
+    public int getUrunSayisi(List<Kategori> kategoriler) {
+        int adet = 0;
+        try {
+            Statement st = getConn().createStatement();
+            String query = "SELECT COUNT(DISTINCT urun_id) FROM urun_kategori WHERE kategori_id IN (";
+            for (int i = 0; i < kategoriler.size(); i++) {
+                query += kategoriler.get(i).getId() + " ,";
+            }
+            query = query.substring(0, query.length() - 1);
+            query += ")";
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
                 adet = rs.getInt("count");
@@ -70,6 +120,48 @@ public class UrunDAO {
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
+        }
+        return urunler;
+    }
+    
+    public List<Urun> getKategoriliUrunler(int count, List<Kategori> kategoriler){
+        List<Urun> urunler = new ArrayList<>();
+        try {
+            Statement st = this.getConn().createStatement();
+            String query = "SELECT * FROM urun  WHERE id in (SELECT urun_id FROM urun_kategori WHERE kategori_id in(";
+            for (int i = 0; i < kategoriler.size(); i++) {
+                query += kategoriler.get(i).getId() + " ,";
+            }
+            query = query.substring(0, query.length() - 1);
+            query += ")) offset " + (count - 1) * 5 + " limit 5";
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                Satici s = getSaticiDao().getSatici(rs.getInt("satici_id"));
+                urunler.add(new Urun(rs.getInt("id"), rs.getString("ad"), s, kategoriler, rs.getInt("miktar"), rs.getFloat("fiyat")));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return urunler;
+    }
+
+    public List<Urun> getUrunler(List<Kategori> kategoriler) {
+        List<Urun> urunler = new ArrayList<>();
+        try {
+            Statement st = getConn().createStatement();
+            String query = "SELECT * from urun WHERE id in (SELECT urun_id FROM urun_kategori WHERE kategori_id in (";
+            for (int i = 0; i < kategoriler.size(); i++) {
+                query += kategoriler.get(i).getId() + " ,";
+            }
+            query = query.substring(0, query.length() - 1);
+            query += "))";
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                Satici s = getSaticiDao().getSatici(rs.getInt("satici_id"));
+                urunler.add(new Urun(rs.getInt("id"), rs.getString("ad"), s, kategoriler, rs.getInt("miktar"), rs.getFloat("fiyat")));
+            }
+        } catch (SQLException ex) {
+            ex.getMessage();
         }
         return urunler;
     }

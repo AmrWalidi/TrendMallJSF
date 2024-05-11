@@ -17,11 +17,14 @@
         <ui:include src="/Template/header.xhtml" />
         <div class="container">
             <h:form>
-                <h:selectManyMenu class="kategory">
-                    <f:selectItems value="#{['test1','test2','test3','test4','test5']}" var="num" itemValue="#{num}" itemLabel="#{num}" />
-                </h:selectManyMenu>
+                <div class="kategori-filter">
+                    <h:selectManyMenu class="kategory" value="#{urunBean.selectedKategoriler}" converter="kategoriConverter">
+                        <f:selectItems value="#{urunBean.kategoriler}" var="k" itemValue="#{k}" itemLabel="#{k.ad}" />
+                    </h:selectManyMenu>    
+                    <h:commandButton value="Filter" action="#{urunBean.filter()}"/>
+                </div>
                 <div id="urunler" class="urun-container" >
-                    <ui:repeat value="#{urunBean.list}" var="u">
+                    <ui:repeat value="#{urunBean.urunler}" var="u">
                         <div class="urun">
                             <div class="urun-image">
                             </div>
