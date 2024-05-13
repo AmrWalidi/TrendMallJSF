@@ -28,22 +28,15 @@ public class KullaniciBean implements Serializable {
     private String successMessage;
     private boolean loggedIn;
 
-    public boolean isLoggedIn() {
-        if (this.getMusteriDAO().getMusteri(kullanici) != null || this.getSaticiDAO().getSatici(kullanici) != null) {
+    public void isLoggedIn() {
+        if (this.getMusteri() != null || this.getSatici() != null) {
             loggedIn = true;
         } else {
             loggedIn = false;
         }
-        return loggedIn;
     }
 
-    public boolean alret() {
-        if (this.isLoggedIn() == true) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+
 
     public KullaniciBean() {
         this.sayfa = "giriş";
