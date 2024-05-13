@@ -4,13 +4,12 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://java.sun.com/jsp/jstl/core"
       >
     <h:head>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
         <link rel="stylesheet" type="text/css" href="css/header.css" />
         <link rel="stylesheet" type="text/css" href="css/normalize.css" />
-        <link rel="stylesheet" type="text/css"  href="css/urun-style.css" />
+        <link rel="stylesheet" type="text/css"  href="css/urun-sayfa.css" />
         <h:outputStylesheet library="css" name="bootstrap.css" />
         <title>TrendMall</title>
     </h:head>
@@ -18,7 +17,7 @@
         <ui:include src="/Template/header.xhtml" />
         <div class="main">
             <h:form>
-                <div class="kategori-filter">
+                <div class="kategoriler">
                     <h:selectManyMenu class="kategory" value="#{urunBean.selectedKategoriler}" converter="kategoriConverter">
                         <f:selectItems value="#{urunBean.kategoriler}" var="k" itemValue="#{k}" itemLabel="#{k.ad}" />
                     </h:selectManyMenu>    
@@ -27,6 +26,11 @@
                         <h:commandButton value="temizle" action="#{urunBean.temizle()}"/>
                     </div>
                 </div>
+                <div class='alert' rendered='#{kullaniciBean.alert()}'>
+                    <span class="closebtn" onclick="this.parentElement.classList.add('hide');">&times;</span> 
+                    <p class='cumle'><strong>uyarı!</strong> Site içerisinde işlem yapabilmek için giriş yapmalısınız</p>
+                </div>
+
                 <div id="urunler" class="urun-container" >
                     <ui:repeat value="#{urunBean.urunler}" var="u">
                         <div class="urun">
@@ -43,10 +47,10 @@
                             </div>
                             <div class="urun-btn">
                                 <div>     
-                                    <h:commandButton  value="Şimdi Al" class="btn-1"/>
+                                    <h:commandButton value="Şimdi Al" class="btn-1" action="#{kullaniciBean.isLoggedIn}" />
                                 </div>
                                 <div>
-                                    <h:commandButton value="Sepete Ekle" class="btn-2"/>
+                                    <h:commandButton value="Sepete Ekle" class="btn-2" action="#{kullaniciBean.isLoggedIn}" />
                                 </div>
                             </div>
                         </div>    

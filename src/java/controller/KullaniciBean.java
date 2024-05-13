@@ -26,6 +26,24 @@ public class KullaniciBean implements Serializable {
     private String yeniSifre;
     private String tekrarSifre;
     private String successMessage;
+    private boolean loggedIn;
+
+    public boolean isLoggedIn() {
+        if (this.getMusteriDAO().getMusteri(kullanici) != null || this.getSaticiDAO().getSatici(kullanici) != null) {
+            loggedIn = true;
+        } else {
+            loggedIn = false;
+        }
+        return loggedIn;
+    }
+
+    public boolean alret() {
+        if (this.isLoggedIn() == true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public KullaniciBean() {
         this.sayfa = "giriş";
@@ -225,4 +243,5 @@ public class KullaniciBean implements Serializable {
             setSuccessMessage("");
         }
     }
+
 }
