@@ -28,17 +28,9 @@ public class KullaniciBean implements Serializable {
     private String successMessage;
     private boolean loggedIn;
 
-    public void isLoggedIn() {
-        if (this.getMusteri() != null || this.getSatici() != null) {
-            loggedIn = true;
-        } else {
-            loggedIn = false;
-        }
-    }
-
-
 
     public KullaniciBean() {
+        this.loggedIn = true;
         this.sayfa = "giriş";
         this.sifreSayfasi = false;
     }
@@ -148,7 +140,19 @@ public class KullaniciBean implements Serializable {
     public void setSuccessMessage(String successMessage) {
         this.successMessage = successMessage;
     }
+    
+    public boolean getLoggedIn() {
+        return loggedIn;
+    }
 
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
+    }
+    
+    public void isLoggedIn() {
+        loggedIn = this.getMusteri() != null || this.getSatici() != null;
+    }
+    
     public String login() {
         this.setMusteri(null);
         this.setSatici(null);
