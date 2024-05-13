@@ -28,24 +28,9 @@ public class KullaniciBean implements Serializable {
     private String successMessage;
     private boolean loggedIn;
 
-    public boolean isLoggedIn() {
-        if (this.getMusteriDAO().getMusteri(kullanici) != null || this.getSaticiDAO().getSatici(kullanici) != null) {
-            loggedIn = true;
-        } else {
-            loggedIn = false;
-        }
-        return loggedIn;
-    }
-
-    public boolean alret() {
-        if (this.isLoggedIn() == true) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     public KullaniciBean() {
+        this.loggedIn = true;
         this.sayfa = "giriş";
         this.sifreSayfasi = false;
     }
@@ -155,7 +140,19 @@ public class KullaniciBean implements Serializable {
     public void setSuccessMessage(String successMessage) {
         this.successMessage = successMessage;
     }
+    
+    public boolean getLoggedIn() {
+        return loggedIn;
+    }
 
+    public void setLoggedIn(boolean loggedIn) {
+        this.loggedIn = loggedIn;
+    }
+    
+    public void isLoggedIn() {
+        loggedIn = this.getMusteri() != null || this.getSatici() != null;
+    }
+    
     public String login() {
         this.setMusteri(null);
         this.setSatici(null);

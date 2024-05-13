@@ -26,10 +26,10 @@
                         <h:commandButton value="temizle" action="#{urunBean.temizle()}"/>
                     </div>
                 </div>
-                <div class='alert' rendered='#{kullaniciBean.alert()}'>
+                <h:panelGroup class='alert' rendered='#{!kullaniciBean.loggedIn}' layout="block">
                     <span class="closebtn" onclick="this.parentElement.classList.add('hide');">&times;</span> 
                     <p class='cumle'><strong>uyarı!</strong> Site içerisinde işlem yapabilmek için giriş yapmalısınız</p>
-                </div>
+                </h:panelGroup>
 
                 <div id="urunler" class="urun-container" >
                     <ui:repeat value="#{urunBean.urunler}" var="u">
@@ -47,10 +47,10 @@
                             </div>
                             <div class="urun-btn">
                                 <div>     
-                                    <h:commandButton value="Şimdi Al" class="btn-1" action="#{kullaniciBean.isLoggedIn}" />
+                                    <h:commandButton value="Şimdi Al" class="btn-1" action="#{kullaniciBean.isLoggedIn()}" />
                                 </div>
                                 <div>
-                                    <h:commandButton value="Sepete Ekle" class="btn-2" action="#{kullaniciBean.isLoggedIn}" />
+                                    <h:commandButton value="Sepete Ekle" class="btn-2" action="#{kullaniciBean.isLoggedIn()}" />
                                 </div>
                             </div>
                         </div>    
