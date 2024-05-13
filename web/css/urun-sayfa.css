@@ -16,7 +16,7 @@
     border-radius:5px;
 }
 
-.kategori-filter{
+.kategoriler{
     display: block;
     right: 0;
     float: right;
@@ -24,7 +24,7 @@
     margin-top: 20px
 }
 
-.kategori-filter input[type="submit"]{
+.kategoriler input[type="submit"]{
     display: block;
 }
 

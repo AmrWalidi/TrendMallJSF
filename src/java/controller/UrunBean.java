@@ -26,6 +26,8 @@ public class UrunBean implements Serializable {
     public List<Urun> getUrunler() {
         if (selectedKategoriler == null) {
             urunler = getDao().getUrunler(counter);
+        } else if (selectedKategoriler.isEmpty()) {
+            urunler = getDao().getUrunler(counter);
         } else {
             urunler = getDao().getKategoriliUrunler(counter, selectedKategoriler);
         }
@@ -66,6 +68,11 @@ public class UrunBean implements Serializable {
 
     public int getPageSayisi() {
         if (selectedKategoriler == null) {
+            this.pageSayisi = this.getDao().getUrunSayisi() / 5 + 1;
+            if (pageSayisi % 5 != 0) {
+                this.pageSayisi++;
+            }
+        } else if (selectedKategoriler.isEmpty()) {
             this.pageSayisi = this.getDao().getUrunSayisi() / 5 + 1;
             if (pageSayisi % 5 != 0) {
                 this.pageSayisi++;
