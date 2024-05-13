@@ -28,6 +28,18 @@
     display: block;
 }
 
+.kategories-btn{
+    display: flex;
+    width: 100%;
+}
+.kategories-btn > :first-child,.kategories-btn > :last-child  {
+    margin-right: 10px;
+    padding: 0 5px;
+}
+.kategories-btn > :first-child,.kategories-btn > :last-child  {
+    padding: 0 5px;
+}
+
 .urun-container{
     display: flex;
     flex-wrap:wrap;
@@ -98,7 +110,7 @@
 .roll{
     display: flex;
     justify-content: center;
-    margin-top: 40px; 
+    margin-top: 40px;
 }
 
 .previous-btn,.next-btn{
@@ -107,10 +119,10 @@
     border: transparent;
     font-size: 28px;
     cursor: pointer;
-    color:#D95927; 
+    color:#D95927;
 
 }
-.previous-btn{    
+.previous-btn{
     margin-left: 4px;
 
 }
@@ -122,5 +134,5 @@
     margin-top: -3px;
     font-weight: bold;
     color:#333;
-    
+
 }

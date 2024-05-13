@@ -89,4 +89,11 @@ public class UrunBean implements Serializable {
         counter = 1;
         setUrunler(getDao().getUrunler(selectedKategoriler));
     }
+
+    public void temizle() {
+        counter = 1;
+        selectedKategoriler = null;
+        setUrunler(getDao().getUrunler(counter));
+    }
+
 }

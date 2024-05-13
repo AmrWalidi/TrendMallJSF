@@ -22,7 +22,10 @@
                     <h:selectManyMenu class="kategory" value="#{urunBean.selectedKategoriler}" converter="kategoriConverter">
                         <f:selectItems value="#{urunBean.kategoriler}" var="k" itemValue="#{k}" itemLabel="#{k.ad}" />
                     </h:selectManyMenu>    
-                    <h:commandButton value="Filter" action="#{urunBean.filter()}"/>
+                    <div class='kategories-btn'>
+                        <h:commandButton value="Filter" action="#{urunBean.filter()}"/>
+                        <h:commandButton value="temizle" action="#{urunBean.temizle()}"/>
+                    </div>
                 </div>
                 <div id="urunler" class="urun-container" >
                     <ui:repeat value="#{urunBean.urunler}" var="u">
