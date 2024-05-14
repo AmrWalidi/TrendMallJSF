@@ -3,12 +3,21 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <script>
+        function submit(event) {
+            document.getElementById("myForm").submit();
+            return false;
+            return true;
+        }
+    </script>
     <div class="header">
         <ui:include src="logo.xhtml" />
-        <h:form class="nav-bar">
+        <h:form class="nav-bar" onsubmit="return submit(event)">
             <div class="search-bar">
-                <h:inputText a:placeholder="Ürün Arayın" />
-                <i class="fas fa-search" style="font-size: 20px; color: #5A5959"></i>
+                <h:inputText a:placeholder="Ürün Arayın" value="#{urunBean.urun}" />
+                <h:commandButton id="myForm" action="#{urunBean.search()}"/>
+                <i class="fas fa-search" style="font-size: 20px; color: #5A5959" ></i>
+
             </div>
             <div class="nav-btns">
                 <h:commandButton rendered="#{kullaniciBean.musteri != null || kullaniciBean.satici != null}" value="Hesabım" class="btn btn-secondary" action="/profile.xhtml" />

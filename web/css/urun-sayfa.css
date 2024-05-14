@@ -51,7 +51,7 @@
     color:white;
     background-color: #D95927;
     opacity: 1;
-    transition: opacity 0.4s ease; 
+    transition: opacity 0.4s ease;
 }
 
 .closebtn {
@@ -84,7 +84,10 @@
 .urun{
     width: 16%;
     margin-right: 4%;
-    margin-bottom: 30px
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px
 }
 
 .urun .urun-image{
@@ -120,24 +123,27 @@
     justify-content: space-between;
 }
 
-.urun-btn .btn-1 {
-    color: #D95927;
-    background-color: white;
-    border: solid 1px #D95927;
-    padding: 4px  8px;
+.urun-btn input{
+
+    padding: 4px 8px;
     font-weight: 600;
     cursor: pointer;
 
 }
 
+.urun-btn input[value= "Şimdi Al"] {
+    color: #D95927;
+    background-color: white;
+    border: solid 1px #D95927;
 
-.urun-btn .btn-2 {
+}
+
+
+.urun-btn input[value= "Sepete Ekle"] {
+
     color: white;
     background-color: #D95927;
     border:none ;
-    padding: 5px 8px;
-    font-weight: 600;
-    cursor: pointer;
 }
 
 .roll{

@@ -36,22 +36,16 @@
                         <div class="urun">
                             <div class="urun-image">
                             </div>
-                            <div class="urun-bilgileri">
-                                <div style="display:flex; gap:10px">     
-                                    <h:outputText class="urun-satici-lable" value="#{u.satici.ad}"/>
-                                    <h:outputText class="urun-urun-lable" value="#{u.ad}"/>
-                                </div>
-                                <div>
-                                    <h:outputText class="urun-fiyati-lable" value="#{u.fiyat} TL" />                   
-                                </div>
+                            <div style="display:flex; gap:10px">     
+                                <h:outputText class="urun-satici-lable" value="#{u.satici.ad}"/>
+                                <h:outputText class="urun-urun-lable" value="#{u.ad}"/>
+                            </div>
+                            <div>
+                                <h:outputText class="urun-fiyati-lable" value="#{u.fiyat} TL" />                   
                             </div>
                             <div class="urun-btn">
-                                <div>     
-                                    <h:commandButton value="Şimdi Al" class="btn-1" action="#{kullaniciBean.isLoggedIn()}" />
-                                </div>
-                                <div>
-                                    <h:commandButton value="Sepete Ekle" class="btn-2" action="#{kullaniciBean.isLoggedIn()}" />
-                                </div>
+                                <h:commandButton value="Şimdi Al" action="#{kullaniciBean.isLoggedIn()}" />
+                                <h:commandButton value="Sepete Ekle"  action="#{kullaniciBean.isLoggedIn()}" />
                             </div>
                         </div>    
                     </ui:repeat>

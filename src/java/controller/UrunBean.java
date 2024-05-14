@@ -6,6 +6,7 @@ import entity.Urun;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Named(value = "urunBean")
@@ -18,18 +19,15 @@ public class UrunBean implements Serializable {
     private UrunDAO dao;
     private int counter = 1;
     private int pageSayisi;
+    private String urun;
 
     public UrunBean() {
 
     }
 
     public List<Urun> getUrunler() {
-        if (selectedKategoriler == null) {
+        if (urunler == null) {
             urunler = getDao().getUrunler(counter);
-        } else if (selectedKategoriler.isEmpty()) {
-            urunler = getDao().getUrunler(counter);
-        } else {
-            urunler = getDao().getKategoriliUrunler(counter, selectedKategoriler);
         }
         return urunler;
     }
@@ -38,12 +36,28 @@ public class UrunBean implements Serializable {
         this.urunler = urunler;
     }
 
+    public String getUrun() {
+        if (urun == null) {
+            urun = "";
+        }
+        return urun;
+    }
+
+    public void setUrun(String urun) {
+        this.urun = urun;
+    }
+
     public List<Kategori> getKategoriler() {
-        this.kategoriler = getDao().getKategoriler();
+        if (kategoriler == null) {
+            this.kategoriler = getDao().getKategoriler();
+        }
         return kategoriler;
     }
 
     public List<Kategori> getSelectedKategoriler() {
+        if (selectedKategoriler == null) {
+            selectedKategoriler = new ArrayList<>();
+        }
         return selectedKategoriler;
     }
 
@@ -67,40 +81,56 @@ public class UrunBean implements Serializable {
     }
 
     public int getPageSayisi() {
-        if (selectedKategoriler == null) {
-            this.pageSayisi = this.getDao().getUrunSayisi() / 5 + 1;
-            if (pageSayisi % 5 != 0) {
-                this.pageSayisi++;
-            }
-        } else if (selectedKategoriler.isEmpty()) {
-            this.pageSayisi = this.getDao().getUrunSayisi() / 5 + 1;
-            if (pageSayisi % 5 != 0) {
-                this.pageSayisi++;
-            }
+        int urunSayisi;
+        if (!urun.isEmpty()) {
+            urunSayisi = this.getDao().getUrunSayisi(urun);
+        } else if (!selectedKategoriler.isEmpty()) {
+            urunSayisi = this.getDao().getUrunSayisi(selectedKategoriler);
         } else {
-            this.pageSayisi = this.getDao().getUrunSayisi(selectedKategoriler) / 5 + 1;
+            urunSayisi = this.getDao().getUrunSayisi();
         }
-
+        pageSayisi = urunSayisi / 5;
+        if (urunSayisi % 5 != 0 || pageSayisi == 0) {
+            pageSayisi++;
+        }
         return pageSayisi;
     }
 
     public void nextPage() {
         counter++;
+        if (selectedKategoriler.isEmpty()) {
+            setUrunler(getDao().getUrunler(counter));
+        } else {
+
+            setUrunler(getDao().getUrunler(counter, selectedKategoriler));
+        }
     }
 
     public void previousPage() {
         counter--;
+        if (selectedKategoriler.isEmpty()) {
+            setUrunler(getDao().getUrunler(counter));
+        } else {
+            setUrunler(getDao().getUrunler(counter, selectedKategoriler));
+        }
     }
 
     public void filter() {
         counter = 1;
-        setUrunler(getDao().getUrunler(selectedKategoriler));
+        setUrunler(getDao().getUrunler(counter, selectedKategoriler));
     }
 
     public void temizle() {
         counter = 1;
-        selectedKategoriler = null;
+        urun = "";
+        selectedKategoriler.clear();
         setUrunler(getDao().getUrunler(counter));
+    }
+
+    public void search() {
+        counter = 1;
+        selectedKategoriler.clear();
+        setUrunler(getDao().getUrunler(counter, urun));
     }
 
 }
