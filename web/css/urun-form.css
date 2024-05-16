@@ -1,0 +1,52 @@
+.urun-form-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+    padding: 20px;
+    border: 1px solid #BFBFBF;
+}
+
+.urun-form{
+    display: flex;
+    flex-direction: column;
+    gap:30px;
+    margin-top: 20px;
+    align-items: center;
+}
+
+.label-input-cotainers{
+    display: flex;
+    gap:40px;
+}
+
+.label-container {
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+    font-size:20px
+}
+.input-container {
+    display:flex;
+    gap: 20px;
+    flex-direction: column
+}
+
+.input-container input[type="text"], select{
+    width: 250px;
+    height: 50px;
+    background-color: #F9F9F9;
+    border-radius: 10px;
+    border: 1px solid #BFBFBF;
+    padding: 1px 5px
+}
+
+.urun-form input[type="submit"]{
+    padding: 5px 20px;
+    font-weight: bold;
+    border-radius: 5px;
+    border-color: transparent; 
+    color: white;
+    background-color: #D95927;
+}
+

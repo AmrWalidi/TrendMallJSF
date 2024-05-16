@@ -52,7 +52,7 @@
     cursor: pointer;
 }
 
-.nav-btns input[type="submit"][value="Ürün EKle"] {
+.nav-btns input[type="submit"][value="Ürün Ekle"] {
     background-color: #FA6930;
     color: #F4F4F4;
 }

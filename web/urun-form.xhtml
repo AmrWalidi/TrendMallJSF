@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>TrendMall</title>
+        <link rel="stylesheet" type="text/css" href="css/header.css" />
+        <link rel="stylesheet" type="text/css" href="css/urun-form.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet library="css" name="bootstrap.css" />
+    </h:head>
+    <body>
+        <ui:include src="/Template/header.xhtml"/>
+        <div style="display: flex; width: 100%; height: 100%; align-items: center; justify-content: center;">
+            <div class="urun-form-container">
+                <h3>Ürün detayları</h3>
+                <h:form class="urun-form" enctype="multipart/form-data">
+                    <div class="label-input-cotainers">
+                        <div class="label-container">
+                            <label>Ürün adı:</label>
+                            <label>Kategori:</label>
+                            <label>Miktar:</label>
+                            <label>Fiyat:</label>
+                            <label>Resim Yükle:</label>
+                        </div>
+                        <div class="input-container">
+                            <h:inputText value=""/>
+                            <h:selectManyMenu value="" converter="kategoriConverter">
+                                <f:selectItems value="#{urunBean.kategoriler}" var="k" itemLabel="#{k.ad}" itemValue="#{k}"/>
+                            </h:selectManyMenu>
+                            <h:inputText value=""/>
+                            <h:inputText value=""/>
+                            <h:inputFile value="" />
+                        </div>  
+                    </div>
+                    <h:commandButton value="Ürün Ekle"/>
+                </h:form>
+            </div>
+        </div>
+    </body>
+</html>
