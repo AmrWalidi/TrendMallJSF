@@ -14,7 +14,7 @@
         <ui:include src="logo.xhtml" />
         <h:form class="nav-bar" onsubmit="return submit(event)">
             <div class="search-bar">
-                <h:inputText a:placeholder="Ürün Arayın" value="#{urunBean.urun}" />
+                <h:inputText a:placeholder="Ürün Arayın" value="#{urunBean.arananUrun}" />
                 <h:commandButton id="myForm" action="#{urunBean.search()}"/>
                 <i class="fas fa-search" style="font-size: 20px; color: #5A5959" ></i>
 

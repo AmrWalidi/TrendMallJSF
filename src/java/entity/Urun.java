@@ -1,5 +1,8 @@
 package entity;
 
+import jakarta.servlet.http.Part;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 
@@ -10,6 +13,10 @@ public class Urun {
     private List<Kategori> kategoriler;
     private int miktar;
     private double fiyat;
+    private Part image;
+    
+    public Urun() {
+    }
 
     public Urun(int id, String ad, Satici satici, List<Kategori> kategoriler, int miktar, double fiyat) {
         this.id = id;
@@ -69,6 +76,24 @@ public class Urun {
     public void setFiyat(double fiyat) {
         this.fiyat = fiyat;
     }
+
+    public Part getImage() {
+        return image;
+    }
+
+    public void setImage(Part image) {
+        this.image = image;
+    }
     
+    public byte[] bytesConverter(Part file){
+        byte[] imageBytes = null;
+        try{ 
+        InputStream input = file.getInputStream();
+        imageBytes = input.readAllBytes();
+        }catch(IOException e){
+            e.getMessage();
+        }
+        return imageBytes;
+    }
     
 }

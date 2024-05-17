@@ -6,6 +6,7 @@ import entity.Urun;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -179,5 +180,27 @@ public class UrunDAO {
             System.out.println(ex.getMessage());
         }
         return urunler;
+    }
+
+    public void urunEkle(Urun urun, int satici_id) {
+        try {
+            PreparedStatement st = this.getConn().prepareStatement("INSERT INTO urun VALUES (default, ?, ?, ?, ?, ?)");
+            st.setInt(1, satici_id);
+            st.setString(2, urun.getAd());
+            st.setInt(3, urun.getMiktar());
+            st.setDouble(4, urun.getFiyat());
+            st.setBytes(5, urun.bytesConverter(urun.getImage()));
+            st.executeUpdate();
+            Statement kategoriStatement = this.getConn().createStatement();
+            ResultSet rs = kategoriStatement.executeQuery("select max(id) as id FROM urun");
+            rs.next();
+            int id = rs.getInt("id");
+            for (Kategori k : urun.getKategoriler()) {
+                String query = "INSERT INTO urun_kategori VALUES(" + id + "," + k.getId() + ")";
+                kategoriStatement.executeUpdate(query);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 }

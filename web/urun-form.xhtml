@@ -25,16 +25,16 @@
                             <label>Resim Yükle:</label>
                         </div>
                         <div class="input-container">
-                            <h:inputText value=""/>
-                            <h:selectManyMenu value="" converter="kategoriConverter">
+                            <h:inputText value="#{urunBean.urun.ad}"/>
+                            <h:selectManyMenu value="#{urunBean.urun.kategoriler}" converter="kategoriConverter">
                                 <f:selectItems value="#{urunBean.kategoriler}" var="k" itemLabel="#{k.ad}" itemValue="#{k}"/>
                             </h:selectManyMenu>
-                            <h:inputText value=""/>
-                            <h:inputText value=""/>
-                            <h:inputFile value="" />
+                            <h:inputText value="#{urunBean.urun.miktar}"/>
+                            <h:inputText value="#{urunBean.urun.fiyat}"/>
+                            <h:inputFile value="#{urunBean.urun.image}" />
                         </div>  
                     </div>
-                    <h:commandButton value="Ürün Ekle"/>
+                    <h:commandButton value="Ürün Ekle" action="#{urunBean.urunEkle(kullaniciBean.satici.id)}"/>
                 </h:form>
             </div>
         </div>

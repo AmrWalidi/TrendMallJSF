@@ -13,18 +13,37 @@ import java.util.List;
 @SessionScoped
 public class UrunBean implements Serializable {
 
+    
+    private UrunDAO dao;
     private List<Urun> urunler;
     private List<Kategori> kategoriler;
     private List<Kategori> selectedKategoriler;
-    private UrunDAO dao;
+    private Urun urun;
     private int counter = 1;
     private int pageSayisi;
-    private String urun;
+    private String arananUrun;
 
     public UrunBean() {
 
     }
+    
+    public UrunDAO getDao() {
+        if (dao == null) {
+            dao = new UrunDAO();
+        }
+        return dao;
+    }
 
+    public Urun getUrun() {
+        if (urun == null)
+            urun = new Urun();
+        return urun;
+    }
+
+    public void setUrun(Urun urun) {
+        this.urun = urun;
+    }
+    
     public List<Urun> getUrunler() {
         if (urunler == null) {
             urunler = getDao().getUrunler(counter);
@@ -36,15 +55,15 @@ public class UrunBean implements Serializable {
         this.urunler = urunler;
     }
 
-    public String getUrun() {
-        if (urun == null) {
-            urun = "";
+    public String getArananUrun() {
+        if (arananUrun == null) {
+            arananUrun = "";
         }
-        return urun;
+        return arananUrun;
     }
 
-    public void setUrun(String urun) {
-        this.urun = urun;
+    public void setArananUrun(String arananUrun) {
+        this.arananUrun = arananUrun;
     }
 
     public List<Kategori> getKategoriler() {
@@ -64,13 +83,7 @@ public class UrunBean implements Serializable {
     public void setSelectedKategoriler(List<Kategori> selectedKategoriler) {
         this.selectedKategoriler = selectedKategoriler;
     }
-
-    public UrunDAO getDao() {
-        if (dao == null) {
-            dao = new UrunDAO();
-        }
-        return dao;
-    }
+    
 
     public int getCounter() {
         return counter;
@@ -82,8 +95,8 @@ public class UrunBean implements Serializable {
 
     public int getPageSayisi() {
         int urunSayisi;
-        if (!urun.isEmpty()) {
-            urunSayisi = this.getDao().getUrunSayisi(urun);
+        if (!arananUrun.isEmpty()) {
+            urunSayisi = this.getDao().getUrunSayisi(arananUrun);
         } else if (!selectedKategoriler.isEmpty()) {
             urunSayisi = this.getDao().getUrunSayisi(selectedKategoriler);
         } else {
@@ -122,7 +135,7 @@ public class UrunBean implements Serializable {
 
     public void temizle() {
         counter = 1;
-        urun = "";
+        arananUrun = "";
         selectedKategoriler.clear();
         setUrunler(getDao().getUrunler(counter));
     }
@@ -130,7 +143,12 @@ public class UrunBean implements Serializable {
     public void search() {
         counter = 1;
         selectedKategoriler.clear();
-        setUrunler(getDao().getUrunler(counter, urun));
+        setUrunler(getDao().getUrunler(counter, arananUrun));
+    }
+    
+    public void urunEkle(int Satici_id){
+        this.getDao().urunEkle(urun, Satici_id);
+        urun = new Urun();
     }
 
 }
