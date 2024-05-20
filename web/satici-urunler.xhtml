@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      >
+    <h:head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+        <link rel="stylesheet" type="text/css" href="css/header.css" />
+        <link rel="stylesheet" type="text/css" href="css/normalize.css" />
+        <link rel="stylesheet" type="text/css"  href="css/satici-urun.css" />
+        <h:outputStylesheet library="css" name="bootstrap.css" />
+        <title>TrendMall</title>
+    </h:head>
+    <h:body>
+        <ui:include src="/Template/header.xhtml" />
+        <div class="main">
+            <h:form>
+                <div id="urunler" class="urun-container" >
+                    <ui:repeat value="#{urunBean.getSaticiUrunler(kullaniciBean.satici)}" var="u">
+                        <div class="urun">
+                            <div class="urun-image">
+                                <img src="image?id=#{u.id}" alt="Image" width="500" hight="500"/>
+                            </div>
+                            <div style="display:flex; gap:10px">     
+                                <h:outputText class="urun-satici-lable" value="#{u.ad}"/>
+                            </div>
+                            <div>
+                                <h:outputText class="urun-fiyati-lable" value="#{u.fiyat} TL" />                   
+                            </div>
+                            <div class="urun-btn">
+                                <h:commandButton value="Sil" action="#{urunBean.delete(u)}" />
+                                <h:commandButton value="Ürün Düzenle"  action="#{urunBean.updatePage(u)}" >
+                                    <f:setPropertyActionListener target="#{urunBean.urun}" value="#{u}" />
+                                </h:commandButton>
+                            </div>
+                        </div>    
+                    </ui:repeat>
+                </div>
+            </h:form>
+        </div>
+    </h:body>
+</html>

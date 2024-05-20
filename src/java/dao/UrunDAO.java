@@ -182,10 +182,10 @@ public class UrunDAO {
         return urunler;
     }
 
-    public void urunEkle(Urun urun, int satici_id) {
+    public void urunEkle(Urun urun, Satici satici) {
         try {
             PreparedStatement st = this.getConn().prepareStatement("INSERT INTO urun VALUES (default, ?, ?, ?, ?, ?)");
-            st.setInt(1, satici_id);
+            st.setInt(1, satici.getId());
             st.setString(2, urun.getAd());
             st.setInt(3, urun.getMiktar());
             st.setDouble(4, urun.getFiyat());
@@ -203,4 +203,76 @@ public class UrunDAO {
             System.out.println(ex.getMessage());
         }
     }
+    
+    public List<Urun> getSaticiUrunler(Satici satici) {
+        List<Urun> urunler = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM urun WHERE satici_id = ?";
+            PreparedStatement ps = this.getConn().prepareStatement(query);
+            ps.setInt(1, satici.getId());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                List<Kategori> kategoriler = this.getUrunKategorileri(rs.getInt("id"));
+                Satici s = getSaticiDao().getSatici(rs.getInt("satici_id"));
+                urunler.add(new Urun(rs.getInt("id"), rs.getString("ad"), s, kategoriler, rs.getInt("miktar"), rs.getFloat("fiyat")));
+
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return urunler;
+    }
+    
+    public byte[] urunImage(String id) {
+        byte[] image = null;
+        try {
+            Statement st = this.getConn().createStatement();
+            String sql = "SELECT image FROM urun where id = " + id;
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+
+                image = rs.getBytes("image");
+            }
+        } catch (SQLException e) {
+            e.getMessage();
+        }
+
+        return image;
+    }
+    
+    public void delete(Urun urun) {
+        try {
+            Statement st = this.getConn().createStatement();
+            String query = "DELETE FROM urun_kategori WHERE urun_id = "+ urun.getId();
+            st.executeUpdate(query);
+            query = "DELETE FROM urun WHERE id = " + urun.getId();
+            st.executeUpdate(query);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+    
+     public void urunDuzenle(Urun urun) {
+        try {
+            PreparedStatement st = this.getConn().prepareStatement("UPDATE urun SET ad=?, miktar=?, fiyat=?, image=? WHERE id=?");
+            st.setString(1, urun.getAd());
+            st.setInt(2, urun.getMiktar());
+            st.setDouble(3, urun.getFiyat());
+            st.setBytes(4, urun.bytesConverter(urun.getImage()));
+            st.setInt(5, urun.getId());
+            st.executeUpdate();
+            Statement deleteStatement = this.getConn().createStatement();
+            String query = "DELETE FROM urun_kategori WHERE urun_id=" + urun.getId();
+            deleteStatement.executeUpdate(query);
+            for (Kategori k : urun.getKategoriler()) {
+                query = "INSERT INTO urun_kategori VALUES(" + urun.getId() + "," + k.getId() + ")";
+                deleteStatement.executeUpdate(query);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+     
+
 }

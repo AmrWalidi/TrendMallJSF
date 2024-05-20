@@ -35,6 +35,7 @@
                     <ui:repeat value="#{urunBean.urunler}" var="u">
                         <div class="urun">
                             <div class="urun-image">
+                                <img src="image?id=#{u.id}" alt="Image" width="500" hight="500"/>
                             </div>
                             <div style="display:flex; gap:10px">     
                                 <h:outputText class="urun-satici-lable" value="#{u.satici.ad}"/>

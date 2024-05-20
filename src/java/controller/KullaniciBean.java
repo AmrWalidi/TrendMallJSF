@@ -163,7 +163,7 @@ public class KullaniciBean implements Serializable {
         } else if (this.getSaticiDAO().getSatici(kullanici) != null) {
             this.setSatici(this.getSaticiDAO().getSatici(kullanici));
             setErrorMessage("");
-            return "index.xhtml";
+            return "satici-urunler.xhtml";
         }
         setErrorMessage("E-posta veya şifre hatalı");
         return "giris-form.xhtml";

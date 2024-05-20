@@ -2,6 +2,7 @@ package controller;
 
 import dao.UrunDAO;
 import entity.Kategori;
+import entity.Satici;
 import entity.Urun;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.SessionScoped;
@@ -16,6 +17,7 @@ public class UrunBean implements Serializable {
     
     private UrunDAO dao;
     private List<Urun> urunler;
+    private List<Urun> saticiUrunler;
     private List<Kategori> kategoriler;
     private List<Kategori> selectedKategoriler;
     private Urun urun;
@@ -89,9 +91,18 @@ public class UrunBean implements Serializable {
         return counter;
     }
 
-    public void setCounter(int counter) {
-        this.counter = counter;
+    public List<Urun> getSaticiUrunler() {
+        return saticiUrunler;
     }
+
+    public void setSaticiUrunler(List<Urun> saticiUrunler) {
+        this.saticiUrunler = saticiUrunler;
+    }
+    
+    public List<Urun> getSaticiUrunler(Satici s) {
+        return getDao().getSaticiUrunler(s);
+    }
+    
 
     public int getPageSayisi() {
         int urunSayisi;
@@ -146,9 +157,25 @@ public class UrunBean implements Serializable {
         setUrunler(getDao().getUrunler(counter, arananUrun));
     }
     
-    public void urunEkle(int Satici_id){
-        this.getDao().urunEkle(urun, Satici_id);
+    public String urunEkle(Satici s){
+        this.getDao().urunEkle(urun, s);
         urun = new Urun();
+        return "satici-urunler.xhtml";
+    }
+    
+    public String updatePage(Urun urun){
+        setUrun(urun);
+        return "urun-form.xhtml";
+    }
+    
+    public String update() {
+        this.getDao().urunDuzenle(urun);
+        urun = new Urun();
+        return "satici-urunler.xhtml";
+    }
+
+    public void delete(Urun urun) {
+        getDao().delete(urun);
     }
 
 }

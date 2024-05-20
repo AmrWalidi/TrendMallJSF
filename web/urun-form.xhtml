@@ -34,7 +34,8 @@
                             <h:inputFile value="#{urunBean.urun.image}" />
                         </div>  
                     </div>
-                    <h:commandButton value="Ürün Ekle" action="#{urunBean.urunEkle(kullaniciBean.satici.id)}"/>
+                    <h:commandButton value="Ürün Ekle" rendered="#{urunBean.urun.id == 0}" action="#{urunBean.urunEkle(kullaniciBean.satici)}"/>
+                    <h:commandButton value="Düzeltle" rendered="#{urunBean.urun.id != 0}" action="#{urunBean.update()}"/>
                 </h:form>
             </div>
         </div>
