@@ -18,7 +18,7 @@
         <div class="main">
             <h:form>
                 <div id="urunler" class="urun-container" >
-                    <ui:repeat value="#{urunBean.getSaticiUrunler(kullaniciBean.satici)}" var="u">
+                    <ui:repeat value="#{saticiBean.getUrunler(kullaniciBean.satici)}" var="u">
                         <div class="urun">
                             <div class="urun-image">
                                 <img src="image?id=#{u.id}" alt="Image" width="500" hight="500"/>
@@ -30,9 +30,9 @@
                                 <h:outputText class="urun-fiyati-lable" value="#{u.fiyat} TL" />                   
                             </div>
                             <div class="urun-btn">
-                                <h:commandButton value="Sil" action="#{urunBean.delete(u)}" />
-                                <h:commandButton value="Ürün Düzenle"  action="#{urunBean.updatePage(u)}" >
-                                    <f:setPropertyActionListener target="#{urunBean.urun}" value="#{u}" />
+                                <h:commandButton value="Sil" action="#{saticiBean.delete(u)}" />
+                                <h:commandButton value="Ürün Düzenle"  action="#{saticiBean.updatePage(u)}" >
+                                    <f:setPropertyActionListener target="#{saticiBean.urun}" value="#{u}" />
                                 </h:commandButton>
                             </div>
                         </div>    

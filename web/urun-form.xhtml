@@ -25,17 +25,17 @@
                             <label>Resim Yükle:</label>
                         </div>
                         <div class="input-container">
-                            <h:inputText value="#{urunBean.urun.ad}"/>
-                            <h:selectManyMenu value="#{urunBean.urun.kategoriler}" converter="kategoriConverter">
+                            <h:inputText value="#{saticiBean.urun.ad}"/>
+                            <h:selectManyMenu value="#{saticiBean.urun.kategoriler}" converter="kategoriConverter">
                                 <f:selectItems value="#{urunBean.kategoriler}" var="k" itemLabel="#{k.ad}" itemValue="#{k}"/>
                             </h:selectManyMenu>
-                            <h:inputText value="#{urunBean.urun.miktar}"/>
-                            <h:inputText value="#{urunBean.urun.fiyat}"/>
-                            <h:inputFile value="#{urunBean.urun.image}" />
+                            <h:inputText value="#{saticiBean.urun.miktar}"/>
+                            <h:inputText value="#{saticiBean.urun.fiyat}"/>
+                            <h:inputFile value="#{saticiBean.urun.image}" />
                         </div>  
                     </div>
-                    <h:commandButton value="Ürün Ekle" rendered="#{urunBean.urun.id == 0}" action="#{urunBean.urunEkle(kullaniciBean.satici)}"/>
-                    <h:commandButton value="Düzeltle" rendered="#{urunBean.urun.id != 0}" action="#{urunBean.update()}"/>
+                    <h:commandButton value="Ürün Ekle" rendered="#{saticiBean.urun.id == 0}" action="#{saticiBean.urunEkle(kullaniciBean.satici)}"/>
+                    <h:commandButton value="Düzeltle" rendered="#{saticiBean.urun.id != 0}" action="#{saticiBean.update}"/>
                 </h:form>
             </div>
         </div>

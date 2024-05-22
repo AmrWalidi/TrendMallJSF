@@ -1,5 +1,6 @@
 package entity;
 
+import converter.ByteArrayPart;
 import jakarta.servlet.http.Part;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,18 +14,19 @@ public class Urun {
     private List<Kategori> kategoriler;
     private int miktar;
     private double fiyat;
-    private Part image;
+    private byte[] image;
     
     public Urun() {
     }
 
-    public Urun(int id, String ad, Satici satici, List<Kategori> kategoriler, int miktar, double fiyat) {
+    public Urun(int id, String ad, Satici satici, List<Kategori> kategoriler, int miktar, double fiyat, byte[] image) {
         this.id = id;
         this.ad = ad;
         this.satici = satici;
         this.kategoriler = kategoriler;
         this.miktar = miktar;
         this.fiyat = fiyat;
+        this.image = image;
     }
 
 
@@ -78,11 +80,13 @@ public class Urun {
     }
 
     public Part getImage() {
-        return image;
+        
+        Part file = new ByteArrayPart(this.image, ad, "png");
+        return file;
     }
 
     public void setImage(Part image) {
-        this.image = image;
+        this.image = bytesConverter(image);
     }
     
     public byte[] bytesConverter(Part file){

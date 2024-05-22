@@ -17,10 +17,8 @@ public class UrunBean implements Serializable {
     
     private UrunDAO dao;
     private List<Urun> urunler;
-    private List<Urun> saticiUrunler;
     private List<Kategori> kategoriler;
     private List<Kategori> selectedKategoriler;
-    private Urun urun;
     private int counter = 1;
     private int pageSayisi;
     private String arananUrun;
@@ -34,16 +32,6 @@ public class UrunBean implements Serializable {
             dao = new UrunDAO();
         }
         return dao;
-    }
-
-    public Urun getUrun() {
-        if (urun == null)
-            urun = new Urun();
-        return urun;
-    }
-
-    public void setUrun(Urun urun) {
-        this.urun = urun;
     }
     
     public List<Urun> getUrunler() {
@@ -89,18 +77,6 @@ public class UrunBean implements Serializable {
 
     public int getCounter() {
         return counter;
-    }
-
-    public List<Urun> getSaticiUrunler() {
-        return saticiUrunler;
-    }
-
-    public void setSaticiUrunler(List<Urun> saticiUrunler) {
-        this.saticiUrunler = saticiUrunler;
-    }
-    
-    public List<Urun> getSaticiUrunler(Satici s) {
-        return getDao().getSaticiUrunler(s);
     }
     
 
@@ -156,26 +132,4 @@ public class UrunBean implements Serializable {
         selectedKategoriler.clear();
         setUrunler(getDao().getUrunler(counter, arananUrun));
     }
-    
-    public String urunEkle(Satici s){
-        this.getDao().urunEkle(urun, s);
-        urun = new Urun();
-        return "satici-urunler.xhtml";
-    }
-    
-    public String updatePage(Urun urun){
-        setUrun(urun);
-        return "urun-form.xhtml";
-    }
-    
-    public String update() {
-        this.getDao().urunDuzenle(urun);
-        urun = new Urun();
-        return "satici-urunler.xhtml";
-    }
-
-    public void delete(Urun urun) {
-        getDao().delete(urun);
-    }
-
 }

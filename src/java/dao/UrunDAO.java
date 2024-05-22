@@ -136,13 +136,14 @@ public class UrunDAO {
             while (rs.next()) {
                 List<Kategori> kategoriler = this.getUrunKategorileri(rs.getInt("id"));
                 Satici s = getSaticiDao().getSatici(rs.getInt("satici_id"));
-                urunler.add(new Urun(rs.getInt("id"), rs.getString("ad"), s, kategoriler, rs.getInt("miktar"), rs.getFloat("fiyat")));
+                urunler.add(new Urun(rs.getInt("id"), rs.getString("ad"), s, kategoriler, rs.getInt("miktar"), rs.getFloat("fiyat"), rs.getBytes("image")));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
         return urunler;
     }
+    
 
     public List<Urun> getUrunler(int count, List<Kategori> kategoriler) {
         List<Urun> urunler = new ArrayList<>();
@@ -157,7 +158,7 @@ public class UrunDAO {
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
                 Satici s = getSaticiDao().getSatici(rs.getInt("satici_id"));
-                urunler.add(new Urun(rs.getInt("id"), rs.getString("ad"), s, kategoriler, rs.getInt("miktar"), rs.getFloat("fiyat")));
+                urunler.add(new Urun(rs.getInt("id"), rs.getString("ad"), s, kategoriler, rs.getInt("miktar"), rs.getFloat("fiyat"),rs.getBytes("image")));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -174,13 +175,14 @@ public class UrunDAO {
             while (rs.next()) {
                 List<Kategori> kategoriler = this.getUrunKategorileri(rs.getInt("id"));
                 Satici s = getSaticiDao().getSatici(rs.getInt("satici_id"));
-                urunler.add(new Urun(rs.getInt("id"), rs.getString("ad"), s, kategoriler, rs.getInt("miktar"), rs.getFloat("fiyat")));
+                urunler.add(new Urun(rs.getInt("id"), rs.getString("ad"), s, kategoriler, rs.getInt("miktar"), rs.getFloat("fiyat"), rs.getBytes("image")));
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
         return urunler;
     }
+    
 
     public void urunEkle(Urun urun, Satici satici) {
         try {
@@ -214,7 +216,7 @@ public class UrunDAO {
             while (rs.next()) {
                 List<Kategori> kategoriler = this.getUrunKategorileri(rs.getInt("id"));
                 Satici s = getSaticiDao().getSatici(rs.getInt("satici_id"));
-                urunler.add(new Urun(rs.getInt("id"), rs.getString("ad"), s, kategoriler, rs.getInt("miktar"), rs.getFloat("fiyat")));
+                urunler.add(new Urun(rs.getInt("id"), rs.getString("ad"), s, kategoriler, rs.getInt("miktar"), rs.getFloat("fiyat"), rs.getBytes("image")));
 
             }
         } catch (SQLException ex) {
