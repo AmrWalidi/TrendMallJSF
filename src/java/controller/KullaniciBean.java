@@ -97,6 +97,7 @@ public class KullaniciBean implements Serializable {
     }
 
     public void setSayfa(String sayfa) {
+        setErrorMessage("");
         this.sayfa = sayfa;
     }
 
@@ -153,21 +154,7 @@ public class KullaniciBean implements Serializable {
         loggedIn = this.getMusteri() != null || this.getSatici() != null;
     }
     
-    public String login() {
-        this.setMusteri(null);
-        this.setSatici(null);
-        if (this.getMusteriDAO().getMusteri(kullanici) != null) {
-            this.setMusteri(this.getMusteriDAO().getMusteri(kullanici));
-            setErrorMessage("");
-            return "index.xhtml";
-        } else if (this.getSaticiDAO().getSatici(kullanici) != null) {
-            this.setSatici(this.getSaticiDAO().getSatici(kullanici));
-            setErrorMessage("");
-            return "satici-urunler.xhtml";
-        }
-        setErrorMessage("E-posta veya şifre hatalı");
-        return "giris-form.xhtml";
-    }
+   
 
     public String logout() {
         this.setMusteri(null);
@@ -187,28 +174,34 @@ public class KullaniciBean implements Serializable {
     }
 
     public String create() {
-        if (kullanici.getAd().length() > 20 || kullanici.getAd().matches(".*\\d+.*")) {
-            setErrorMessage("Kullanici adı 20 karekterden az oluşur ve rakamlarden oluşmaz");
-        } else if (kullanici.getSoyad().length() > 20 || kullanici.getSoyad().matches(".*\\d+.*")) {
-            setErrorMessage("Kullanıcı soyadı 20 karekterden az oluşur ve rakamlarden oluşmaz");
-        } else if (kullanici.getEposta().length() > 50 || !(kullanici.getEposta().indexOf('@') >= 0)) {
-            setErrorMessage("E-posta 50 karekterden az oluşur ve @ sembol içerir");
-        } else if (kullanici.getSifre().length() < 6 || kullanici.getSifre().length() > 36) {
-            setErrorMessage("Şifre 6 ve 16 arasında karekterden oluşur");
-        } else if (kullanici.getTelNo().charAt(0) != '5' || kullanici.getTelNo().length() != 10 || !kullanici.getTelNo().matches("\\d+")) {
-            setErrorMessage("telefon numarasi 5 ile başlar ve 10 rakamlardan oluşur");
-        } else if (this.getMusteriDAO().getMusteri(kullanici.getEposta()) || this.getSaticiDAO().getSatici(kullanici.getEposta())) {
+        if (this.getMusteriDAO().getMusteri(kullanici.getEposta()) || this.getSaticiDAO().getSatici(kullanici.getEposta())) {
             setErrorMessage("E-posta zaten alındı");
-        } else {
-            setErrorMessage("");
-            if (type == 1) {
-                this.getMusteriDAO().create(kullanici);
-                return this.login();
-            } else {
+            return "giris-form.xhtml";
+        } 
+        else {
+            if (type == 1) 
+                this.getMusteriDAO().create(kullanici); 
+            else 
                 this.getSaticiDAO().create(kullanici);
-                return this.login();
-            }
+            return this.login();
+        }   
+    }
+    
+    
+    
+     public String login() {
+        this.setMusteri(null);
+        this.setSatici(null);
+        if (this.getMusteriDAO().getMusteri(kullanici) != null) {
+            this.setMusteri(this.getMusteriDAO().getMusteri(kullanici));
+            setErrorMessage("");
+            return "index.xhtml";
+        } else if (this.getSaticiDAO().getSatici(kullanici) != null) {
+            this.setSatici(this.getSaticiDAO().getSatici(kullanici));
+            setErrorMessage("");
+            return "satici-urunler.xhtml";
         }
+        setErrorMessage("E-posta veya şifre hatalı");
         return "giris-form.xhtml";
     }
 

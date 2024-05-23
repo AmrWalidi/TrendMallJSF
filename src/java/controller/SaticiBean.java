@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSF/JSFManagedBean.java to edit this template
- */
 package controller;
 
 import dao.UrunDAO;
@@ -12,10 +8,6 @@ import jakarta.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
 
-/**
- *
- * @author HP
- */
 @Named(value = "saticiBean")
 @SessionScoped
 public class SaticiBean implements Serializable{
