@@ -12,8 +12,6 @@ import jakarta.faces.validator.ValidatorException;
 @FacesValidator("emailValidator")
 public class EmailValidator implements Validator{
     
-    private MusteriDAO musteriDao;
-    private SaticiDAO saticiDao;
 
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
@@ -28,17 +26,4 @@ public class EmailValidator implements Validator{
             throw new ValidatorException(new FacesMessage("E-posta @ sembol içermeli"));
         }
     }
-
-    public MusteriDAO getMusteriDao() {
-        if (musteriDao == null) 
-            musteriDao = new MusteriDAO();
-        return musteriDao;
-    }
-
-    public SaticiDAO getSaticiDao() {
-        if (saticiDao == null) 
-            saticiDao = new SaticiDAO();
-        return saticiDao;
-    }
-    
 }
