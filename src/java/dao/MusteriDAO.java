@@ -73,6 +73,25 @@ public class MusteriDAO {
         }
         return musteri;
     }
+    
+    public Musteri getMusteri(int id) {
+        Musteri musteri = null;
+        try {
+            String query = "SELECT * FROM musteri WHERE id = ?";
+            PreparedStatement st = this.getConn().prepareStatement(query);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                musteri = new Musteri(rs.getInt("id"), rs.getString("ad"),
+                        rs.getString("soyad"), rs.getString("eposta"),
+                        rs.getString("sifre"), rs.getString("tel_no"),
+                        rs.getString("adres"));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return musteri;
+    }
 
     public boolean getMusteri(String email) {
         try {

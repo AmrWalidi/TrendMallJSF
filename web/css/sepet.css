@@ -1,0 +1,116 @@
+* {
+    font-family: "Arial", sans-serif;
+}
+
+.container {
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1380px;
+
+}
+input[type="submit"]{
+    cursor: pointer;
+}
+.urunler-container {
+    width: 60%;
+    display: flex;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.urun-liste {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.urun-liste > :first-child{
+    font-size: 20px;
+    font-weight: bold;
+    margin: 25px 0px;
+}
+.urun {
+    display: flex;
+    justify-content: space-between;
+    padding: 18px 20px;
+    background-color: #FBFDFD;
+    align-items: center;
+    margin-bottom: 20px;
+    border: 1px solid #DCDCDC;
+}
+.urun-remove-btn input[type="submit"]{
+    padding: 8px 15px;
+    background-color: #6F6F6F;
+    color: #EEEEEE;
+    border-radius: 12px;
+    border: transparent;
+
+}
+
+.urun > :first-child{
+    font-weight: bold;
+}
+
+.fiyat{
+    color: #D95927;
+    font-weight: bold;
+}
+.sayac {
+    display: inline-block;
+    background-color:#F9F9F9;
+}
+.sayac input[type="submit"]{
+    display: inline-block;
+    font-weight: bold;
+    background-color: #EBEBEB;
+    outline: none;
+    border: none;
+    padding: 12px 6px;
+}
+.sayac input[value="+"]{
+    color:#D95927;
+}
+.sayac-degeri{
+    display: inline-block;
+    height: 40px;
+    padding: 0 8px;
+    margin: 0;
+    margin-bottom: -15px;
+}
+.urunler-ozeti {
+    justify-content: space-around;
+    padding: 8px 25px 12px ;
+    width: 25%;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
+    border: 1px solid #c3c3c3;
+    border-radius: 15px;
+    max-height: 330px;
+}
+.urunler-ozeti > :first-child{
+    font-weight: bold;
+    font-size: 20px
+
+}
+.urunler-ozeti div{
+    display: flex;
+    justify-content: space-between;
+}
+.cizgi{
+    width: 100%;
+    border: 0.5px solid;
+}
+.urunler-ozeti input[type="submit"]{
+    font-size: 15px;
+    background-color: transparent;
+    width: 100%;
+    padding: 7px 0;
+    border: 2px solid #D95927;
+    color: #D95927;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}

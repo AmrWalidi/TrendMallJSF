@@ -45,8 +45,8 @@
                                 <h:outputText class="urun-fiyati-lable" value="#{u.fiyat} TL" />                   
                             </div>
                             <div class="urun-btn">
-                                <h:commandButton value="Şimdi Al" action="#{kullaniciBean.isLoggedIn()}" />
-                                <h:commandButton value="Sepete Ekle"  action="#{kullaniciBean.isLoggedIn()}" />
+                                <h:commandButton value="Şimdi Al" />
+                                <h:commandButton value="Sepete Ekle"  action="#{kullaniciBean.sepeteEkle(u)}" />
                             </div>
                         </div>    
                     </ui:repeat>

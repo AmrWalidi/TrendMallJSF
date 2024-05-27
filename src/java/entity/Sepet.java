@@ -4,12 +4,16 @@ import java.util.List;
 
 
 public class Sepet {
+    private int id;
     private Musteri musteri;
-    private List<Urun> urunList;
+    private List urunler;
+    private double toplamUcret;
 
-    public Sepet(Musteri musteri, List<Urun> urunList) {
+    public Sepet(int id, Musteri musteri, List<Urun> urunler, double toplamUcret) {
+        this.id = id;
         this.musteri = musteri;
-        this.urunList = urunList;
+        this.urunler = urunler;
+        this.toplamUcret = toplamUcret;
     }
 
     public Sepet(Musteri musteri) {
@@ -17,6 +21,14 @@ public class Sepet {
     }
 
     public Sepet() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Musteri getMusteri() {
@@ -27,11 +39,21 @@ public class Sepet {
         this.musteri = musteri;
     }
 
-    public List<Urun> getUrunList() {
-        return urunList;
+    public List<Urun> getUrunler() {
+        return urunler;
     }
 
-    public void setUrunList(List<Urun> urunList) {
-        this.urunList = urunList;
+    public void setUrunler(List<Urun> urunler) {
+        this.urunler = urunler;
     }
+
+    public double getToplamUcret() {
+        return toplamUcret;
+    }
+
+    public void setToplamUcret(double toplamUcret) {
+        this.toplamUcret = toplamUcret;
+    }
+
+    
 }

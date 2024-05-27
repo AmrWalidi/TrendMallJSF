@@ -5,8 +5,10 @@ import dao.SaticiDAO;
 import entity.Kullanici;
 import entity.Musteri;
 import entity.Satici;
+import entity.Urun;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.SessionScoped;
+import jakarta.inject.Inject;
 import java.io.Serializable;
 
 @Named(value = "kullaniciBean")
@@ -27,6 +29,9 @@ public class KullaniciBean implements Serializable {
     private String tekrarSifre;
     private String successMessage;
     private boolean loggedIn;
+    @Inject
+    private SepetBean sb;
+    
 
 
     public KullaniciBean() {
@@ -101,7 +106,7 @@ public class KullaniciBean implements Serializable {
         this.sayfa = sayfa;
     }
 
-    public boolean isSifreSayfasi() {
+    public boolean getSifreSayfasi() {
         return sifreSayfasi;
     }
 
@@ -149,16 +154,21 @@ public class KullaniciBean implements Serializable {
     public void setLoggedIn(boolean loggedIn) {
         this.loggedIn = loggedIn;
     }
-    
-    public void isLoggedIn() {
-        loggedIn = this.getMusteri() != null || this.getSatici() != null;
+
+    public void sepeteEkle(Urun u) {
+        if (this.getMusteri() != null){
+            sb.sepeteEkle(u, musteri);
+        }
+        else {
+            loggedIn = false;
+        }
     }
     
-   
-
     public String logout() {
         this.setMusteri(null);
         this.setSatici(null);
+        sb.setSepet(null);
+        loggedIn = false;
         return "giris-form.xhtml";
     }
 
@@ -195,10 +205,12 @@ public class KullaniciBean implements Serializable {
         if (this.getMusteriDAO().getMusteri(kullanici) != null) {
             this.setMusteri(this.getMusteriDAO().getMusteri(kullanici));
             setErrorMessage("");
+            loggedIn = true;
             return "index.xhtml";
         } else if (this.getSaticiDAO().getSatici(kullanici) != null) {
             this.setSatici(this.getSaticiDAO().getSatici(kullanici));
             setErrorMessage("");
+            loggedIn = true;
             return "satici-urunler.xhtml";
         }
         setErrorMessage("E-posta veya şifre hatalı");

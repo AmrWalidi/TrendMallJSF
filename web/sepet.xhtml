@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      >
+    <head>
+        <title>TrendMall</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" type="text/css" href="css/normalize.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+        <link rel="stylesheet" type="text/css" href="css/header.css" />
+        <link rel="stylesheet" type="text/css" href="css/sepet.css" />
+    </head>
+    <body>
+        <ui:include src="/Template/header.xhtml" />
+        <div class="container">
+            <h:form  style="width: 100%;
+                     display: flex;
+                     justify-content: space-around;">
+                <div class="urunler-container">
+                    <div class="urun-liste">
+                        <p><h:outputText value="Sepetim(#{sepetBean.sepet.urunler.size()} Urun)"/></p>
+                        <ui:repeat value="#{sepetBean.sepet.urunler}" var="u">
+                            <div class="urun">
+                                <p><h:outputText value="#{u.satici.ad}"/></p>
+                                <p><h:outputText value="#{u.ad}"/></p>
+                                <div class="sayac">
+                                    <h:commandButton value="-" action="#{sepetBean.urunSayisiAzaltir(u)}"/>
+                                    <p class="sayac-degeri"> <h:outputText value="#{sepetBean.getUrunAdet(u)}"/></p>
+                                    <h:commandButton value="+" action="#{sepetBean.urunSayisiArtirir(u)}"/>
+                                </div>
+                                <p class="fiyat"><h:outputText value="#{sepetBean.getUrunAdet(u) * u.fiyat}"/></p>
+                                <p class="urun-remove-btn"><h:commandButton value="Remove" action="#{sepetBean.sepettenCikar(u)}"/></p>
+                            </div>
+                        </ui:repeat>
+                    </div>
+                </div>
+                <div class="urunler-ozeti">
+                    <p><h:outputText value="Sipariş Özeti"/></p>
+                    <div><p>ürünlerin tutarı</p><p><h:outputText value="#{sepetBean.sepet.toplamUcret}"/></p></div>
+                    <div><p>kargo ücreti</p><p><h:outputText value="#{sepetBean.sepet.toplamUcret == 0.0? '0': '50'}TL"/></p></div>
+                    <p class="cizgi"></p>
+                    <div><p>Toplam</p><p><h:outputText value="#{sepetBean.sepet.toplamUcret != 0.0? (sepetBean.sepet.toplamUcret + 50) : 0}"/></p></div>
+                    <p><h:commandButton value="Sepat Onayla" /></p>
+                </div>            
+            </h:form>
+        </div>
+    </body>
+</html>
+

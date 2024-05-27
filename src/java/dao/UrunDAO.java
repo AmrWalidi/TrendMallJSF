@@ -183,6 +183,23 @@ public class UrunDAO {
         return urunler;
     }
     
+    public Urun getUrun(int id) {
+        Urun urun = null;
+        try {
+            Statement st = this.getConn().createStatement();
+            String query = "SELECT * FROM urun WHERE id = " + id;
+            ResultSet rs = st.executeQuery(query);
+            while (rs.next()) {
+                List<Kategori> kategoriler = this.getUrunKategorileri(rs.getInt("id"));
+                Satici s = getSaticiDao().getSatici(rs.getInt("satici_id"));
+                urun = new Urun(rs.getInt("id"), rs.getString("ad"), s, kategoriler, rs.getInt("miktar"), rs.getFloat("fiyat"), rs.getBytes("image"));
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return urun;
+    }
+    
 
     public void urunEkle(Urun urun, Satici satici) {
         try {
