@@ -94,8 +94,6 @@
     display: flex;
     align-content: center;
     justify-content: center;
-    width: 100%;
-    height: 220px;
     background-color: white;
     margin: 5px;
 }
@@ -156,9 +154,12 @@
 }
 
 .roll{
+    position: absolute;
     display: flex;
     justify-content: center;
-    margin-top: 40px;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .previous-btn,.next-btn{
@@ -178,7 +179,7 @@
 .sayfa-sayisi{
     display: inline-block;
     padding: 10px;
-    font-size: 24px;
+    font-size: 22px;
     margin-top: -3px;
     font-weight: bold;
     color:#333;

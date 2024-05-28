@@ -86,7 +86,6 @@ public class SepetDAO {
                 Urun u = this.getuDao().getUrun(rs.getInt("urun_id"));
                 urunler.add(u);
             }
-            st.executeUpdate(query);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

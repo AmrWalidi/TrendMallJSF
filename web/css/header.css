@@ -21,7 +21,7 @@
 
 .nav-bar {
     display: flex;
-    gap: 50px;
+    gap: 30px;
 }
 
 .search-bar input{
@@ -43,26 +43,42 @@
     gap: 20px;
 }
 
-.nav-btns input[type="submit"]{
+.nav-btns input{
     font-size: 14px;
     padding: 0px 5px;
     border-radius: 12px;
-    box-shadow: 0px 4px 4px rgba(0,0,0,0.25);
-    border-color: transparent;
+    border: 2px solid #f27a1a;
+    background-color: transparent;
+    color: #f27a1a;
     cursor: pointer;
+    transition: 0.2s;
 }
 
-.nav-btns input[type="submit"][value="Ürün Ekle"] {
-    background-color: #FA6930;
-    color: #F4F4F4;
+.nav-btns input:hover{
+    background-color: #f27a1a;
+    color: white;
 }
 
-.nav-btns input[type="submit"][value="Sepetim"] {
-    background-color: #FA6930;
-    color: #F4F4F4;
+.cart-btn-container{
+    position: relative;
+    padding: 5px;
 }
 
-.nav-btns input[type="submit"][value="Giriş Yap"] {
-    background-color: #FA6930;
-    color: #F4F4F4;
+.cart-btn-container input{
+    height: 50px;
+}
+
+.cart-notification{
+    position: absolute;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height:20px;
+    background-color: red;
+    color: white;
+    border-radius: 999px;
+    padding: 5px;
+    right: 0%;
+    top:0%
 }
