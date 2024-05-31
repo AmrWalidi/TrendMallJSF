@@ -52,9 +52,9 @@
                     </ui:repeat>
                 </div>
                 <div class="roll">
-                    <h:commandButton rendered="#{urunBean.counter gt 1}" class="previous-btn" value="&#9664;" action="#{urunBean.previousPage()}"/>
+                    <h:commandButton rendered="#{urunBean.counter gt 1}" class="previous-btn" value="&laquo;" action="#{urunBean.previousPage()}"/>
                     <h:outputText class="sayfa-sayisi" value="#{urunBean.counter} of #{urunBean.pageSayisi}"/>
-                    <h:commandButton rendered="#{urunBean.counter lt urunBean.pageSayisi}" class="next-btn" value="&#9654;" action="#{urunBean.nextPage()}"/>
+                    <h:commandButton rendered="#{urunBean.counter lt urunBean.pageSayisi}" class="next-btn" value="&raquo;" action="#{urunBean.nextPage()}"/>
                 </div>
             </h:form>
         </div>

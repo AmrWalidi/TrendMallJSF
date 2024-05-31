@@ -20,10 +20,16 @@
 
             </div>
             <div class="nav-btns">
-                <h:commandButton rendered="#{kullaniciBean.musteri != null || kullaniciBean.satici != null}" value="Hesabım" class="btn btn-secondary" action="/profile.xhtml" />
-                <h:commandButton rendered="#{kullaniciBean.musteri != null}" value="Sepetim" action="/sepet.xhtml"/>
+                <h:commandButton rendered="#{kullaniciBean.musteri != null || kullaniciBean.satici != null}" value="Anasayfa" action="/index.xhtml" />
+                <h:commandButton rendered="#{kullaniciBean.musteri != null || kullaniciBean.satici != null}" value="Hesabım" action="/profile.xhtml" />
+                <h:panelGroup class="cart-btn-container" rendered="#{kullaniciBean.musteri != null}" layout="block">
+                    <h:commandButton action="/sepet.xhtml" value="Sepetim" />
+                    <h:panelGroup class="cart-notification" layout="block" >
+                        #{sepetBean.sepet.urunler.size()}
+                    </h:panelGroup>
+                </h:panelGroup>
                 <h:commandButton rendered="#{kullaniciBean.satici != null}" value="Ürün Ekle" action="#{saticiBean.urunEklePage}"/>
-                <h:commandButton rendered="#{kullaniciBean.musteri != null || kullaniciBean.satici != null}" value="Çıkış Yap" class="btn btn-outline-danger" action="#{kullaniciBean.logout}"/>
+                <h:commandButton rendered="#{kullaniciBean.musteri != null || kullaniciBean.satici != null}" value="Çıkış Yap" action="#{kullaniciBean.logout}"/>
                 <h:commandButton rendered="#{kullaniciBean.musteri == null and kullaniciBean.satici == null}" action="/giris-form.xhtml" value="Giriş Yap" />
             </div>
         </h:form>

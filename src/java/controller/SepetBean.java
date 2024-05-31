@@ -47,7 +47,9 @@ public class SepetBean implements Serializable {
             boolean inCart = false;
             for (Urun urun : sepet.getUrunler()){
                 if (urun.getId() == u.getId()){
+                    urunSayisiArtirir(u);
                     inCart = true;
+                    break;
                 }
             }
             if (!inCart){
