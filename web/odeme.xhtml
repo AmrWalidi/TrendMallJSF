@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <head>
+        <title>Ödeme Sayfası</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" type="text/css" href="css/normalize.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+        <link rel="stylesheet" type="text/css" href="css/header.css" />
+        <link rel="stylesheet" type="text/css" href="css/odeme.css" />
+    </head>
+    <body>
+        <ui:include src="/Template/header.xhtml" />
+        <div style="display: flex">
+           <h:form>
+            <div class="odeme-form">
+                <h2>Ödeme Seçenekleri</h2>
+                <div class="odeme-turu">
+                    <h:selectOneRadio value="#{odemeBean.odemeTuru}" styleClass="radio-container">
+                        <f:selectItem class="kart-odeme-label" itemValue="1"  itemLabel="Banka Kart" style="margin-right: 60px"/>
+                        <f:selectItem itemValue="2" itemLabel="Kapıda Ödeme" />
+                    </h:selectOneRadio>
+                </div>
+                <div class="kart-bilgiler"> 
+                    <div>
+                        <h:outputLabel for="lname" class="L-name" value="Kart Sahibinin Adı:" /><br/>
+                        <h:inputText id="lname" class="I-name" value="#{odemeBean.kartSahibiAdi}" validator="nameValidator" />
+                    </div>
+                    <div>
+                        <h:outputLabel for="KNum" class="L-KNum" value="Kart Numarası" /><br/>
+                        <h:inputText id="kNum" class="I-KNum" value="#{odemeBean.kartNo}" maxlength="16" validator="kartNoValidator"/>
+                    </div>
+                    <div class="kart-son-kullanim">
+                        <div>
+                            <h:outputLabel for="SKT" value="Son Kullanım Tarihi" /><br/>
+                            <h:selectOneMenu class="son-ay" value="#{odemeBean.bitisAyi}">
+                                <c:forEach var="i" begin="1" end="12">
+                                    <f:selectItem itemValue="#{i}" itemLabel="#{i}" />
+                                </c:forEach>
+                            </h:selectOneMenu>
+
+                            <h:selectOneMenu class="son-ay" value="#{odemeBean.bitisYili}">
+                                <c:forEach var="i" begin="1" end="12">
+                                    <f:selectItem itemValue="#{i+2023}" itemLabel="#{i+2023}" />
+                                </c:forEach>
+                            </h:selectOneMenu>
+
+                        </div>
+                        <div>
+                            <h:outputLabel for="cvv" value="CVV" /><br/>
+                            <h:inputText id="cvv" value="#{odemeBean.cvv}"  maxlength="3" validator="cvvValidator"/>
+                        </div>
+                    </div>
+                    <h:messages style="padding-left: 30px;color: red;padding-top: 20px"/>
+                </div>
+                <h:commandButton class="form-btn" value="Ödeme Yap" action="#{odemeBean.odeme}" />
+            </div>
+        </h:form>
+        <h:form>
+            <div class="ozet">
+                <div class="siparis-ozeti">
+                    <h3><h:outputText value="Sipariş Özeti"/></h3>
+                    <div><p>ürünlerin tutarı</p><p><h:outputText value="#{odemeBean.odemeTutari} TL" /></p></div>
+                    <div><p>kargo ücreti</p><p><h:outputText value="50TL"/></p></div>
+                    <p class="cizgi"></p>
+                    <div><p>Toplam</p><p><h:outputText value="#{odemeBean.sepetBean.sepet.toplamUcret != 0.0? (odemeBean.sepetBean.sepet.toplamUcret + 50) : 0} TL" style="color:#D95927;font-weight: bold"/></p></div>
+                </div>
+                <div class="kupon-side">
+                    <h:outputLabel for="kupon" class="L-kupon" value="Kupon Kodu" /><br/>
+                    <div style="display: flex; align-items: center; gap: 10px">
+                        <h:inputText id="kupn" class="I-kupon" value="#{odemeBean.kupon}" />
+                    <h:commandButton class="form-btn" value="UYGULA" action="#{odemeBean.kuponUygula}"/>
+                    </div>
+                    
+                </div> 
+            </div>
+        </h:form> 
+        </div>
+    </body>
+</html>

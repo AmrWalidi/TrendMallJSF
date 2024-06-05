@@ -7,11 +7,12 @@
       >
     <h:head>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
-        <link rel="stylesheet" type="text/css" href="css/header.css" />
-        <link rel="stylesheet" type="text/css" href="css/normalize.css" />
-        <link rel="stylesheet" type="text/css"  href="css/urun-sayfa.css" />
-        <h:outputStylesheet library="css" name="bootstrap.css" />
-        <title>TrendMall</title>
+            <link rel="stylesheet" type="text/css" href="css/header.css" />
+            <link rel="stylesheet" type="text/css" href="css/normalize.css" />
+            <link rel="stylesheet" type="text/css"  href="css/urun-sayfa.css" />
+            <h:outputStylesheet library="css" name="bootstrap.css" />
+            <title>TrendMall</title>
+            
     </h:head>
     <h:body>
         <ui:include src="/Template/header.xhtml" />
@@ -26,6 +27,13 @@
                         <h:commandButton value="temizle" action="#{urunBean.temizle()}"/>
                     </div>
                 </div>
+                
+<!--                <h:panelGroup class='alert' rendered='#{kullaniciBean.loggedIn}' layout="block">
+                    <span class="closebtn" onclick="this.parentElement.classList.add('hide');">&times;</span> 
+                    <p class='cumle'><span><i class='far fa-check-circle' style='font-size:36px'></i>
+                        </span> Ürün sepete eklendi</p>
+                </h:panelGroup>-->
+
                 <h:panelGroup class='alert' rendered='#{!kullaniciBean.loggedIn}' layout="block">
                     <span class="closebtn" onclick="this.parentElement.classList.add('hide');">&times;</span> 
                     <p class='cumle'><strong>uyarı!</strong> Site içerisinde işlem yapabilmek için giriş yapmalısınız</p>
@@ -45,7 +53,7 @@
                                 <h:outputText class="urun-fiyati-lable" value="#{u.fiyat} TL" />                   
                             </div>
                             <div class="urun-btn">
-                                <h:commandButton value="Şimdi Al" />
+                                <h:commandButton value="Şimdi Al" action="#{odemeBean.simdiAl(u)}"/>
                                 <h:commandButton value="Sepete Ekle"  action="#{kullaniciBean.sepeteEkle(u)}" />
                             </div>
                         </div>    

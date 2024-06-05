@@ -63,6 +63,20 @@
     right: 50px;
     top:25%;
 }
+.cumle{
+    display: flex;
+    padding-top: 8px;
+}
+
+.hide{
+    display:none;
+}
+.cumle span i{
+    display: inline-block;
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
 
 .closebtn:hover {
     color: black;

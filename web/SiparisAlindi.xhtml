@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      >    <head>
+        <title>Ödeme Sayfası</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" type="text/css" href="css/normalize.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+        <link rel="stylesheet" type="text/css" href="css/header.css" />
+        <link rel="stylesheet" type="text/css" href="css/SiparisAlindi.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+    </head>
+    <body>
+        <ui:include src="/Template/header.xhtml" />
+        <h:form class="siparis-alindi">
+            <p class="first-cumle">Siparişiniz Başarılı Alındı</p>
+            <p><i class="fa-regular fa-circle-check"></i></p>
+            <p class="last-cumle">Siparişiniz En Kısa Zamanda Kapında olacak</p>
+            <h:commandButton   value="Ana Sayfa" action="/index.xhtml"/>
+        </h:form>
+
+    </body>
+</html>

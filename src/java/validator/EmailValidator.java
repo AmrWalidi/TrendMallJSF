@@ -24,6 +24,6 @@ public class EmailValidator implements Validator{
         }
         else if (email.indexOf('@') < 0){
             throw new ValidatorException(new FacesMessage("E-posta @ sembol içermeli"));
-        }
+        }   
     }
 }

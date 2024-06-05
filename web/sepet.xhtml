@@ -48,7 +48,7 @@
                     <div><p>kargo ücreti</p><p><h:outputText value="#{sepetBean.sepet.toplamUcret == 0.0? '0': '50'} TL"/></p></div>
                     <p class="cizgi"></p>
                     <div><p>Toplam</p><p><h:outputText value="#{sepetBean.sepet.toplamUcret != 0.0? (sepetBean.sepet.toplamUcret + 50) : 0} TL"/></p></div>
-                    <p><h:commandButton value="Sepat Onayla" /></p>
+                    <p><h:commandButton value="Sepat Onayla" action="#{odemeBean.sepetOnayla(sepetBean.sepet.toplamUcret)}"/></p>
                 </div>            
             </h:form>
         </div>

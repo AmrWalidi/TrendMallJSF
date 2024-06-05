@@ -1,0 +1,50 @@
+body{
+    position: relative;
+}
+
+
+input[type="submit"]{
+    cursor: pointer;
+}
+
+.siparis-alindi{
+    font-family: "Arial", sans-serif;
+    color:#D95927;
+    font-size: 28px;
+    font-weight: 600;
+    Position:absolute;
+    Left: 50%;
+    Top: 50%;
+    Transform: translate(-50%,50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.first-cumle{
+    padding-bottom: 30px;
+    letter-spacing: 1px;
+
+}
+
+.fa-regular, .far {
+    font-weight: 500;
+    font-size: 60px;
+    padding-bottom: 30px;
+
+}
+.last-cumle{
+    max-width: 498px;
+    justify-content: center;
+    text-align: center;
+    padding-bottom: 40px;
+}
+
+.siparis-alindi input[type="submit"]{
+    background-color: transparent;
+    color:#D95927;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 10px;
+    border: 2px solid #D95927;
+    font-size: 20px;
+}

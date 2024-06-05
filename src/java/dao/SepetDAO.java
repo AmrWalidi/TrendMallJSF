@@ -39,7 +39,7 @@ public class SepetDAO {
         return db;
     }
 
-    public void createSepet(int musteriId) {
+    public Sepet createSepet(int musteriId) {
         try {
             Statement st = this.getConn().createStatement();
             String query = "INSERT INTO sepet (musteri_id) VALUES (" + musteriId + ")";
@@ -47,6 +47,7 @@ public class SepetDAO {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        return getSepet(musteriId);
     }
 
     public void sepeteEkle(int sepetId, Urun u) {
@@ -140,6 +141,16 @@ public class SepetDAO {
             st.executeUpdate(query);
             query = "UPDATE sepet set toplam_ucret = toplam_ucret - " + (adet * u.getFiyat()) + " WHERE id = " + sepetId;
             st.executeUpdate(query);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    public void sepetKaldir(int id){
+         try {
+            Statement st = this.getConn().createStatement();
+            st.executeUpdate("DELETE FROM sepet_urun WHERE sepet_id = " + id);
+            st.executeUpdate("DELETE FROM sepet WHERE id = " + id);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

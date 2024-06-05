@@ -245,5 +245,6 @@ public class KullaniciBean implements Serializable {
             setSuccessMessage("");
         }
     }
+    
 
 }

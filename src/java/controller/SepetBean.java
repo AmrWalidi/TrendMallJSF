@@ -8,6 +8,7 @@ import jakarta.inject.Named;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Inject;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 @Named(value = "sepetBean")
 @SessionScoped
@@ -41,7 +42,7 @@ public class SepetBean implements Serializable {
 
     public void sepeteEkle(Urun u, Musteri m) {
         if (this.getSepet().getId() == 0) {
-            this.getDao().createSepet(m.getId());
+            sepet = this.getDao().createSepet(m.getId());
             this.getDao().sepeteEkle(sepet.getId(), u);
         } else {
             boolean inCart = false;
@@ -83,5 +84,10 @@ public class SepetBean implements Serializable {
         sepet.setToplamUcret(sepet.getToplamUcret() - (this.getUrunAdet(u) * u.getFiyat()));
         this.getDao().sepettenCikar(sepet.getId(), u);
     }
-
+    
+    public void sepetKaldir(){
+        sepet.getUrunler().clear();
+        sepet.setToplamUcret(0);
+        this.getDao().sepetKaldir(sepet.getId());
+    }
 }
