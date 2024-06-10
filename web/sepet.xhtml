@@ -24,19 +24,19 @@
                     <div class="urunler" >
                         <ui:repeat  value="#{sepetBean.sepet.urunler}" var="u">
                             <div class="card" style="width: 18rem;">
-                                <img style="margin: 20px" src="image?id=#{u.id}" alt="Image" width="200" hight="200"/>
+                                <img style="margin: 20px" src="image?id=#{u.urun.id}" alt="Image" width="200" hight="200"/>
                                 <div class="card-body">
-                                    <p class="card-title">#{u.satici.ad}</p>
-                                    <p class="card-text">#{u.ad}</p>
+                                    <p class="card-title">#{u.urun.satici.ad}</p>
+                                    <p class="card-text">#{u.urun.ad}</p>
                                     <div style="display: flex; gap: 50px; align-items: center;">
                                         <div class="sayac"> 
-                                            <h:commandButton value="-" action="#{sepetBean.urunSayisiAzaltir(u)}"/>
-                                            <p class="sayac-degeri"> <h:outputText value="#{sepetBean.getUrunAdet(u)}"/></p>
-                                            <h:commandButton value="+" action="#{sepetBean.urunSayisiArtirir(u)}"/>
+                                            <h:commandButton value="-" action="#{sepetBean.urunSayisiAzaltir(u.urun)}"/>
+                                            <p class="sayac-degeri"> <h:outputText value="#{sepetBean.getUrunAdet(u.urun)}"/></p>
+                                            <h:commandButton value="+" action="#{sepetBean.urunSayisiArtirir(u.urun)}"/>
                                         </div>
-                                        <p class="fiyat"><h:outputText value="#{sepetBean.getUrunAdet(u) * u.fiyat} TL"/></p>
+                                        <p class="fiyat"><h:outputText value="#{sepetBean.getUrunAdet(u.urun) * u.urun.fiyat} TL"/></p>
                                     </div>
-                                    <p class="urun-remove-btn"><h:commandButton value="Remove" action="#{sepetBean.sepettenCikar(u)}"/></p>
+                                    <p class="urun-remove-btn"><h:commandButton value="Remove" action="#{sepetBean.sepettenCikar(u.urun)}"/></p>
                                 </div>
                             </div>
                         </ui:repeat>

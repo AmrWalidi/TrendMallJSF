@@ -1,146 +1,104 @@
 package dao;
 
 import entity.Sepet;
+import entity.SepetUrun;
+import entity.SepetUrunId;
 import entity.Urun;
-import java.sql.*;
+import jakarta.ejb.Local;
+import jakarta.ejb.Stateless;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.Query;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import util.DBConnection;
 
-public class SepetDAO {
-
-    private Connection db;
-    private MusteriDAO mDao;
-    private UrunDAO uDao;
+@Local
+@Stateless
+public class SepetDAO extends AbstractDAO<Sepet> implements Serializable {
 
     public SepetDAO() {
-
+        super(Sepet.class);
     }
 
-    public MusteriDAO getmDao() {
-        if (mDao == null) {
-            mDao = new MusteriDAO();
-        }
-        return mDao;
-    }
-
-    public UrunDAO getuDao() {
-        if (uDao == null) {
-            uDao = new UrunDAO();
-        }
-        return uDao;
-    }
-
-    public Connection getConn() {
-        if (db == null) {
-            DBConnection conn = new DBConnection();
-            db = conn.getConnection();
-        }
-        return db;
-    }
-
-    public void createSepet(int musteriId) {
+    public void sepeteEkle(Sepet s, Urun u) {
         try {
-            Statement st = this.getConn().createStatement();
-            String query = "INSERT INTO sepet (musteri_id) VALUES (" + musteriId + ")";
-            st.executeUpdate(query);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            Query query = this.em.createQuery("SELECT su FROM SepetUrun su WHERE su.sepet.id = " + s.getId() + " and su.urun.id = " + u.getId() + "", SepetUrun.class);
+            SepetUrun su = (SepetUrun) query.getSingleResult();
+            su.setAdet(su.getAdet() + 1);
+            this.em.merge(su);
+        } catch (NoResultException ex) {
+            SepetUrun su = new SepetUrun(s, u, 1);
+            this.em.persist(su);
+
         }
+        Sepet sepet = this.getById(s.getId());
+        sepet.setToplamUcret(sepet.getToplamUcret() + u.getFiyat());
+        this.update(sepet);
     }
 
-    public void sepeteEkle(int sepetId, Urun u) {
+    public Sepet getSepetByMusteriId(int musteriId) {
+        Query query = this.em.createQuery("SELECT s FROM Sepet s WHERE s.musteri.id = " + musteriId, Sepet.class);
         try {
-            Statement st = this.getConn().createStatement();
-            String query = "INSERT INTO sepet_urun VALUES (" + sepetId + ", " + u.getId() + ")";
-            st.executeUpdate(query);
-            query = "UPDATE sepet set toplam_ucret = toplam_ucret + " + u.getFiyat() + " WHERE id = " + sepetId;
-            st.executeUpdate(query);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            return (Sepet) query.getSingleResult();
+        } catch (NoResultException e) {
+            return new Sepet();
         }
     }
 
-    public Sepet getSepet(int musteriId) {
-        Sepet s = new Sepet();
-        try {
-            Statement st = this.getConn().createStatement();
-            String query = "SELECT * FROM Sepet Where musteri_id = " + musteriId;
-            ResultSet rs = st.executeQuery(query);
-            while (rs.next()) {
-                s = new Sepet(rs.getInt("id"), this.getmDao().getMusteri(musteriId), this.getSepetUrunler(rs.getInt("id")), rs.getFloat("toplam_ucret"));
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return s;
-    }
-
-    public List<Urun> getSepetUrunler(int sepetId) {
+    public List<Urun> getSepetUrunler(int id) {
         List<Urun> urunler = new ArrayList<>();
+        Query query = this.em.createQuery("SELECT su FROM SepetUrun su WHERE su.sepet.id = " + id, SepetUrun.class);
         try {
-            Statement st = this.getConn().createStatement();
-            String query = "SELECT * FROM Sepet_urun Where sepet_id = " + sepetId;
-            ResultSet rs = st.executeQuery(query);
-            while (rs.next()) {
-                Urun u = this.getuDao().getUrun(rs.getInt("urun_id"));
-                urunler.add(u);
+            List<SepetUrun> suList = query.getResultList();
+            for (SepetUrun su : suList) {
+                urunler.add(su.getUrun());
             }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            return urunler;
+        } catch (NoResultException e) {
+            return new ArrayList<>();
         }
-        return urunler;
     }
 
     public int getUrunAdet(int sepetId, int urunId) {
-        int adet = 0;
-        try {
-            Statement st = this.getConn().createStatement();
-            String query = "SELECT adet FROM Sepet_urun Where sepet_id = " + sepetId + " and urun_id = " + urunId;
-            ResultSet rs = st.executeQuery(query);
-            rs.next();
-            adet = rs.getInt("adet");
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+        SepetUrun sepetUrun = this.em.find(SepetUrun.class, new SepetUrunId(sepetId, urunId));
+        if (sepetUrun != null) {
+            return sepetUrun.getAdet();
         }
-        return adet;
+        return 0;
     }
 
     public void urunSayisiArtirir(int sepetId, Urun u) {
-        try {
-            Statement st = this.getConn().createStatement();
-            String query = "UPDATE sepet_urun SET adet = adet + 1 WHERE sepet_id= " + sepetId + " and urun_Id = " + u.getId();
-            st.executeUpdate(query);
-            query = "UPDATE sepet set toplam_ucret = toplam_ucret + " + u.getFiyat() + " WHERE id = " + sepetId;
-            st.executeUpdate(query);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+        Query query = this.em.createQuery("SELECT su FROM SepetUrun su WHERE su.sepet.id = " + sepetId + " and su.urun.id = " + u.getId(), SepetUrun.class);
+        SepetUrun su = (SepetUrun) query.getSingleResult();
+        su.setAdet(su.getAdet() + 1);
+        this.em.merge(su);
+        Sepet sepet = this.getById(sepetId);
+        sepet.setToplamUcret(sepet.getToplamUcret() + u.getFiyat());
+        this.update(sepet);
     }
-    
+
     public void urunSayisiAzaltir(int sepetId, Urun u) {
-        try {
-            Statement st = this.getConn().createStatement();
-            String query = "UPDATE sepet_urun SET adet = adet - 1 WHERE sepet_id= " + sepetId + " and urun_Id = " + u.getId();
-            st.executeUpdate(query);
-            query = "UPDATE sepet set toplam_ucret = toplam_ucret - " + u.getFiyat() + " WHERE id = " + sepetId;
-            st.executeUpdate(query);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+        Query query = this.em.createQuery("SELECT su FROM SepetUrun su WHERE su.sepet.id = " + sepetId + " and su.urun.id = " + u.getId(), SepetUrun.class);
+        SepetUrun su = (SepetUrun) query.getSingleResult();
+        su.setAdet(su.getAdet() - 1);
+        this.em.merge(su);
+        Sepet sepet = this.getById(sepetId);
+        sepet.setToplamUcret(sepet.getToplamUcret() - u.getFiyat());
+        this.update(sepet);
     }
-    
-    public void sepettenCikar(int sepetId, Urun u){
+
+    public void sepettenCikar(int sepetId, Urun u) {
         try {
-            Statement st = this.getConn().createStatement();
-            ResultSet rs = st.executeQuery("SELECT adet FROM sepet_urun WHERE urun_id = " + u.getId() + " and sepet_id = " + sepetId);
-            rs.next();
-            int adet = rs.getInt("adet");
-            String query = "DELETE FROM sepet_urun WHERE urun_id = " + u.getId();
-            st.executeUpdate(query);
-            query = "UPDATE sepet set toplam_ucret = toplam_ucret - " + (adet * u.getFiyat()) + " WHERE id = " + sepetId;
-            st.executeUpdate(query);
-        } catch (SQLException e) {
+            int adet = 0;
+            SepetUrun sepetUrun = this.em.find(SepetUrun.class, new SepetUrunId(sepetId, u.getId()));
+            if (sepetUrun != null) {
+                adet = sepetUrun.getAdet();
+            }
+            this.em.remove(sepetUrun);
+            Sepet sepet = this.getById(sepetId);
+            sepet.setToplamUcret(sepet.getToplamUcret() - (adet * u.getFiyat()));
+            this.update(sepet);
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }

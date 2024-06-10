@@ -1,16 +1,29 @@
 package entity;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.MappedSuperclass;
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class Kullanici {
-
+@MappedSuperclass
+@Inheritance(strategy  = InheritanceType.JOINED)
+public class Kullanici implements Serializable{
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String ad;
     private String soyad;
     private String eposta;
     private String sifre;
+    @Column(name = "tel_no")
     private String telNo;
     private String adres;
 

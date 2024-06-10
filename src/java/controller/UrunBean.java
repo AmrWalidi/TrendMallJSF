@@ -1,9 +1,10 @@
 package controller;
 
+import dao.KategoriDAO;
 import dao.UrunDAO;
 import entity.Kategori;
-import entity.Satici;
 import entity.Urun;
+import jakarta.ejb.EJB;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -14,10 +15,11 @@ import java.util.List;
 @SessionScoped
 public class UrunBean implements Serializable {
 
-    
-    private UrunDAO dao;
+    @EJB
+    private UrunDAO urunDAO;
+    @EJB
+    private KategoriDAO kategoriDAO;
     private List<Urun> urunler;
-    private List<Kategori> kategoriler;
     private List<Kategori> selectedKategoriler;
     private int counter = 1;
     private int pageSayisi;
@@ -26,17 +28,19 @@ public class UrunBean implements Serializable {
     public UrunBean() {
 
     }
-    
-    public UrunDAO getDao() {
-        if (dao == null) {
-            dao = new UrunDAO();
-        }
-        return dao;
+
+    public UrunDAO getUrunDAO() {
+        return urunDAO;
     }
+
+    public KategoriDAO getKategoriDAO() {
+        return kategoriDAO;
+    }
+    
     
     public List<Urun> getUrunler() {
         if (urunler == null) {
-            urunler = getDao().getUrunler(counter);
+            urunler = urunDAO.getUrunler(counter);
         }
         return urunler;
     }
@@ -57,10 +61,7 @@ public class UrunBean implements Serializable {
     }
 
     public List<Kategori> getKategoriler() {
-        if (kategoriler == null) {
-            this.kategoriler = getDao().getKategoriler();
-        }
-        return kategoriler;
+        return kategoriDAO.getEntities();
     }
 
     public List<Kategori> getSelectedKategoriler() {
@@ -83,11 +84,11 @@ public class UrunBean implements Serializable {
     public int getPageSayisi() {
         int urunSayisi;
         if (!arananUrun.isEmpty()) {
-            urunSayisi = this.getDao().getUrunSayisi(arananUrun);
+            urunSayisi = this.urunDAO.getUrunSayisi(arananUrun);
         } else if (!selectedKategoriler.isEmpty()) {
-            urunSayisi = this.getDao().getUrunSayisi(selectedKategoriler);
+            urunSayisi = this.urunDAO.getUrunSayisi(selectedKategoriler);
         } else {
-            urunSayisi = this.getDao().getUrunSayisi();
+            urunSayisi = this.urunDAO.getUrunSayisi();
         }
         pageSayisi = urunSayisi / 5;
         if (urunSayisi % 5 != 0 || pageSayisi == 0) {
@@ -99,37 +100,37 @@ public class UrunBean implements Serializable {
     public void nextPage() {
         counter++;
         if (selectedKategoriler.isEmpty()) {
-            setUrunler(getDao().getUrunler(counter));
+            setUrunler(urunDAO.getUrunler(counter));
         } else {
 
-            setUrunler(getDao().getUrunler(counter, selectedKategoriler));
+            setUrunler(urunDAO.getUrunler(counter, selectedKategoriler));
         }
     }
 
     public void previousPage() {
         counter--;
         if (selectedKategoriler.isEmpty()) {
-            setUrunler(getDao().getUrunler(counter));
+            setUrunler(urunDAO.getUrunler(counter));
         } else {
-            setUrunler(getDao().getUrunler(counter, selectedKategoriler));
+            setUrunler(urunDAO.getUrunler(counter, selectedKategoriler));
         }
     }
 
     public void filter() {
         counter = 1;
-        setUrunler(getDao().getUrunler(counter, selectedKategoriler));
+        setUrunler(urunDAO.getUrunler(counter, selectedKategoriler));
     }
 
     public void temizle() {
         counter = 1;
         arananUrun = "";
         selectedKategoriler.clear();
-        setUrunler(getDao().getUrunler(counter));
+        setUrunler(urunDAO.getUrunler(counter));
     }
 
     public void search() {
         counter = 1;
         selectedKategoriler.clear();
-        setUrunler(getDao().getUrunler(counter, arananUrun));
+        setUrunler(urunDAO.getUrunler(counter, arananUrun));
     }
 }

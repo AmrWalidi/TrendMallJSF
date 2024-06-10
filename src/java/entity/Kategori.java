@@ -1,9 +1,20 @@
 package entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import java.util.List;
 
+@Entity
 public class Kategori {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String ad;
+    @ManyToMany(mappedBy = "kategoriler")
+    private List<Urun> urunler;
 
     public Kategori() {
     }
@@ -27,6 +38,14 @@ public class Kategori {
 
     public void setAd(String ad) {
         this.ad = ad;
+    }
+
+    public List<Urun> getUrunler() {
+        return urunler;
+    }
+
+    public void setUrunler(List<Urun> urunler) {
+        this.urunler = urunler;
     }
 
     @Override
