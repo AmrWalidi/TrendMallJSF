@@ -3,16 +3,11 @@ package converter;
 import controller.UrunBean;
 import entity.Kategori;
 import jakarta.enterprise.context.RequestScoped;
-import jakarta.enterprise.context.SessionScoped;
-import jakarta.faces.bean.ManagedBean;
-import jakarta.faces.bean.ManagedProperty;
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.convert.Converter;
-import jakarta.faces.convert.FacesConverter;
 import jakarta.inject.Inject;
 
-@ManagedBean
 @RequestScoped
 public class KategoriConverter implements Converter {
 

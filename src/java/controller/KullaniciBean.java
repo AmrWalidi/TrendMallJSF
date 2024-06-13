@@ -133,8 +133,8 @@ public class KullaniciBean implements Serializable {
     public void setSuccessMessage(String successMessage) {
         this.successMessage = successMessage;
     }
-    
-    public MusteriDAO getMusteriDAO(){
+
+    public MusteriDAO getMusteriDAO() {
         return musteriDAO;
     }
 
@@ -165,13 +165,13 @@ public class KullaniciBean implements Serializable {
     public void update() {
         if (this.musteriDAO.getMusteri(kullanici) != null) {
             this.musteriDAO.update(musteri);
-            setSuccessMessage("Şifreniz Başarılı Bir Şekilde Değişti");
         } else if (this.saticiDAO.getSatici(kullanici) != null) {
             this.saticiDAO.update(satici);
-            setSuccessMessage("Şifreniz Başarılı Bir Şekilde Değişti");
         }
-        setErrorMessage("E-posta veya şifre hatalı");
+        setSuccessMessage("Bilgileriniz Başarılı Bir Şekilde Değişti");
+        setErrorMessage("");
     }
+
     public String create() {
         if (this.musteriDAO.getMusteri(kullanici.getEposta()) || this.saticiDAO.getSatici(kullanici.getEposta())) {
             setErrorMessage("E-posta zaten alındı");
@@ -221,21 +221,15 @@ public class KullaniciBean implements Serializable {
     public void sifreDegistir() {
         if (eskiSifre.equals(kullanici.getSifre())) {
             if (yeniSifre.equals(tekrarSifre)) {
-                if (yeniSifre.length() >= 6 || yeniSifre.length() <= 36) {
-                    if (musteri != null) {
-                        getMusteri().setSifre(yeniSifre);
-                        getKullanici().setSifre(yeniSifre);
-                        musteriDAO.update(getMusteri());
-                    } else {
-                        satici.setSifre(yeniSifre);
-                        kullanici.setSifre(yeniSifre);
-                        saticiDAO.update(getSatici());
-                    }
-                    setErrorMessage("");
-                    setSuccessMessage("Şifreniz Başarılı Bir Şekilde Değişti");
+                if (musteri != null) {
+                    getMusteri().setSifre(getMusteri().encryptString(yeniSifre));
+                    musteriDAO.update(getMusteri());
                 } else {
-                    setErrorMessage("Şifre 6 ve 16 arasında karekterden oluşur");
+                    getSatici().setSifre(getSatici().encryptString(yeniSifre));
+                    saticiDAO.update(getSatici());
                 }
+                setErrorMessage("");
+                setSuccessMessage("Şifreniz Başarılı Bir Şekilde Değişti");
             } else {
                 setErrorMessage("Tekrarlana şifre ve yeni sifre farklı");
             }

@@ -1,5 +1,6 @@
 package entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,7 +20,7 @@ public class Sepet {
     private Musteri musteri;
     @Column(name = "toplam_ucret")
     private double toplamUcret;
-    @OneToMany(mappedBy = "sepet")
+    @OneToMany(mappedBy = "sepet", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SepetUrun> urunler;
 
     public Sepet(int id, Musteri musteri, double toplamUcret, List<SepetUrun> urunler) {

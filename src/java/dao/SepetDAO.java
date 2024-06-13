@@ -21,19 +21,10 @@ public class SepetDAO extends AbstractDAO<Sepet> implements Serializable {
     }
 
     public void sepeteEkle(Sepet s, Urun u) {
-        try {
-            Query query = this.em.createQuery("SELECT su FROM SepetUrun su WHERE su.sepet.id = " + s.getId() + " and su.urun.id = " + u.getId() + "", SepetUrun.class);
-            SepetUrun su = (SepetUrun) query.getSingleResult();
-            su.setAdet(su.getAdet() + 1);
-            this.em.merge(su);
-        } catch (NoResultException ex) {
-            SepetUrun su = new SepetUrun(s, u, 1);
-            this.em.persist(su);
-
-        }
-        Sepet sepet = this.getById(s.getId());
-        sepet.setToplamUcret(sepet.getToplamUcret() + u.getFiyat());
-        this.update(sepet);
+        SepetUrun su = new SepetUrun(s, u, 1);
+        s.getUrunler().add(su);
+        s.setToplamUcret(s.getToplamUcret() + u.getFiyat());
+        this.update(s);
     }
 
     public Sepet getSepetByMusteriId(int musteriId) {
@@ -67,37 +58,48 @@ public class SepetDAO extends AbstractDAO<Sepet> implements Serializable {
         return 0;
     }
 
-    public void urunSayisiArtirir(int sepetId, Urun u) {
-        Query query = this.em.createQuery("SELECT su FROM SepetUrun su WHERE su.sepet.id = " + sepetId + " and su.urun.id = " + u.getId(), SepetUrun.class);
-        SepetUrun su = (SepetUrun) query.getSingleResult();
-        su.setAdet(su.getAdet() + 1);
-        this.em.merge(su);
-        Sepet sepet = this.getById(sepetId);
-        sepet.setToplamUcret(sepet.getToplamUcret() + u.getFiyat());
-        this.update(sepet);
+    public void urunSayisiArtirir(Sepet s, Urun u) {
+        SepetUrun sepetUrun = this.em.find(SepetUrun.class, new SepetUrunId(s.getId(), u.getId()));
+        for (SepetUrun su : s.getUrunler()) {
+            if (su.getUrun().getId() == u.getId()) {
+                sepetUrun = su;
+                break;
+            }
+        }
+        sepetUrun.setAdet(sepetUrun.getAdet() + 1);
+        s.setToplamUcret(s.getToplamUcret() + u.getFiyat());
+        this.update(s);
     }
 
-    public void urunSayisiAzaltir(int sepetId, Urun u) {
-        Query query = this.em.createQuery("SELECT su FROM SepetUrun su WHERE su.sepet.id = " + sepetId + " and su.urun.id = " + u.getId(), SepetUrun.class);
-        SepetUrun su = (SepetUrun) query.getSingleResult();
-        su.setAdet(su.getAdet() - 1);
-        this.em.merge(su);
-        Sepet sepet = this.getById(sepetId);
-        sepet.setToplamUcret(sepet.getToplamUcret() - u.getFiyat());
-        this.update(sepet);
+    public void urunSayisiAzaltir(Sepet s, Urun u) {
+        SepetUrun sepetUrun = this.em.find(SepetUrun.class, new SepetUrunId(s.getId(), u.getId()));
+        for (SepetUrun su : s.getUrunler()) {
+            if (su.getUrun().getId() == u.getId()) {
+                sepetUrun = su;
+                break;
+            }
+        }
+        sepetUrun.setAdet(sepetUrun.getAdet() - 1);
+        s.setToplamUcret(s.getToplamUcret() - u.getFiyat());
+        this.update(s);
     }
 
-    public void sepettenCikar(int sepetId, Urun u) {
+    public void sepettenCikar(Sepet s, Urun u) {
         try {
             int adet = 0;
-            SepetUrun sepetUrun = this.em.find(SepetUrun.class, new SepetUrunId(sepetId, u.getId()));
+            SepetUrun sepetUrun = this.em.find(SepetUrun.class, new SepetUrunId(s.getId(), u.getId()));
             if (sepetUrun != null) {
                 adet = sepetUrun.getAdet();
             }
-            this.em.remove(sepetUrun);
-            Sepet sepet = this.getById(sepetId);
-            sepet.setToplamUcret(sepet.getToplamUcret() - (adet * u.getFiyat()));
-            this.update(sepet);
+            s.setToplamUcret(s.getToplamUcret() - (adet * u.getFiyat()));
+            for (SepetUrun su : s.getUrunler()) {
+                if (su.getUrun().getId() == u.getId()) {
+                    sepetUrun = su;
+                    break;
+                }
+            }
+            s.getUrunler().remove(sepetUrun);
+            this.update(s);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

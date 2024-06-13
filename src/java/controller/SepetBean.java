@@ -43,15 +43,14 @@ public class SepetBean implements Serializable {
             boolean inCart = false;
             for (SepetUrun su : sepet.getUrunler()) {
                 if (su.getUrun().getId() == u.getId()) {
-                    urunSayisiArtirir(u);
                     inCart = true;
                     break;
                 }
             }
-            if (!inCart) {
+            if (inCart) {
+                urunSayisiArtirir(u);
+            } else {
                 this.dao.sepeteEkle(sepet, u);
-                sepet.getUrunler().add(new SepetUrun(sepet, u, 0));
-                sepet.setToplamUcret(sepet.getToplamUcret() + u.getFiyat());
             }
         }
     }
@@ -61,29 +60,27 @@ public class SepetBean implements Serializable {
     }
 
     public void urunSayisiArtirir(Urun u) {
-        dao.urunSayisiArtirir(sepet.getId(), u);
-        sepet.setToplamUcret(sepet.getToplamUcret() + u.getFiyat());
+        dao.urunSayisiArtirir(sepet, u);
     }
 
     public void urunSayisiAzaltir(Urun u) {
         if (this.getUrunAdet(u) == 1) {
             this.sepettenCikar(u);
         } else {
-            dao.urunSayisiAzaltir(sepet.getId(), u);
-            sepet.setToplamUcret(sepet.getToplamUcret() - u.getFiyat());
+            dao.urunSayisiAzaltir(sepet, u);
         }
     }
 
     public void sepettenCikar(Urun u) {
-        SepetUrun su = new SepetUrun(sepet, u,0);
-        for (SepetUrun urun : sepet.getUrunler()) {
-                if (urun.getUrun().getId() == su.getUrun().getId()) {
-                    su = urun;
-                }
-            }
-        sepet.getUrunler().remove(su);
-        sepet.setToplamUcret(sepet.getToplamUcret() - (this.getUrunAdet(u) * u.getFiyat()));
-        this.dao.sepettenCikar(sepet.getId(), u);
+        this.dao.sepettenCikar(sepet, u);
+        if (sepet.getUrunler().isEmpty()) {
+            delete(this.sepet);
+        }
+    }
+
+    public void delete(Sepet s) {
+        this.dao.delete(sepet);
+        sepet = new Sepet();
     }
 
 }
