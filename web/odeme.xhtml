@@ -16,7 +16,7 @@
     <body>
         <ui:include src="/Template/header.xhtml" />
         <div style="display: flex">
-           <h:form>
+           <h:form >
             <div class="odeme-form">
                 <h2>Ödeme Seçenekleri</h2>
                 <div class="odeme-turu">
@@ -28,11 +28,11 @@
                 <div class="kart-bilgiler"> 
                     <div>
                         <h:outputLabel for="lname" class="L-name" value="Kart Sahibinin Adı:" /><br/>
-                        <h:inputText id="lname" class="I-name" value="#{odemeBean.kartSahibiAdi}" validator="nameValidator" />
+                        <h:inputText id="lname" class="I-name" value="#{odemeBean.kartSahibiAdi}"  />
                     </div>
                     <div>
                         <h:outputLabel for="KNum" class="L-KNum" value="Kart Numarası" /><br/>
-                        <h:inputText id="kNum" class="I-KNum" value="#{odemeBean.kartNo}" maxlength="16" validator="kartNoValidator"/>
+                        <h:inputText id="kNum" class="I-KNum" value="#{odemeBean.kartNo}" maxlength="16" />
                     </div>
                     <div class="kart-son-kullanim">
                         <div>
@@ -52,7 +52,7 @@
                         </div>
                         <div>
                             <h:outputLabel for="cvv" value="CVV" /><br/>
-                            <h:inputText id="cvv" value="#{odemeBean.cvv}"  maxlength="3" validator="cvvValidator"/>
+                            <h:inputText id="cvv" value="#{odemeBean.cvv}"  maxlength="3" />
                         </div>
                     </div>
                     <h:messages style="padding-left: 30px;color: red;padding-top: 20px"/>
