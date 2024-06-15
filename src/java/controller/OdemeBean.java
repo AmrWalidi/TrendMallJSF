@@ -130,15 +130,15 @@ public class OdemeBean implements Serializable {
         odemeTutari = odemeTutari -(double) kupon();
     }
 
-    public String odeme() {
-        LocalDate currentDate = LocalDate.now();
-        getOdemeDAO().odeme(kullaniciBean.getMusteri().getId(), odemeTutari, currentDate);
-        if (odemeTuru == 1) {
-            getOdemeDAO().kartOdeme(kartSahibiAdi, kartNo, bitisAyi, bitisYili, cvv);
-        }
-        sepetBean.sepetKaldir();
-        return "SiparisAlindi.xhtml";
-    }
+//    public String odeme() {
+//        LocalDate currentDate = LocalDate.now();
+//        getOdemeDAO().odeme(kullaniciBean.getMusteri().getId(), odemeTutari, currentDate);
+//        if (odemeTuru == 1) {
+//            getOdemeDAO().kartOdeme(kartSahibiAdi, kartNo, bitisAyi, bitisYili, cvv);
+//        }
+//        sepetBean.sepetKaldir();
+//        return "SiparisAlindi.xhtml";
+//    }
 
     public String simdiAl(Urun u){
         this.odemeTutari = u.getFiyat();

@@ -15,11 +15,11 @@
             
     </h:head>
     <h:body>
-        <ui:include src="/Template/header.xhtml" />
+        <ui:include src="/Component/header.xhtml" />
         <div class="main">
             <h:form>
                 <div class="kategoriler">
-                    <h:selectManyMenu class="kategory" value="#{urunBean.selectedKategoriler}" converter="kategoriConverter">
+                    <h:selectManyMenu class="kategory" value="#{urunBean.selectedKategoriler}" converter="#{kategoriConverter}">
                         <f:selectItems value="#{urunBean.kategoriler}" var="k" itemValue="#{k}" itemLabel="#{k.ad}" />
                     </h:selectManyMenu>    
                     <div class='kategories-btn'>

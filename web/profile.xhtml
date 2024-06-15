@@ -10,7 +10,7 @@
         <title>TrendMall</title>
     </h:head>
     <body>
-        <ui:include src="/Template/header.xhtml" />
+        <ui:include src="/Component/header.xhtml" />
 
         <div class="container">
             <h:form class="side-profile-container ">
@@ -28,7 +28,8 @@
                 </h:panelGroup>
                 <h:panelGroup rendered="#{!kullaniciBean.sifreSayfasi}" class="input-container">
                     <label>Cep Telefonu</label>
-                    <h:inputText value="#{kullaniciBean.musteri != null? kullaniciBean.musteri.telNo:kullaniciBean.satici.telNo }"/>
+                    <h:inputText id="telNo" value="#{kullaniciBean.musteri != null? kullaniciBean.musteri.telNo:kullaniciBean.satici.telNo }" validator="phoneNumberValidator"/>
+                    <h:message for="telNo" style="color:red;"/>
                 </h:panelGroup>
                 <h:panelGroup rendered="#{kullaniciBean.sifreSayfasi}" class="input-container">
                     <label>Eski Şifre</label>
@@ -36,7 +37,8 @@
                 </h:panelGroup>
                 <h:panelGroup rendered="#{kullaniciBean.sifreSayfasi}" class="input-container">
                     <label>Yeni Şifre</label>
-                    <h:inputSecret value="#{kullaniciBean.yeniSifre}"/>
+                    <h:inputSecret id="password" value="#{kullaniciBean.yeniSifre}" validator="passwordValidator"/>
+                    <h:message for="password" style="color:red;"/>
                 </h:panelGroup>
                 <h:panelGroup rendered="#{kullaniciBean.sifreSayfasi}" class="input-container">
                     <label>Tekrar Şifre</label>
@@ -44,7 +46,7 @@
                 </h:panelGroup>
                 <h:panelGroup rendered="#{!kullaniciBean.sifreSayfasi}" class="input-container">
                     <label>Adres</label>
-                    <h:inputText value="#{kullaniciBean.musteri != null? kullaniciBean.musteri.adres:kullaniciBean.satici.adres }"/>
+                    <h:inputText id="adress"  value="#{kullaniciBean.musteri != null? kullaniciBean.musteri.adres:kullaniciBean.satici.adres }" />
                 </h:panelGroup>
                 <h:outputText rendered="#{kullaniciBean.errorMessage != ''}" style="color: red;" value="#{kullaniciBean.errorMessage}"/>
                 <h:outputText rendered="#{kullaniciBean.successMessage != ''}" style="color:green;" value="#{kullaniciBean.successMessage}"/>

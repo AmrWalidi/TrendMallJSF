@@ -24,7 +24,7 @@
                 <h:commandButton rendered="#{kullaniciBean.musteri != null || kullaniciBean.satici != null}" value="Hesabım" action="/profile.xhtml" />
                 <h:panelGroup class="cart-btn-container" rendered="#{kullaniciBean.musteri != null}" layout="block">
                     <h:commandButton action="/sepet.xhtml" value="Sepetim" />
-                    <h:panelGroup class="cart-notification" layout="block" >
+                    <h:panelGroup rendered="#{sepetBean.sepet.urunler != null}" class="cart-notification" layout="block" >
                         #{sepetBean.sepet.urunler.size()}
                     </h:panelGroup>
                 </h:panelGroup>

@@ -1,6 +1,7 @@
 package servlet;
 
-import dao.UrunDAO;
+import controller.UrunBean;
+import jakarta.inject.Inject;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,13 +12,8 @@ import java.io.OutputStream;
 @WebServlet("/image")
 public class ImageServlet extends HttpServlet {  
     
-    private UrunDAO dao;
-    
-    public UrunDAO getDAO(){
-        if (this.dao == null) 
-            dao = new UrunDAO();
-        return dao;
-    }
+    @Inject
+    private UrunBean urunBean;
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
@@ -26,7 +22,7 @@ public class ImageServlet extends HttpServlet {
         try {
             response.setContentType("image/png");
             try (OutputStream out = response.getOutputStream()) {
-                out.write(getDAO().urunImage(imageID));
+                out.write(urunBean.getUrunDAO().urunImage(imageID));
             }
         } catch (IOException e) {
             e.getMessage();

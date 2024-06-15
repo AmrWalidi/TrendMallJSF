@@ -6,6 +6,7 @@ import entity.Kullanici;
 import entity.Musteri;
 import entity.Satici;
 import entity.Urun;
+import jakarta.ejb.EJB;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Inject;
@@ -18,7 +19,9 @@ public class KullaniciBean implements Serializable {
     private Kullanici kullanici;
     private Musteri musteri;
     private Satici satici;
+    @EJB
     private MusteriDAO musteriDAO;
+    @EJB
     private SaticiDAO saticiDAO;
     private int type;
     private String errorMessage;
@@ -31,8 +34,6 @@ public class KullaniciBean implements Serializable {
     private boolean loggedIn;
     @Inject
     private SepetBean sb;
-    
-
 
     public KullaniciBean() {
         this.loggedIn = true;
@@ -65,20 +66,6 @@ public class KullaniciBean implements Serializable {
 
     public void setSatici(Satici satici) {
         this.satici = satici;
-    }
-
-    public MusteriDAO getMusteriDAO() {
-        if (this.musteriDAO == null) {
-            musteriDAO = new MusteriDAO();
-        }
-        return musteriDAO;
-    }
-
-    public SaticiDAO getSaticiDAO() {
-        if (this.saticiDAO == null) {
-            saticiDAO = new SaticiDAO();
-        }
-        return saticiDAO;
     }
 
     public int getType() {
@@ -146,7 +133,11 @@ public class KullaniciBean implements Serializable {
     public void setSuccessMessage(String successMessage) {
         this.successMessage = successMessage;
     }
-    
+
+    public MusteriDAO getMusteriDAO() {
+        return musteriDAO;
+    }
+
     public boolean getLoggedIn() {
         return loggedIn;
     }
@@ -156,14 +147,13 @@ public class KullaniciBean implements Serializable {
     }
 
     public void sepeteEkle(Urun u) {
-        if (this.getMusteri() != null){
-            sb.sepeteEkle(u, musteri);
-        }
-        else {
+        if (this.getMusteri() != null) {
+            sb.sepeteEkle(u);
+        } else {
             loggedIn = false;
         }
     }
-    
+
     public String logout() {
         this.setMusteri(null);
         this.setSatici(null);
@@ -173,42 +163,53 @@ public class KullaniciBean implements Serializable {
     }
 
     public void update() {
-        if (this.getMusteriDAO().getMusteri(kullanici) != null) {
-            this.getMusteriDAO().update(musteri);
-            setSuccessMessage("Şifreniz Başarılı Bir Şekilde Değişti");
-        } else if (this.getSaticiDAO().getSatici(kullanici) != null) {
-            this.getSaticiDAO().update(satici);
-            setSuccessMessage("Şifreniz Başarılı Bir Şekilde Değişti");
+        if (this.musteriDAO.getMusteri(kullanici) != null) {
+            this.musteriDAO.update(musteri);
+        } else if (this.saticiDAO.getSatici(kullanici) != null) {
+            this.saticiDAO.update(satici);
         }
-        setErrorMessage("E-posta veya şifre hatalı");
+        setSuccessMessage("Bilgileriniz Başarılı Bir Şekilde Değişti");
+        setErrorMessage("");
     }
 
     public String create() {
-        if (this.getMusteriDAO().getMusteri(kullanici.getEposta()) || this.getSaticiDAO().getSatici(kullanici.getEposta())) {
+        if (this.musteriDAO.getMusteri(kullanici.getEposta()) || this.saticiDAO.getSatici(kullanici.getEposta())) {
             setErrorMessage("E-posta zaten alındı");
             return "giris-form.xhtml";
-        } 
-        else {
-            if (type == 1) 
-                this.getMusteriDAO().create(kullanici); 
-            else 
-                this.getSaticiDAO().create(kullanici);
+        } else {
+            if (type == 1) {
+                Musteri m = new Musteri();
+                m.setAd(kullanici.getAd());
+                m.setSoyad(kullanici.getSoyad());
+                m.setEposta(kullanici.getEposta());
+                m.setSifre(kullanici.getSifre());
+                m.setTelNo(kullanici.getTelNo());
+                m.setAdres(kullanici.getAdres());
+                this.musteriDAO.create(m);
+            } else {
+                Satici s = new Satici();
+                s.setAd(kullanici.getAd());
+                s.setSoyad(kullanici.getSoyad());
+                s.setEposta(kullanici.getEposta());
+                s.setSifre(kullanici.getSifre());
+                s.setTelNo(kullanici.getTelNo());
+                s.setAdres(kullanici.getAdres());
+                this.saticiDAO.create(s);
+            }
             return this.login();
-        }   
+        }
     }
-    
-    
-    
-     public String login() {
+
+    public String login() {
         this.setMusteri(null);
         this.setSatici(null);
-        if (this.getMusteriDAO().getMusteri(kullanici) != null) {
-            this.setMusteri(this.getMusteriDAO().getMusteri(kullanici));
+        if (this.musteriDAO.getMusteri(kullanici) != null) {
+            this.setMusteri(this.musteriDAO.getMusteri(kullanici));
             setErrorMessage("");
             loggedIn = true;
             return "index.xhtml";
-        } else if (this.getSaticiDAO().getSatici(kullanici) != null) {
-            this.setSatici(this.getSaticiDAO().getSatici(kullanici));
+        } else if (this.saticiDAO.getSatici(kullanici) != null) {
+            this.setSatici(this.saticiDAO.getSatici(kullanici));
             setErrorMessage("");
             loggedIn = true;
             return "satici-urunler.xhtml";
@@ -220,21 +221,15 @@ public class KullaniciBean implements Serializable {
     public void sifreDegistir() {
         if (eskiSifre.equals(kullanici.getSifre())) {
             if (yeniSifre.equals(tekrarSifre)) {
-                if (yeniSifre.length() >= 6 || yeniSifre.length() <= 36) {
-                    if (musteri != null) {
-                        getMusteri().setSifre(yeniSifre);
-                        getKullanici().setSifre(yeniSifre);
-                        getMusteriDAO().update(getMusteri());
-                    } else {
-                        getSatici().setSifre(yeniSifre);
-                        getKullanici().setSifre(yeniSifre);
-                        getSaticiDAO().update(getSatici());
-                    }
-                    setErrorMessage("");
-                    setSuccessMessage("Şifreniz Başarılı Bir Şekilde Değişti");
+                if (musteri != null) {
+                    getMusteri().setSifre(getMusteri().encryptString(yeniSifre));
+                    musteriDAO.update(getMusteri());
                 } else {
-                    setErrorMessage("Şifre 6 ve 16 arasında karekterden oluşur");
+                    getSatici().setSifre(getSatici().encryptString(yeniSifre));
+                    saticiDAO.update(getSatici());
                 }
+                setErrorMessage("");
+                setSuccessMessage("Şifreniz Başarılı Bir Şekilde Değişti");
             } else {
                 setErrorMessage("Tekrarlana şifre ve yeni sifre farklı");
             }

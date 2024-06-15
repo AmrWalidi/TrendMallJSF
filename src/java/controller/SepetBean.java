@@ -1,9 +1,10 @@
 package controller;
 
 import dao.SepetDAO;
-import entity.Musteri;
 import entity.Sepet;
+import entity.SepetUrun;
 import entity.Urun;
+import jakarta.ejb.EJB;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Inject;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 public class SepetBean implements Serializable {
 
     private Sepet sepet;
+    @EJB
     private SepetDAO dao;
     @Inject
     private KullaniciBean kb;
@@ -24,7 +26,7 @@ public class SepetBean implements Serializable {
 
     public Sepet getSepet() {
         if (sepet == null) {
-            sepet = this.getDao().getSepet(kb.getMusteri().getId());
+            sepet = this.dao.getSepetByMusteriId(kb.getMusteri().getId());
         }
         return sepet;
     }
@@ -33,61 +35,52 @@ public class SepetBean implements Serializable {
         this.sepet = sepet;
     }
 
-    public SepetDAO getDao() {
-        if (dao == null) {
-            dao = new SepetDAO();
-        }
-        return dao;
-    }
-
-    public void sepeteEkle(Urun u, Musteri m) {
+    public void sepeteEkle(Urun u) {
         if (this.getSepet().getId() == 0) {
-            sepet = this.getDao().createSepet(m.getId());
-            this.getDao().sepeteEkle(sepet.getId(), u);
+            sepet.setMusteri(kb.getMusteri());
+            this.dao.create(sepet);
+            this.dao.sepeteEkle(sepet, u);
         } else {
             boolean inCart = false;
-            for (Urun urun : sepet.getUrunler()){
-                if (urun.getId() == u.getId()){
-                    urunSayisiArtirir(u);
+            for (SepetUrun su : sepet.getUrunler()) {
+                if (su.getUrun().getId() == u.getId()) {
                     inCart = true;
                     break;
                 }
             }
-            if (!inCart){
-                this.getDao().sepeteEkle(sepet.getId(), u);
-                sepet.getUrunler().add(u);
-                sepet.setToplamUcret(sepet.getToplamUcret() + u.getFiyat());
+            if (inCart) {
+                urunSayisiArtirir(u);
+            } else {
+                this.dao.sepeteEkle(sepet, u);
             }
         }
     }
 
     public int getUrunAdet(Urun u) {
-        return getDao().getUrunAdet(sepet.getId(), u.getId());
+        return dao.getUrunAdet(sepet.getId(), u.getId());
     }
 
     public void urunSayisiArtirir(Urun u) {
-        getDao().urunSayisiArtirir(sepet.getId(), u);
-        sepet.setToplamUcret(sepet.getToplamUcret() + u.getFiyat());
+        dao.urunSayisiArtirir(sepet, u);
     }
 
     public void urunSayisiAzaltir(Urun u) {
         if (this.getUrunAdet(u) == 1) {
             this.sepettenCikar(u);
         } else {
-            getDao().urunSayisiAzaltir(sepet.getId(), u);
-            sepet.setToplamUcret(sepet.getToplamUcret() - u.getFiyat());
+            dao.urunSayisiAzaltir(sepet, u);
         }
     }
 
     public void sepettenCikar(Urun u) {
-        sepet.getUrunler().remove(u);
-        sepet.setToplamUcret(sepet.getToplamUcret() - (this.getUrunAdet(u) * u.getFiyat()));
-        this.getDao().sepettenCikar(sepet.getId(), u);
+        this.dao.sepettenCikar(sepet, u);
+        if (sepet.getUrunler().isEmpty()) {
+            delete(this.sepet);
+        }
     }
-    
-    public void sepetKaldir(){
-        sepet.getUrunler().clear();
-        sepet.setToplamUcret(0);
-        this.getDao().sepetKaldir(sepet.getId());
+
+    public void delete(Sepet s) {
+        this.dao.delete(sepet);
+        sepet = new Sepet();
     }
 }

@@ -1,19 +1,33 @@
 package entity;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import java.util.List;
 
-
+@Entity
 public class Sepet {
-    private int id;
-    private Musteri musteri;
-    private List urunler;
-    private double toplamUcret;
 
-    public Sepet(int id, Musteri musteri, List<Urun> urunler, double toplamUcret) {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @OneToOne
+    private Musteri musteri;
+    @Column(name = "toplam_ucret")
+    private double toplamUcret;
+    @OneToMany(mappedBy = "sepet", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SepetUrun> urunler;
+
+    public Sepet(int id, Musteri musteri, double toplamUcret, List<SepetUrun> urunler) {
         this.id = id;
         this.musteri = musteri;
-        this.urunler = urunler;
         this.toplamUcret = toplamUcret;
+        this.urunler = urunler;
     }
 
     public Sepet(Musteri musteri) {
@@ -39,14 +53,6 @@ public class Sepet {
         this.musteri = musteri;
     }
 
-    public List<Urun> getUrunler() {
-        return urunler;
-    }
-
-    public void setUrunler(List<Urun> urunler) {
-        this.urunler = urunler;
-    }
-
     public double getToplamUcret() {
         return toplamUcret;
     }
@@ -55,5 +61,14 @@ public class Sepet {
         this.toplamUcret = toplamUcret;
     }
 
+    public List<SepetUrun> getUrunler() {
+        return urunler;
+    }
+
+    public void setUrunler(List<SepetUrun> urunler) {
+        this.urunler = urunler;
+    }
     
+    
+
 }

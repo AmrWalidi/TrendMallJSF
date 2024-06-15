@@ -1,21 +1,23 @@
 package converter;
 
-import dao.UrunDAO;
+import controller.UrunBean;
 import entity.Kategori;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.component.UIComponent;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.convert.Converter;
-import jakarta.faces.convert.FacesConverter;
+import jakarta.inject.Inject;
 
-@FacesConverter("kategoriConverter")
+@RequestScoped
 public class KategoriConverter implements Converter {
 
-    private UrunDAO dao;
+    @Inject
+    private UrunBean urunBean;
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         int id = Integer.valueOf(value);
-        Kategori k = this.getDao().getKategori(id);
+        Kategori k = urunBean.getKategoriDAO().getById(id);
         return k;
     }
 
@@ -23,13 +25,6 @@ public class KategoriConverter implements Converter {
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         Kategori k = (Kategori)value;
         return String.valueOf(k.getId());
-    }
-
-    public UrunDAO getDao() {
-        if (dao == null) {
-            dao = new UrunDAO();
-        }
-        return dao;
     }
 
 }
