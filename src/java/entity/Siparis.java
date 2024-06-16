@@ -1,27 +1,28 @@
 package entity;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Sepet {
+public class Siparis {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @OneToOne
+    @ManyToOne(targetEntity = Musteri.class)
     private Musteri musteri;
-    @Column(name = "toplam_ucret")
-    private double toplamUcret;
-    @OneToMany(mappedBy = "sepet", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<SepetUrun> urunler;
+    @OneToOne
+    private Odeme odeme;
+    @OneToMany(mappedBy = "siparis", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SiparisUrun> urunler;
 
     public int getId() {
         return id;
@@ -39,19 +40,22 @@ public class Sepet {
         this.musteri = musteri;
     }
 
-    public double getToplamUcret() {
-        return toplamUcret;
+    public Odeme getOdeme() {
+        return odeme;
     }
 
-    public void setToplamUcret(double toplamUcret) {
-        this.toplamUcret = toplamUcret;
+    public void setOdeme(Odeme odeme) {
+        this.odeme = odeme;
     }
 
-    public List<SepetUrun> getUrunler() {
+    public List<SiparisUrun> getUrunler() {
+        if (urunler == null) {
+            urunler = new ArrayList<>();
+        }
         return urunler;
     }
 
-    public void setUrunler(List<SepetUrun> urunler) {
+    public void setUrunler(List<SiparisUrun> urunler) {
         this.urunler = urunler;
     }
 

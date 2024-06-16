@@ -34,6 +34,8 @@ public class KullaniciBean implements Serializable {
     private boolean loggedIn;
     @Inject
     private SepetBean sb;
+    @Inject
+    private OdemeBean od;
 
     public KullaniciBean() {
         this.loggedIn = true;
@@ -151,6 +153,15 @@ public class KullaniciBean implements Serializable {
             sb.sepeteEkle(u);
         } else {
             loggedIn = false;
+        }
+    }
+    
+    public String simdiAl(Urun u) {
+        if (this.getMusteri() != null) {
+            return od.simdiAl(u);
+        } else {
+            loggedIn = false;
+            return "index.xhtml";
         }
     }
 

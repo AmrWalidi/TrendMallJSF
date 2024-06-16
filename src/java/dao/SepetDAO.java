@@ -104,15 +104,4 @@ public class SepetDAO extends AbstractDAO<Sepet> implements Serializable {
             System.out.println(e.getMessage());
         }
     }
-    
-//    public void sepetKaldir(int id){
-//         try {
-//            Statement st = this.getConn().createStatement();
-//            st.executeUpdate("DELETE FROM sepet_urun WHERE sepet_id = " + id);
-//            st.executeUpdate("DELETE FROM sepet WHERE id = " + id);
-//        } catch (SQLException e) {
-//            System.out.println(e.getMessage());
-//        }
-//    }
-
 }

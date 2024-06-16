@@ -2,43 +2,90 @@
     font-family: "Arial", sans-serif;
 }
 
-input[type="submit"]{
+.odeme-sayfa{
+    display: flex;
+    gap: 300px;
+    align-items: center;
+}
+
+.odeme-sayfa input[type="submit"]{
     cursor: pointer;
 }
 
-form{
+.odeme-secenekler{
+    margin: 50px;
+}
+
+.odeme-secenekler h2{
+    padding: 10px 0;
+}
+
+.kart-container{
+    border: 1px solid #e2e2e2;
+    background-color: white;
+    margin-top: 30px;
+    padding: 0px 20px 20px;
+    border-radius:5px;
+    width: fit-content;
+
+}
+
+.kart-container input[type="submit"]{
+    text-decoration: underline;
+    margin-top: 10px;
+    background-color: transparent;
+    border: none;
+}
+
+.kartlar{
+    display: flex;
+    flex-direction: column;
+}
+
+.kayitli-kart-container{
+    display: flex;
+    margin: 10px;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.kayitli-kart-container button{
+    background-color: #f27a1b;
+    color: white;
+    border: none;
+    padding: 3px;
+    border-radius:5px;
+}
+
+.kayitli-kart-container div{
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: 5px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #F9F9F9;
+    box-shadow: 1px 1px 1px rgba(0,0,0, 0.25)
+}
+
+.clicked{
+    outline: 3px solid #f27a1b
+}
+
+.odeme-sayfa-component{
     padding-left: 20px;
     padding-right: 20px;
     padding-top: 20px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 1100px;
     display: flex;
     justify-content: space-between;
 }
-.odeme-form{
-    width:80%;
-}
-.odmeme-turu{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-}
+
 .odeme-form h2{
     padding-bottom: 30px;
 }
 
-[type="checkbox"], [type="radio"] {
+[type="radio"] {
     margin-left: 150px;
-}
-
-.kart-bilgiler{
-    border: solid 1px #BEBCBC;
-    background-color: #F9F9F9;
-    margin-top: 30px;
-    padding: 0px 20px 20px;
-    width: fit-content;
-    border-radius:5px;
 }
 .I-name,.I-KNum{
     border: solid 1px #919191;
@@ -47,15 +94,15 @@ form{
     border-radius: 5px;
     padding-left: 5px;
     font-size: 14px;
+    background-color: #F9F9F9;
 }
 .I-name:focus{
     outline: none;
 }
-.kart-bilgiler label{
+.kart-container label{
     display: inline-block;
     padding: 26px 0px 5px;
     font-size: 13px;
-
 }
 .kart-son-kullanim{
     display:flex;
@@ -66,6 +113,8 @@ form{
 .kart-son-kullanim input,.son-ay,.son-yil{
     width: 70px;
     height: 30px;
+    background-color: #F9F9F9;
+    border: solid 1px #919191;
 }
 .son-ay{
     margin-right: 7px;
@@ -75,15 +124,18 @@ form{
     margin-right: 20px;
 
 }
-.ozet{
-    width: 50%;
-    position: relative;
+
+.kaydet{
+    padding: 10px 0;
+}
+
+.kaydet{
+    font-size: 14px;
 }
 
 .siparis-ozeti {
     justify-content: space-around;
     padding: 8px 25px 12px ;
-    width: 100%;
     background-color: #ffffff;
     display: flex;
     flex-direction: column;
@@ -108,7 +160,7 @@ form{
 
 .kart-odeme-label{
     display: inline-block;
-    margin-right: 400px;   
+    margin-right: 400px;
 }
 
 .kupon-side{
@@ -125,17 +177,27 @@ form{
     border-radius: 5px;
     padding: 4px;
     font-size: 14px;
+
 }
 
 .kupon-side input[type="text"]:focus{
     outline: none;
+
 }
 
-.form-btn{
+.kupon-side input[type="submit"]{
     background-color: #D95927;
     color: white;
     border-color: transparent;
     border-radius: 5px;
     padding: 4px 8px;
+}
 
+.odeme-btn{
+    margin-top: 20px;
+    background-color: #D95927;
+    color: white;
+    border-color: transparent;
+    border-radius: 5px;
+    padding: 4px 8px;
 }

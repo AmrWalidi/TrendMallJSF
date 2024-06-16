@@ -27,16 +27,6 @@ public class Kullanici implements Serializable{
     private String telNo;
     private String adres;
 
-    public Kullanici(int id, String ad, String soyad, String eposta, String sifre, String telNo, String adres) {
-        this.id = id;
-        this.ad = ad;
-        this.soyad = soyad;
-        this.eposta = eposta;
-        this.sifre = sifre;
-        this.telNo = telNo;
-        this.adres = adres;
-    }
-
     public Kullanici() {
     }
 

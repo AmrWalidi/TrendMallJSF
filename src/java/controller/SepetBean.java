@@ -9,7 +9,6 @@ import jakarta.inject.Named;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Inject;
 import java.io.Serializable;
-import java.util.ArrayList;
 
 @Named(value = "sepetBean")
 @SessionScoped
@@ -75,11 +74,11 @@ public class SepetBean implements Serializable {
     public void sepettenCikar(Urun u) {
         this.dao.sepettenCikar(sepet, u);
         if (sepet.getUrunler().isEmpty()) {
-            delete(this.sepet);
+            delete();
         }
     }
 
-    public void delete(Sepet s) {
+    public void delete() {
         this.dao.delete(sepet);
         sepet = new Sepet();
     }

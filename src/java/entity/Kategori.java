@@ -16,14 +16,6 @@ public class Kategori {
     @ManyToMany(mappedBy = "kategoriler")
     private List<Urun> urunler;
 
-    public Kategori() {
-    }
-
-    public Kategori(int id, String ad) {
-        this.id = id;
-        this.ad = ad;
-    }
-
     public int getId() {
         return id;
     }

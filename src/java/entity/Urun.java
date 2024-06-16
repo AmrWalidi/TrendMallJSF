@@ -34,20 +34,6 @@ public class Urun {
     @OneToMany(mappedBy = "urun")
     private List<SepetUrun> sepetler;
 
-    public Urun() {
-    }
-
-    public Urun(int id, String ad, Satici satici, List<Kategori> kategoriler, int miktar, double fiyat, byte[] image, List<SepetUrun> sepetler) {
-        this.id = id;
-        this.ad = ad;
-        this.satici = satici;
-        this.kategoriler = kategoriler;
-        this.miktar = miktar;
-        this.fiyat = fiyat;
-        this.image = image;
-        this.sepetler = sepetler;
-    }
-
     public int getId() {
         return id;
     }

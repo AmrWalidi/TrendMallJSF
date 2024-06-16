@@ -6,79 +6,121 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <head>
-        <title>Ödeme Sayfası</title>
+        <title>TrendMall</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" type="text/css" href="css/normalize.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
         <link rel="stylesheet" type="text/css" href="css/header.css" />
         <link rel="stylesheet" type="text/css" href="css/odeme.css" />
+        <script>
+            function selectKart(element) {
+                var elements = document.querySelectorAll('.kart-numara-tarih');
+                elements.forEach(function (el) {
+                    el.classList.remove('clicked');
+                }
+                );
+
+                element.classList.add('clicked');
+            }
+        </script>
     </head>
     <body>
-        <ui:include src="/Template/header.xhtml" />
-        <div style="display: flex">
-           <h:form >
-            <div class="odeme-form">
-                <h2>Ödeme Seçenekleri</h2>
-                <div class="odeme-turu">
-                    <h:selectOneRadio value="#{odemeBean.odemeTuru}" styleClass="radio-container">
-                        <f:selectItem class="kart-odeme-label" itemValue="1"  itemLabel="Banka Kart" style="margin-right: 60px"/>
-                        <f:selectItem itemValue="2" itemLabel="Kapıda Ödeme" />
-                    </h:selectOneRadio>
-                </div>
-                <div class="kart-bilgiler"> 
-                    <div>
-                        <h:outputLabel for="lname" class="L-name" value="Kart Sahibinin Adı:" /><br/>
-                        <h:inputText id="lname" class="I-name" value="#{odemeBean.kartSahibiAdi}"  />
-                    </div>
-                    <div>
-                        <h:outputLabel for="KNum" class="L-KNum" value="Kart Numarası" /><br/>
-                        <h:inputText id="kNum" class="I-KNum" value="#{odemeBean.kartNo}" maxlength="16" />
-                    </div>
-                    <div class="kart-son-kullanim">
-                        <div>
-                            <h:outputLabel for="SKT" value="Son Kullanım Tarihi" /><br/>
-                            <h:selectOneMenu class="son-ay" value="#{odemeBean.bitisAyi}">
-                                <c:forEach var="i" begin="1" end="12">
-                                    <f:selectItem itemValue="#{i}" itemLabel="#{i}" />
-                                </c:forEach>
-                            </h:selectOneMenu>
-
-                            <h:selectOneMenu class="son-ay" value="#{odemeBean.bitisYili}">
-                                <c:forEach var="i" begin="1" end="12">
-                                    <f:selectItem itemValue="#{i+2023}" itemLabel="#{i+2023}" />
-                                </c:forEach>
-                            </h:selectOneMenu>
-
+        <ui:include src="/Component/header.xhtml" />
+        <div class="odeme-sayfa">
+            <div>
+                <h:form>
+                    <div class="odeme-secenekler">
+                        <h2>Ödeme Seçenekleri</h2>
+                        <div class="odeme-turu">
+                            <h:selectOneRadio value="#{odemeBean.odemeTuru}" styleClass="radio-container">
+                                <f:selectItem class="kart-odeme-label" itemValue="1"  itemLabel="Banka Kart"/>
+                                <f:selectItem itemValue="2" itemLabel="Kapıda Ödeme" />
+                            </h:selectOneRadio>
                         </div>
-                        <div>
-                            <h:outputLabel for="cvv" value="CVV" /><br/>
-                            <h:inputText id="cvv" value="#{odemeBean.cvv}"  maxlength="3" />
+                        <h:panelGroup layout="block" styleClass="kart-container"  rendered="#{odemeBean.kayitliKart}">
+                            <h:commandButton action="#{odemeBean.setKayitliKart(false)}" value="Başka bir kart ile ödeme yap" />
+                            <div class="kartlar">
+                                <ui:repeat  value="#{odemeBean.list}" var="l">
+                                    <div class="kayitli-kart-container">
+                                        <div class="kart-numara-tarih" id="#{l.id}" onclick="selectKart(this)">
+                                            <p>
+                                                <h:outputText value="#{odemeBean.replaceSubstring(l.numara, 4, 12, ' **** ** ')}" />
+                                            </p>
+                                            <p>
+                                                <h:outputText value="#{l.sonKullanmaTarihi}">
+                                                    <f:convertDateTime pattern="MM/yyyy" />
+                                                </h:outputText>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </ui:repeat>
+                            </div>
+                            <h:outputText rendered="#{odemeBean.list.size() == 0}" value="Kayıtlı Kartınız Yoktur" />
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block" class="kart-container" rendered="#{!odemeBean.kayitliKart}"> 
+                            <h:commandButton action="#{odemeBean.setKayitliKart(true)}" value="Kayıtlı kartımla ödeme yap" />
+                            <div>
+                                <h:outputLabel for="lname" class="L-name" value="Kart Sahibinin Adı" /><br/>
+                                <h:inputText id="lname" class="I-name" value="#{odemeBean.kart.sahib}"/>
+                            </div>
+                            <div>
+                                <h:outputLabel for="KNum" class="L-KNum" value="Kart Numarası" /><br/>
+                                <h:inputText id="kNum" class="I-KNum" value="#{odemeBean.kart.numara}" validator="kartNoValidator" maxlength="16" />
+                            </div>
+                            <div class="kart-son-kullanim">
+                                <div>
+                                    <h:outputLabel for="SKT" value="Son Kullanım Tarihi" /><br/>
+                                    <h:selectOneMenu class="son-ay" value="#{odemeBean.ay}">
+                                        <c:forEach var="i" begin="1" end="12">
+                                            <f:selectItem itemValue="#{i}" itemLabel="#{i}" />
+                                        </c:forEach>
+                                    </h:selectOneMenu>
+
+                                    <h:selectOneMenu class="son-ay" value="#{odemeBean.yil}">
+                                        <c:forEach var="i" begin="1" end="12">
+                                            <f:selectItem itemValue="#{i+2023}" itemLabel="#{i+2023}" />
+                                        </c:forEach>
+                                    </h:selectOneMenu>
+
+                                </div>
+                                <div>
+                                    <h:outputLabel for="cvv" value="CVV" /><br/>
+                                    <h:inputText id="cvv" value="#{odemeBean.kart.cvv}" validator="cvvValidator"  maxlength="3" />
+                                </div>
+
+                            </div>
+                            <div class="kaydet">
+                                <h:selectBooleanCheckbox value="#{odemeBean.saveKart}" />
+                                <h:outputText value="Kart Bilgileri Kaydetmek İstiyorum"/>
+                            </div>
+                            <h:messages style="padding-left: 30px;color: red;padding-top: 20px"/>
+                        </h:panelGroup>
+                        <h:commandButton class="odeme-btn" value="Ödeme Yap" action="#{odemeBean.odeme}" />
+                    </div>
+                </h:form>
+                <h:form >
+                    <h:commandButton style="margin-left: 50px "  class="odeme-btn" value="Ödeme Yap" action="#{odemeBean.odeme}" />
+                </h:form>    
+            </div>
+            <h:form styleClass="odeme-sayfa-component">
+                <div>
+                    <div class="siparis-ozeti">
+                        <h3><h:outputText value="Sipariş Özeti"/></h3>
+                        <div><p>ürünlerin tutarı</p><p><h:outputText value="#{odemeBean.odemeTutari} TL" /></p></div>
+                        <div><p>kargo ücreti</p><p><h:outputText value="50TL"/></p></div>
+                        <p class="cizgi"></p>
+                        <div><p>Toplam</p><p><h:outputText value="#{(odemeBean.odemeTutari + 50)} TL" style="color:#D95927;font-weight: bold"/></p></div>
+                    </div>
+                    <div class="kupon-side">
+                        <h:outputLabel for="kupon" class="L-kupon" value="Kupon Kodu" /><br/>
+                        <div style="display: flex; align-items: center; gap: 10px">
+                            <h:inputText id="kupn" class="I-kupon" value="#{odemeBean.kupon}" />
+                            <h:commandButton class="form-btn" value="UYGULA" action="#{odemeBean.kuponUygula}"/>
                         </div>
-                    </div>
-                    <h:messages style="padding-left: 30px;color: red;padding-top: 20px"/>
+                    </div> 
                 </div>
-                <h:commandButton class="form-btn" value="Ödeme Yap" action="#{odemeBean.odeme}" />
-            </div>
-        </h:form>
-        <h:form>
-            <div class="ozet">
-                <div class="siparis-ozeti">
-                    <h3><h:outputText value="Sipariş Özeti"/></h3>
-                    <div><p>ürünlerin tutarı</p><p><h:outputText value="#{odemeBean.odemeTutari} TL" /></p></div>
-                    <div><p>kargo ücreti</p><p><h:outputText value="50TL"/></p></div>
-                    <p class="cizgi"></p>
-                    <div><p>Toplam</p><p><h:outputText value="#{odemeBean.sepetBean.sepet.toplamUcret != 0.0? (odemeBean.sepetBean.sepet.toplamUcret + 50) : 0} TL" style="color:#D95927;font-weight: bold"/></p></div>
-                </div>
-                <div class="kupon-side">
-                    <h:outputLabel for="kupon" class="L-kupon" value="Kupon Kodu" /><br/>
-                    <div style="display: flex; align-items: center; gap: 10px">
-                        <h:inputText id="kupn" class="I-kupon" value="#{odemeBean.kupon}" />
-                    <h:commandButton class="form-btn" value="UYGULA" action="#{odemeBean.kuponUygula}"/>
-                    </div>
-                    
-                </div> 
-            </div>
-        </h:form> 
+            </h:form> 
         </div>
     </body>
 </html>
