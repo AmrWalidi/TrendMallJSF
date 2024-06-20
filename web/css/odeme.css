@@ -2,23 +2,15 @@
     font-family: "Arial", sans-serif;
 }
 
-.odeme-sayfa{
-    display: flex;
-    gap: 300px;
-    align-items: center;
-}
 
-.odeme-sayfa input[type="submit"]{
+.odeme-sayfa input[type="submit"],button{
     cursor: pointer;
 }
 
-.odeme-secenekler{
-    margin: 50px;
+h2{
+    margin: 20px;
 }
 
-.odeme-secenekler h2{
-    padding: 10px 0;
-}
 
 .kart-container{
     border: 1px solid #e2e2e2;
@@ -30,11 +22,21 @@
 
 }
 
-.kart-container input[type="submit"]{
-    text-decoration: underline;
-    margin-top: 10px;
+.radio-container tbody tr{
+    display: flex;
+    gap: 300px;
+}
+
+.hidden {
+    display: none;
+}
+
+.toggle-btn{
     background-color: transparent;
     border: none;
+    text-decoration: underline;
+    margin-top: 10px;
+    cursor:pointer;
 }
 
 .kartlar{
@@ -47,14 +49,6 @@
     margin: 10px;
     flex-direction: column;
     gap: 10px;
-}
-
-.kayitli-kart-container button{
-    background-color: #f27a1b;
-    color: white;
-    border: none;
-    padding: 3px;
-    border-radius:5px;
 }
 
 .kayitli-kart-container div{
@@ -73,6 +67,9 @@
 }
 
 .odeme-sayfa-component{
+    position: absolute;
+    left: 60%;
+    top: 30%;
     padding-left: 20px;
     padding-right: 20px;
     padding-top: 20px;
@@ -84,9 +81,6 @@
     padding-bottom: 30px;
 }
 
-[type="radio"] {
-    margin-left: 150px;
-}
 .I-name,.I-KNum{
     border: solid 1px #919191;
     width: 320px;
@@ -139,7 +133,6 @@
     background-color: #ffffff;
     display: flex;
     flex-direction: column;
-    margin-top: 40px;
     border: 1px solid #c3c3c3;
     border-radius: 15px;
     max-height: 330px;

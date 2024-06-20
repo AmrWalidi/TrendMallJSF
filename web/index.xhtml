@@ -14,10 +14,10 @@
         <title>TrendMall</title>
 
     </h:head>
-    <h:body>
-        <ui:include src="/Component/header.xhtml" />
+    <h:body >
+        <ui:include id="header" src="/Component/header.xhtml" />
         <div class="main">
-            <h:form>
+            <h:form id="form">
                 <div class="kategoriler">
                     <h:selectManyMenu class="kategory" value="#{urunBean.selectedKategoriler}" converter="#{kategoriConverter}">
                         <f:selectItems value="#{urunBean.kategoriler}" var="k" itemValue="#{k}" itemLabel="#{k.ad}" />
@@ -33,7 +33,7 @@
                     <p class='cumle'><strong>uyarı!</strong> Site içerisinde işlem yapabilmek için giriş yapmalısınız</p>
                 </h:panelGroup>
 
-                <div id="urunler" class="urun-container" >
+                <h:panelGroup id="urunler" class="urun-container" >
                     <ui:repeat value="#{urunBean.urunler}" var="u">
                         <div class="urun">
                             <div class="urun-image">
@@ -48,15 +48,19 @@
                             </div>
                             <div class="urun-btn">
                                 <h:commandButton value="Şimdi Al" action="#{kullaniciBean.simdiAl(u)}"/>
-                                <h:commandButton value="Sepete Ekle"  action="#{kullaniciBean.sepeteEkle(u)}" />
+                                <h:commandButton value="Sepete Ekle" action="#{kullaniciBean.sepeteEkle(u)}"/>
                             </div>
                         </div>    
                     </ui:repeat>
-                </div>
+                </h:panelGroup>
                 <div class="roll">
-                    <h:commandButton rendered="#{urunBean.counter gt 1}" class="previous-btn" value="&laquo;" action="#{urunBean.previousPage()}"/>
+                    <h:commandButton id="previous" rendered="#{urunBean.counter gt 1}" class="previous-btn" value="&laquo;">
+                        <f:ajax event="click" listener="#{urunBean.previousPage()}" execute="previous" render="form"/>
+                    </h:commandButton>
                     <h:outputText class="sayfa-sayisi" value="#{urunBean.counter} of #{urunBean.pageSayisi}"/>
-                    <h:commandButton rendered="#{urunBean.counter lt urunBean.pageSayisi}" class="next-btn" value="&raquo;" action="#{urunBean.nextPage()}"/>
+                    <h:commandButton id="next" rendered="#{urunBean.counter lt urunBean.pageSayisi}" class="next-btn" value="&raquo;">
+                        <f:ajax event="click" listener="#{urunBean.nextPage()}" execute="next" render="form"/>
+                    </h:commandButton>
                 </div>
             </h:form>
         </div>

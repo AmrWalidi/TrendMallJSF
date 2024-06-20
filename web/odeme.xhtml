@@ -5,13 +5,17 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-    <head>
+    <h:head>
         <title>TrendMall</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="stylesheet" type="text/css" href="css/normalize.css" />
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
         <link rel="stylesheet" type="text/css" href="css/header.css" />
         <link rel="stylesheet" type="text/css" href="css/odeme.css" />
+
+    </h:head>
+    <body>
         <script>
             function selectKart(element) {
                 var elements = document.querySelectorAll('.kart-numara-tarih');
@@ -19,26 +23,26 @@
                     el.classList.remove('clicked');
                 }
                 );
-
                 element.classList.add('clicked');
             }
         </script>
-    </head>
-    <body>
         <ui:include src="/Component/header.xhtml" />
-        <div class="odeme-sayfa">
-            <div>
+        <h2>Ödeme Seçenekleri</h2>
+        <div style="margin-left: 50px ">
+            <h:panelGroup id="container">
                 <h:form>
-                    <div class="odeme-secenekler">
-                        <h2>Ödeme Seçenekleri</h2>
-                        <div class="odeme-turu">
-                            <h:selectOneRadio value="#{odemeBean.odemeTuru}" styleClass="radio-container">
-                                <f:selectItem class="kart-odeme-label" itemValue="1"  itemLabel="Banka Kart"/>
-                                <f:selectItem itemValue="2" itemLabel="Kapıda Ödeme" />
-                            </h:selectOneRadio>
-                        </div>
-                        <h:panelGroup layout="block" styleClass="kart-container"  rendered="#{odemeBean.kayitliKart}">
-                            <h:commandButton action="#{odemeBean.setKayitliKart(false)}" value="Başka bir kart ile ödeme yap" />
+                    <div class="odeme-turu">
+                        <h:selectOneRadio id="radioId" value="#{odemeBean.odemeTuru}" styleClass="radio-container">
+                            <f:selectItem class="kart-odeme-label" itemValue="1"  itemLabel="Banka Kart"/>
+                            <f:selectItem itemValue="2" itemLabel="Kapıda Ödeme" />
+                            <f:ajax event="change" listener="#{odemeBean.handleodemeTuru()}" execute="radioId" render="container"/>
+                        </h:selectOneRadio>
+                    </div>
+                    <h:panelGroup layout="block" id="kart-odeme">
+                        <h:panelGroup rendered="#{odemeBean.odeme.tur == 'kart' and odemeBean.kayitliKart}" layout="block" styleClass="kart-container"  >
+                            <h:commandButton id="kayitli-kart" class="toggle-btn" value="Başka bir kart ile ödeme yap">
+                                <f:ajax event="click" listener="#{odemeBean.setKayitliKart(false)}" execute="kayitli-kart" render="kart-odeme" /> 
+                            </h:commandButton>
                             <div class="kartlar">
                                 <ui:repeat  value="#{odemeBean.list}" var="l">
                                     <div class="kayitli-kart-container">
@@ -56,10 +60,13 @@
                                 </ui:repeat>
                             </div>
                             <h:outputText rendered="#{odemeBean.list.size() == 0}" value="Kayıtlı Kartınız Yoktur" />
+                            <h:commandButton class="odeme-btn" value="Ödeme Yap" action="#{odemeBean.odeme}" />
                         </h:panelGroup>
 
-                        <h:panelGroup layout="block" class="kart-container" rendered="#{!odemeBean.kayitliKart}"> 
-                            <h:commandButton action="#{odemeBean.setKayitliKart(true)}" value="Kayıtlı kartımla ödeme yap" />
+                        <h:panelGroup rendered="#{odemeBean.odeme.tur == 'kart' and !odemeBean.kayitliKart}" layout="block" styleClass="kart-container"> 
+                            <h:commandButton id="kart-bilgiler" class="toggle-btn" value="Kayıtlı kartımla ödeme yap">
+                                <f:ajax event="click" listener="#{odemeBean.setKayitliKart(true)}" execute="kart-bilgiler" render="kart-odeme" /> 
+                            </h:commandButton>
                             <div>
                                 <h:outputLabel for="lname" class="L-name" value="Kart Sahibinin Adı" /><br/>
                                 <h:inputText id="lname" class="I-name" value="#{odemeBean.kart.sahib}"/>
@@ -95,14 +102,12 @@
                                 <h:outputText value="Kart Bilgileri Kaydetmek İstiyorum"/>
                             </div>
                             <h:messages style="padding-left: 30px;color: red;padding-top: 20px"/>
+                            <h:commandButton class="odeme-btn" value="Ödeme Yap" action="#{odemeBean.odeme}" />
                         </h:panelGroup>
-                        <h:commandButton class="odeme-btn" value="Ödeme Yap" action="#{odemeBean.odeme}" />
-                    </div>
-                </h:form>
-                <h:form >
-                    <h:commandButton style="margin-left: 50px "  class="odeme-btn" value="Ödeme Yap" action="#{odemeBean.odeme}" />
+                    </h:panelGroup>
+                    <h:commandButton rendered="#{odemeBean.odeme.tur == 'nakit'}" class="odeme-btn" value="Ödeme Yap" action="#{odemeBean.odeme}" />
                 </h:form>    
-            </div>
+            </h:panelGroup>
             <h:form styleClass="odeme-sayfa-component">
                 <div>
                     <div class="siparis-ozeti">

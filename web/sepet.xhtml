@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       >
     <h:head>
         <title>TrendMall</title>
@@ -23,22 +24,26 @@
                     <p><h:outputText value="Sepetim(#{sepetBean.sepet.urunler.size()} Urun)"/></p>
                     <div class="urunler" >
                         <ui:repeat  value="#{sepetBean.sepet.urunler}" var="u">
-                            <div class="card" style="width: 18rem;">
+                            <h:panelGroup id="card" class="card" style="width: 18rem;">
                                 <img style="margin: 20px" src="image?id=#{u.urun.id}" alt="Image" width="200" hight="200"/>
                                 <div class="card-body">
                                     <p class="card-title">#{u.urun.satici.ad}</p>
                                     <p class="card-text">#{u.urun.ad}</p>
                                     <div style="display: flex; gap: 50px; align-items: center;">
                                         <div class="sayac"> 
-                                            <h:commandButton value="-" action="#{sepetBean.urunSayisiAzaltir(u.urun)}"/>
+                                            <h:commandButton id="decs" value="-">
+                                                <f:ajax event="click" listener="#{sepetBean.urunSayisiAzaltir(u.urun)}" execute="decs" render="card"/>
+                                            </h:commandButton>
                                             <p class="sayac-degeri"> <h:outputText value="#{sepetBean.getUrunAdet(u.urun)}"/></p>
-                                            <h:commandButton value="+" action="#{sepetBean.urunSayisiArtirir(u.urun)}"/>
+                                            <h:commandButton id="incs" value="+">
+                                                <f:ajax event="click" listener="#{sepetBean.urunSayisiArtirir(u.urun)}" execute="incs" render="card"/>
+                                            </h:commandButton>
                                         </div>
                                         <p class="fiyat"><h:outputText value="#{sepetBean.getUrunAdet(u.urun) * u.urun.fiyat} TL"/></p>
                                     </div>
                                     <p class="urun-remove-btn"><h:commandButton value="Remove" action="#{sepetBean.sepettenCikar(u.urun)}"/></p>
                                 </div>
-                            </div>
+                            </h:panelGroup>
                         </ui:repeat>
                     </div>
                 </div>

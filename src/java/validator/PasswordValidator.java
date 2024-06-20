@@ -14,7 +14,7 @@ public class PasswordValidator implements Validator{
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         String password = (String) value;
         if (password.isEmpty()) {
-            throw new ValidatorException(new FacesMessage("Şifre alanı boş olmaz"));
+            throw new ValidatorException(new FacesMessage("Şifre boş olmaz"));
         }
         else if (password.length() < 6 || password.length() > 36) {
             throw new ValidatorException(new FacesMessage("Şifre 6 ve 16 arasında karekterden oluşur"));

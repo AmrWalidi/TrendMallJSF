@@ -14,13 +14,13 @@ public class PhoneNumberValidator implements Validator{
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         String telNo = (String) value;
         if (telNo.isEmpty()) {
-            throw new ValidatorException(new FacesMessage("Bu alanı boş olmaz"));
+            throw new ValidatorException(new FacesMessage("Telefon Numarası boş olmaz"));
         }
         else if (telNo.charAt(0) != '5') {
-            throw new ValidatorException(new FacesMessage("telefon numarasi 5 ile başlamalı"));
+            throw new ValidatorException(new FacesMessage("Telefon Numarası 5 ile başlamalı"));
         }
         else if (telNo.length() != 10 || !telNo.matches("\\d+")) {
-            throw new ValidatorException(new FacesMessage(" 10 rakamlardan oluşur"));
+            throw new ValidatorException(new FacesMessage(" Telefon Numarası 10 rakamlardan oluşur"));
         }
     }
     

@@ -29,7 +29,7 @@
                     </h:panelGroup>
                 </h:panelGroup>
                 <h:commandButton rendered="#{kullaniciBean.satici != null}" value="Ürün Ekle" action="#{saticiBean.urunEklePage}"/>
-                <h:commandButton rendered="#{kullaniciBean.musteri != null || kullaniciBean.satici != null}" value="Çıkış Yap" action="#{kullaniciBean.logout}"/>
+                <h:commandButton rendered="#{kullaniciBean.musteri != null || kullaniciBean.satici != null}" value="Çıkış Yap" action="logout?faces-redirect=true"/>
                 <h:commandButton rendered="#{kullaniciBean.musteri == null and kullaniciBean.satici == null}" action="/giris-form.xhtml" value="Giriş Yap" />
             </div>
         </h:form>

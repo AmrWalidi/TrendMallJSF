@@ -9,6 +9,8 @@ import entity.Urun;
 import jakarta.ejb.EJB;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import java.io.Serializable;
 
@@ -165,13 +167,6 @@ public class KullaniciBean implements Serializable {
         }
     }
 
-    public String logout() {
-        this.setMusteri(null);
-        this.setSatici(null);
-        sb.setSepet(null);
-        loggedIn = false;
-        return "giris-form.xhtml";
-    }
 
     public void update() {
         if (this.musteriDAO.getMusteri(kullanici) != null) {
@@ -186,7 +181,7 @@ public class KullaniciBean implements Serializable {
     public String create() {
         if (this.musteriDAO.getMusteri(kullanici.getEposta()) || this.saticiDAO.getSatici(kullanici.getEposta())) {
             setErrorMessage("E-posta zaten alındı");
-            return "giris-form.xhtml";
+            return "giris-form?faces-redirect=true";
         } else {
             if (type == 1) {
                 Musteri m = new Musteri();
@@ -207,7 +202,7 @@ public class KullaniciBean implements Serializable {
                 s.setAdres(kullanici.getAdres());
                 this.saticiDAO.create(s);
             }
-            return this.login();
+             return this.login();
         }
     }
 
@@ -216,17 +211,17 @@ public class KullaniciBean implements Serializable {
         this.setSatici(null);
         if (this.musteriDAO.getMusteri(kullanici) != null) {
             this.setMusteri(this.musteriDAO.getMusteri(kullanici));
-            setErrorMessage("");
             loggedIn = true;
-            return "index.xhtml";
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("validMusteri", this.getMusteri());
         } else if (this.saticiDAO.getSatici(kullanici) != null) {
             this.setSatici(this.saticiDAO.getSatici(kullanici));
-            setErrorMessage("");
             loggedIn = true;
-            return "satici-urunler.xhtml";
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("validSatici", this.getSatici());
         }
-        setErrorMessage("E-posta veya şifre hatalı");
-        return "giris-form.xhtml";
+        else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("E-posta veya şifre hatalı"));
+        }
+        return "index?faces-redirect=true";
     }
 
     public void sifreDegistir() {

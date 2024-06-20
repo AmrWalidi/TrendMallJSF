@@ -32,17 +32,12 @@
                         <h:form id="form">
                             <div class="inputs">
                                 <h:inputText id="email" a:placeholder="E-posta" value="#{kullaniciBean.kullanici.eposta}" validator="emailValidator"/>
-                                <h:message for="email" style="color:red;"/>
                                 <h:inputText id="name" rendered="#{kullaniciBean.sayfa == 'üye ol'}" a:placeholder="Ad" value="#{kullaniciBean.kullanici.ad}" validator="nameValidator"/>
-                                <h:message for="name" style="color:red;"/>
-                                <h:inputText id="surname" rendered="#{kullaniciBean.sayfa == 'üye ol'}" a:placeholder="Soyad" value="#{kullaniciBean.kullanici.soyad}" validator="nameValidator"/>
-                                <h:message for="surname" style="color:red;"/>
+                                <h:inputText id="surname" rendered="#{kullaniciBean.sayfa == 'üye ol'}" a:placeholder="Soyad" value="#{kullaniciBean.kullanici.soyad}" validator="surnameValidator"/>
                                 <h:inputSecret id="password" a:placeholder="Şifre" value="#{kullaniciBean.kullanici.sifre}" validator="passwordValidator"/>
-                                <h:message for="password" style="color:red;"/>
                                 <h:inputText id="telNo" rendered="#{kullaniciBean.sayfa == 'üye ol'}" a:placeholder="Telefon Numarası" value="#{kullaniciBean.kullanici.telNo}" validator="phoneNumberValidator"/>
-                                <h:message for="telNo" style="color:red;"/>
                                 <h:inputTextarea id="adress" rendered="#{kullaniciBean.sayfa == 'üye ol'}" cols="30" rows="5" a:placeholder="Adres" value="#{kullaniciBean.kullanici.adres}" required="true"/>
-                                <h:message for="adress" style="color:red;"/>
+
                             </div>
                             <h:selectOneRadio id="type" rendered="#{kullaniciBean.sayfa == 'üye ol'}" value="#{kullaniciBean.type}" class="kullanci_radios" required="true">
                                 <div>
@@ -52,10 +47,9 @@
                                     <f:selectItem itemValue="2" itemLabel="Satıcı" />
                                 </div>
                             </h:selectOneRadio>
-                            <h:message for="type" style="color:red;"/>
                             <h:commandButton rendered="#{kullaniciBean.sayfa == 'üye ol'}" value="Üye Ol" action="#{kullaniciBean.create}" styleClass="submit" />
                             <h:commandButton rendered="#{kullaniciBean.sayfa == 'giriş'}" value="Giriş Yap" action="#{kullaniciBean.login}" styleClass="submit" />
-                            <p class="error-message">#{kullaniciBean.errorMessage}</p>
+                            <h:messages style="padding: 10px;color:red;"></h:messages>
                         </h:form>
                     </div>
                 </div>

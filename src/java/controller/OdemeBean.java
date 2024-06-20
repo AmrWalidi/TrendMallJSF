@@ -127,11 +127,6 @@ public class OdemeBean implements Serializable {
         return urun;
     }
 
-    public List<Kart> getList() {
-        list =  this.kartDAO.getEntities(kullaniciBean.getMusteri());
-        return list;
-    }
-
     public boolean isKayitliKart() {
         return kayitliKart;
     }
@@ -140,14 +135,28 @@ public class OdemeBean implements Serializable {
         this.kayitliKart = kayitliKart;
     }
     
+
+    public List<Kart> getList() {
+        list = this.kartDAO.getEntities(kullaniciBean.getMusteri());
+        return list;
+    }
+
+    public void handleodemeTuru() {
+        if (odemeTuru == 1) {
+            getOdeme().setTur("kart");
+        } else {
+            getOdeme().setTur("nakit");
+        }
+    }
+
     public String replaceSubstring(String originalString, int startIndex, int endIndex, String replacement) {
         if (originalString == null || originalString.isEmpty()) {
             return originalString;
         }
-        
+
         StringBuilder sb = new StringBuilder(originalString);
         sb.replace(startIndex, endIndex, replacement);
-        
+
         return sb.toString();
     }
 
@@ -166,16 +175,13 @@ public class OdemeBean implements Serializable {
         getOdeme().setTarih(Date.from(Instant.now()));
         getOdeme().setUcret(odemeTutari + 50);
 
-        if (odemeTuru == 1) {
-            getOdeme().setTur("kart");
+        if (getOdeme().getTur().equals("kart")) {
             if (saveKart) {
                 Date expiryDate = Date.valueOf(yil + "-" + ay + "-01");
                 this.getKart().setSonKullanmaTarihi(expiryDate);
                 this.getKart().setMusteri(kullaniciBean.getMusteri());
                 this.kartDAO.create(kart);
             }
-        } else {
-            getOdeme().setTur("nakit");
         }
         this.odemeDAO.create(odeme);
         siparis = new Siparis();
@@ -199,6 +205,7 @@ public class OdemeBean implements Serializable {
         this.urun = u;
         this.odemeTutari = urun.getFiyat();
         this.fromPage = "simdi Al";
+        this.kuponUygulama = false;
         return "odeme.xhtml";
     }
 
@@ -206,6 +213,7 @@ public class OdemeBean implements Serializable {
         this.sepet = s;
         this.odemeTutari = sepet.getToplamUcret();
         this.fromPage = "sepet onayla";
+        this.kuponUygulama = false;
         return "odeme.xhtml";
     }
 }

@@ -7,21 +7,18 @@ import jakarta.faces.validator.FacesValidator;
 import jakarta.faces.validator.Validator;
 import jakarta.faces.validator.ValidatorException;
 
-
-@FacesValidator("nameValidator")
-public class NameValidator implements Validator{
+@FacesValidator("surnameValidator")
+public class SurnameValidator implements Validator {
 
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         String name = (String) value;
         if (name.isEmpty()) {
-            throw new ValidatorException(new FacesMessage("Ad boş olmaz"));
-        }
-        else if (name.length() > 20) {
-            throw new ValidatorException(new FacesMessage("Ad 20 karekterden az olmalı"));
+            throw new ValidatorException(new FacesMessage("Soyad boş olmaz"));
+        } else if (name.length() > 20) {
+            throw new ValidatorException(new FacesMessage("Soyad 20 karekterden az olmalı"));
         } else if (name.matches(".*\\d+.*")) {
-            throw new ValidatorException(new FacesMessage("Ad rakamlarden oluşmaz"));
-        } 
+            throw new ValidatorException(new FacesMessage("Soyad rakamlarden oluşmaz"));
+        }
     }
-    
 }
