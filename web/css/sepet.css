@@ -118,3 +118,32 @@ input[type="submit"]{
     font-weight: bold;
     letter-spacing: 0.5px;
 }
+
+.sepet-mesaj{
+    position:absolute;
+    right: 50%;
+    top:50%;
+    transform: translate(50%,-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px
+}
+
+.sepet-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 999px;
+    background-color: rgba(242,99,44, 0.10);
+}
+
+.sepet-mesaj i{
+    font-size: 70px;
+    color: #E65E29;
+}
+
+.sepet-mesaj p{
+    font-size: 30px;
+}

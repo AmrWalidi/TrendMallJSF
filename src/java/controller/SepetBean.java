@@ -71,15 +71,29 @@ public class SepetBean implements Serializable {
         }
     }
 
-    public void sepettenCikar(Urun u) {
+    public String sepettenCikar(Urun u) {
         this.dao.sepettenCikar(sepet, u);
         if (sepet.getUrunler().isEmpty()) {
             delete();
+            return "bos-sepet.xhtml";
+        }
+        else {
+            return "sepet.xhtml";
         }
     }
 
     public void delete() {
         this.dao.delete(sepet);
         sepet = new Sepet();
+    }
+
+    public String sepeteGit() {
+        if (this.getSepet().getUrunler() == null) {
+            return "/bos-sepet.xhtml";
+        } else if (this.getSepet().getUrunler().isEmpty()) {
+            return "/bos-sepet.xhtml";
+        } else {
+            return "/sepet.xhtml";
+        }
     }
 }
