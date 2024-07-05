@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <script>
+        function submit(event) {
+            document.getElementById("myForm").submit();
+            return false;
+            return true;
+        }
+    </script>
+    <div class="header">
+        <ui:include src="logo.xhtml" />
+        <h:form class="nav-bar" onsubmit="return submit(event)">
+            <div class="search-bar">
+                <h:inputText a:placeholder="Ürün Arayın" value="#{urunBean.arananUrun}" />
+                <h:commandButton id="myForm" action="#{urunBean.search()}"/>
+                <i class="fas fa-search" style="font-size: 20px; color: #5A5959" ></i>
+
+            </div>
+            <div class="nav-btns">
+                <h:commandButton rendered="#{kullaniciBean.musteri != null || kullaniciBean.satici != null}" value="Anasayfa" action="/index.xhtml" />
+                <h:commandButton rendered="#{kullaniciBean.musteri != null || kullaniciBean.satici != null}" value="Hesabım" action="/profile.xhtml" />
+                <h:panelGroup class="cart-btn-container" rendered="#{kullaniciBean.musteri != null}" layout="block">
+                    <h:commandButton action="#{sepetBean.sepeteGit()}" value="Sepetim" />
+                    <h:panelGroup rendered="#{sepetBean.sepet.urunler != null}" class="cart-notification" layout="block" >
+                        #{sepetBean.sepet.urunler.size()}
+                    </h:panelGroup>
+                </h:panelGroup>
+                <h:commandButton rendered="#{kullaniciBean.satici != null}" value="Ürün Ekle" action="#{saticiBean.urunEklePage}"/>
+                <h:commandButton rendered="#{kullaniciBean.musteri != null || kullaniciBean.satici != null}" value="Çıkış Yap" action="logout?faces-redirect=true"/>
+                <h:commandButton rendered="#{kullaniciBean.musteri == null and kullaniciBean.satici == null}" action="/giris-form.xhtml" value="Giriş Yap" />
+            </div>
+        </h:form>
+    </div>
+</ui:composition>
