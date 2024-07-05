@@ -6,14 +6,14 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 template="/template/sepet-template.xhtml">
     <ui:define name="sepet">
-        <h:form  style="width: 100%;
+        <h:form id="page" style="width: 100%;
                  display: flex;
                  justify-content: space-around;">
             <div class="urunler-container">
                 <p><h:outputText value="Sepetim(#{sepetBean.sepet.urunler.size()} Urun)"/></p>
                 <div class="urunler" >
                     <ui:repeat  value="#{sepetBean.sepet.urunler}" var="u">
-                        <h:panelGroup id="card" class="card" style="width: 18rem;">
+                        <h:panelGroup class="card" style="width: 18rem;">
                             <img style="margin: 20px" src="image?id=#{u.urun.id}" alt="Image" width="200" hight="200"/>
                             <div class="card-body">
                                 <p class="card-title">#{u.urun.satici.ad}</p>
@@ -25,7 +25,7 @@
                                         </h:commandButton>
                                         <p class="sayac-degeri"> <h:outputText value="#{sepetBean.getUrunAdet(u.urun)}"/></p>
                                         <h:commandButton id="incs" value="+">
-                                            <f:ajax event="click" listener="#{sepetBean.urunSayisiArtirir(u.urun)}" execute="incs" render="card"/>
+                                            <f:ajax event="click" listener="#{sepetBean.urunSayisiArtirir(u.urun)}" execute="incs" render="page"/>
                                         </h:commandButton>
                                     </div>
                                     <p class="fiyat"><h:outputText value="#{sepetBean.getUrunAdet(u.urun) * u.urun.fiyat} TL"/></p>
@@ -42,7 +42,7 @@
                 <div><p>kargo ücreti</p><p><h:outputText value="#{sepetBean.sepet.toplamUcret == 0.0? '0': '50'} TL"/></p></div>
                 <p class="cizgi"></p>
                 <div><p>Toplam</p><p><h:outputText value="#{sepetBean.sepet.toplamUcret != 0.0? (sepetBean.sepet.toplamUcret + 50) : 0} TL"/></p></div>
-                <p><h:commandButton value="Sepat Onayla" action="#{odemeBean.sepetOnayla(sepetBean.sepet)}"/></p>
+                <p><h:commandButton value="Sepet Onayla" action="#{odemeBean.sepetOnayla(sepetBean.sepet)}"/></p>
             </div>            
         </h:form>    
     </ui:define>
